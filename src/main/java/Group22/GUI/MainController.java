@@ -41,11 +41,11 @@ public class MainController {
     @FXML
     private Label noDroneSelectedLabel;
 
-    @FXML
+    /*@FXML
     private Label droneStatusLabel;
 
     @FXML
-    private Label droneLastSeenLabel;
+    private Label droneLastSeenLabel;*/
 
     // ----------
 
