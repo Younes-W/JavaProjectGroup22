@@ -54,7 +54,7 @@ public class MainController {
     private Map<Integer, Drone> droneMap;
 
     // ----------
-
+    int hallo = 5;
     // happens automatically
     public void initialize() {
         System.out.println("Initializing Main Controller");
