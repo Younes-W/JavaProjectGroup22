@@ -24,6 +24,7 @@
                   <Label fx:id="droneLastSeenLabel" layoutX="147.0" layoutY="183.0" text="Last Seen" />
                   <Label fx:id="droneStatusLabel" layoutX="147.0" layoutY="210.0" text="Status" />
                   <Button layoutX="459.0" layoutY="322.0" mnemonicParsing="false" text="Drone Dynamics" />
+                  <Button layoutX="219.0" layoutY="252.0" mnemonicParsing="false" text="Test" />
                </children></AnchorPane>
          </content>
       </Tab>
