@@ -4,10 +4,61 @@
     -fx-text-fill: #dee0e4;
 }
 
-/* TASK BAR */
+/* BUTTONS */
 
-.myToolbar {
-    -fx-background-color: red; /* Schwarz, 50% transparent */
+.button {
+    -fx-background-color: #2c2d30;    /* Hintergrundfarbe */
+    -fx-text-fill: #dee0e4;          /* Textfarbe */
+
+    -fx-border-color: #686b73;         /* Rahmenfarbe */
+    -fx-border-width: 1;             /* Rahmenbreite optional */
+
+    /* Ecken abrunden */
+    -fx-background-radius: 5;        /* Rundung für den Hintergrund */
+    -fx-border-radius: 5;           /* Rundung für den Rahmen */
+}
+
+/* TABS */
+
+.line {
+    -fx-stroke: #393b40;     /* Rot z.B. */
+    -fx-stroke-width: 2;     /* 5 Pixel dick */
+}
+
+.tab:hover .text {
+    -fx-fill: #d5996b;
+}
+
+/* Tab Size */
+.tab{
+    -fx-padding: 6 20 10 20;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+/* Drone and DroneType Tabs */
+.subTab{
+    -fx-background-color: #1e1f22;
+}
+
+.subTab .text{
+    -fx-fill: #dee0e4;
+}
+
+/* Main Tab Line */
+.tab-pane .tab-header-background {
+    -fx-background-color: #1e1f22;
+    -fx-background-insets: 0;
+}
+
+.tab:selected .text{
+    -fx-fill: #d5996b;
+}
+
+.tab:selected {
+    -fx-border-color: transparent transparent #d5996b transparent; /* Balken nur unten */
+    -fx-border-width: 0 0 3 0;  /* Balkenbreite unten */
+    -fx-border-radius: 1 1 0 0;
 }
 
 
@@ -51,14 +102,18 @@
     -fx-cell-size: 25;
 }
 
+.list-cell:hover {
+    -fx-text-fill: #d5996b;
+}
+
 .list-cell:filled:selected {
     -fx-background-color: #3b559a;
-    -fx-text-fill: #dee0e4;
+    -fx-text-fill: #d5996b;
 }
 
 .list-cell:filled:selected:focused {
     -fx-background-color: #43454a;
-    -fx-text-fill: #dee0e4;
+    -fx-text-fill: #d5996b;
 }
 
 .mainBackground{
