@@ -2,11 +2,15 @@
     -fx-font-family: "Verdana";
     -fx-font-size: 14px;
     -fx-text-fill: #dee0e4;
+    -fx-transition: all 0.3s ease;
+    -fx-transform-origin: center center; /* Ursprung für Skalierung: Mitte */
 }
 
 /* BUTTONS */
 
 #droneTypeLabel:hover{
+    -fx-scale-x: 1.05; /* Skalierung in der Breite */
+    -fx-scale-y: 1.05; /* Skalierung in der Höhe */
     -fx-text-fill: #d5996b;
 }
 
