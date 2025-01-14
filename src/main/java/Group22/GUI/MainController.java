@@ -47,6 +47,9 @@ public class MainController {
     @FXML
     private Label noDroneSelectedLabel;
 
+    @FXML
+    private Button droneDynamicsButton;
+
     // Tab 2
 
     @FXML
@@ -78,6 +81,7 @@ public class MainController {
 
     @FXML
     private Label droneTypeMaximumCarriageLabel;
+
 
     // ----------
 
@@ -294,4 +298,26 @@ public class MainController {
         // Refresh everything
         initialize();
     }
+
+    @FXML
+    private void resetLabelsforDroneDynamics() {
+        // Tab 1
+        noDroneSelectedLabel.setVisible(false);
+        droneTypeLabel.setVisible(false);
+        droneCreatedLabel.setVisible(false);
+        droneSerialNumberLabel.setVisible(false);
+        droneCarriageWeightLabel.setVisible(false);
+        droneCarriageTypeLabel.setVisible(false);
+
+        // Tab 2
+        noDroneTypeSelectedLabel.setVisible(false);
+        droneTypeManufacturerLabel.setVisible(false);
+        droneTypeTypenameLabel.setVisible(false);
+        droneTypeWeightLabel.setVisible(false);
+        droneTypeMaximumSpeedLabel.setVisible(false);
+        droneTypeBatteryCapacityLabel.setVisible(false);
+        droneTypeControlRangeLabel.setVisible(false);
+        droneTypeMaximumCarriageLabel.setVisible(false);
+    }
+
 }
