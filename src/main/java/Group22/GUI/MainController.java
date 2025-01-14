@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
 import java.util.Map;
 
@@ -50,6 +51,42 @@ public class MainController {
     @FXML
     private Button droneDynamicsButton;
 
+    @FXML
+    private VBox droneInfoVBox;
+
+    @FXML
+    private VBox droneDynamicsVBox;
+
+    @FXML
+    private Label dynamicsDroneLabel;
+
+    @FXML
+    private Label dynamicsStatusLabel;
+
+    @FXML
+    private Label dynamicsBatteryStatusLabel;
+
+    @FXML
+    private Label dynamicsTimestampLabel;
+
+    @FXML
+    private Label dynamicsLatitudeLabel;
+
+    @FXML
+    private Label dynamicsLongitudeLabel;
+
+    @FXML
+    private Label dynamicsSpeedLabel;
+
+    @FXML
+    private Label dynamicsControlRangeLabel;
+
+    @FXML
+    private Label dynamicsAlignmentRollLabel;
+    @FXML
+    private Label dynamicsAlignmentYawLabel;
+
+
     // Tab 2
 
     @FXML
@@ -82,6 +119,10 @@ public class MainController {
     @FXML
     private Label droneTypeMaximumCarriageLabel;
 
+    @FXML
+    private VBox droneTypesVBox;
+
+
 
     // ----------
 
@@ -92,6 +133,8 @@ public class MainController {
     private Map<Integer, DroneType> droneTypeMap;
 
     private Integer selectedDroneId = null;
+
+    private boolean isDroneDynamicsSelected = false;
 
     // ----------
 
@@ -177,13 +220,21 @@ public class MainController {
         if(droneId != null && droneMap.containsKey(droneId)) {
             selectedDroneId = droneId;
             Drone selectedDrone = droneMap.get(droneId); // Get Drone from ID
+
             if(selectedDrone != null) {
+                if (isDroneDynamicsSelected == true) {
+                    droneDynamicsVBox.setVisible(true);
 
-                // Make Labels Visable
-                makeDroneLabelsVisable();
+                    setDroneDynamicsLabels(selectedDrone);
 
-                // Show Information
-                setDroneLabels(selectedDrone);
+                }else {
+                    droneDynamicsVBox.setVisible(false);
+                    // Make Labels Visable
+                    makeDroneLabelsVisable();
+
+                    // Show Information
+                    setDroneLabels(selectedDrone);
+                }
             }
         }
     }
@@ -205,41 +256,37 @@ public class MainController {
     private void resetLabels() {
         // Tab 1
         noDroneSelectedLabel.setVisible(true);
-        droneTypeLabel.setVisible(false);
-        droneCreatedLabel.setVisible(false);
-        droneSerialNumberLabel.setVisible(false);
-        droneCarriageWeightLabel.setVisible(false);
-        droneCarriageTypeLabel.setVisible(false);
+        droneInfoVBox.setVisible(false);
+
+        //Drone Dynamics
+        droneDynamicsVBox.setVisible(false);
 
         // Tab 2
-        noDroneTypeSelectedLabel.setVisible(true);
-        droneTypeManufacturerLabel.setVisible(false);
-        droneTypeTypenameLabel.setVisible(false);
-        droneTypeWeightLabel.setVisible(false);
-        droneTypeMaximumSpeedLabel.setVisible(false);
-        droneTypeBatteryCapacityLabel.setVisible(false);
-        droneTypeControlRangeLabel.setVisible(false);
-        droneTypeMaximumCarriageLabel.setVisible(false);
+        droneTypesVBox.setVisible(false);
+
+
     }
 
     private void makeDroneLabelsVisable(){
         noDroneSelectedLabel.setVisible(false);
-        droneTypeLabel.setVisible(true);
-        droneCreatedLabel.setVisible(true);
-        droneSerialNumberLabel.setVisible(true);
-        droneCarriageWeightLabel.setVisible(true);
-        droneCarriageTypeLabel.setVisible(true);
+        droneInfoVBox.setVisible(true);
+        droneDynamicsVBox.setVisible(false);
     }
 
     private void makeDroneTypeLabelsVisable(){
         noDroneTypeSelectedLabel.setVisible(false);
-        droneTypeManufacturerLabel.setVisible(true);
-        droneTypeTypenameLabel.setVisible(true);
-        droneTypeWeightLabel.setVisible(true);
-        droneTypeMaximumSpeedLabel.setVisible(true);
-        droneTypeBatteryCapacityLabel.setVisible(true);
-        droneTypeControlRangeLabel.setVisible(true);
-        droneTypeMaximumCarriageLabel.setVisible(true);
+        droneTypesVBox.setVisible(true);
+
+    }
+
+    private void makeDroneDynamicsLabelsVisable() {
+        // Tab 1
+        droneInfoVBox.setVisible(false);
+        droneDynamicsVBox.setVisible(true);
+
+        // Tab 2
+        noDroneTypeSelectedLabel.setVisible(false);
+        droneTypesVBox.setVisible(false);
     }
 
     private void setDroneLabels(Drone selectedDrone){
@@ -258,6 +305,11 @@ public class MainController {
         droneTypeBatteryCapacityLabel.setText("Battery Capacity: " + selectedDroneType.getBatteryCapacity());
         droneTypeControlRangeLabel.setText("Control Range: " + selectedDroneType.getControlRange());
         droneTypeMaximumCarriageLabel.setText("Maximum Carriage: " + selectedDroneType.getMaxCarriage());
+    }
+
+    private void setDroneDynamicsLabels(Drone selectedDrone){
+        dynamicsDroneLabel.setText("Drone: " + selectedDrone.getCreated());
+
     }
 
     // --------------
@@ -300,24 +352,25 @@ public class MainController {
     }
 
     @FXML
-    private void resetLabelsforDroneDynamics() {
-        // Tab 1
-        noDroneSelectedLabel.setVisible(false);
-        droneTypeLabel.setVisible(false);
-        droneCreatedLabel.setVisible(false);
-        droneSerialNumberLabel.setVisible(false);
-        droneCarriageWeightLabel.setVisible(false);
-        droneCarriageTypeLabel.setVisible(false);
+    private void setDroneDynamicsButton(){
+        if (isDroneDynamicsSelected== false){
+            droneInfoVBox.setVisible(false);
+            droneDynamicsVBox.setVisible(true);
+            isDroneDynamicsSelected = true;
+            droneDynamicsButton.setText("Drone Information");
 
-        // Tab 2
-        noDroneTypeSelectedLabel.setVisible(false);
-        droneTypeManufacturerLabel.setVisible(false);
-        droneTypeTypenameLabel.setVisible(false);
-        droneTypeWeightLabel.setVisible(false);
-        droneTypeMaximumSpeedLabel.setVisible(false);
-        droneTypeBatteryCapacityLabel.setVisible(false);
-        droneTypeControlRangeLabel.setVisible(false);
-        droneTypeMaximumCarriageLabel.setVisible(false);
+        }else {
+            droneDynamicsVBox.setVisible(false);
+            droneInfoVBox.setVisible(true);
+            isDroneDynamicsSelected = false;
+            droneDynamicsButton.setText("Drone Dynamics");
+        }
     }
+
+
+
+
+
+
 
 }
