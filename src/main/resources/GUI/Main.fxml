@@ -8,15 +8,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane fx:id="mainTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Group22.GUI.MainController">
+<TabPane fx:id="mainTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550" prefWidth="775" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Group22.GUI.MainController">
 
    <tabs>
       <!-- Tab 1: Drone Information -->
-      <Tab fx:id="droneTab" text="Drone Information">
+      <Tab fx:id="droneTab" styleClass="subTab" text="Drone Information">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="mainBackground">
                <children>
-                  <ListView fx:id="droneIdListView" layoutX="14.0" layoutY="17.0" prefHeight="367.0" prefWidth="123.0" />
+                  <ListView fx:id="droneIdListView" layoutX="14.0" layoutY="17.0" prefHeight="544.0" prefWidth="123.0" />
                   <VBox fx:id="droneInfoVBox" layoutX="150.0" layoutY="40.0" spacing="10">
                      <children>
                         <Label fx:id="droneTypeLabel" text="DroneType" />
@@ -26,10 +26,10 @@
                         <Label fx:id="droneCreatedLabel" text="Created" />
                      </children>
                   </VBox>
-                  <Button fx:id="refreshButton" layoutX="510.0" layoutY="17.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+                  <Button fx:id="refreshButton" layoutX="705.0" layoutY="14.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
                   <Label fx:id="noDroneSelectedLabel" layoutX="300.0" layoutY="176.0" text="No Drone Selected" />
-                  <Button fx:id="droneDynamicsButton" layoutX="462.0" layoutY="331.0" mnemonicParsing="false" onAction="#setDroneDynamicsButton" text="Drone Dynamics" />
-                  <VBox fx:id="droneDynamicsVBox" layoutX="250.0" layoutY="40.0" spacing="10.0">
+                  <Button fx:id="droneDynamicsButton" layoutX="658.0" layoutY="482.0" mnemonicParsing="false" onAction="#setDroneDynamicsButton" text="Drone Dynamics" />
+                  <VBox fx:id="droneDynamicsVBox" layoutX="150.0" layoutY="40.0" spacing="10.0">
                      <children>
                         <Label fx:id="dynamicsDroneLabel" text="Drone" />
                         <Label fx:id="dynamicsStatusLabel" text="Status" />
@@ -50,7 +50,7 @@
 
 
       <!-- Tab 2: Drone Types -->
-      <Tab fx:id="droneTypeTab" text="Drone Types">
+      <Tab fx:id="droneTypeTab" styleClass="subTab" text="Drone Types">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="mainBackground">
                <children>

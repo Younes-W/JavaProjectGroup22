@@ -6,6 +6,10 @@
 
 /* BUTTONS */
 
+#droneTypeLabel:hover{
+    -fx-text-fill: #d5996b;
+}
+
 .button {
     -fx-background-color: #2c2d30;    /* Hintergrundfarbe */
     -fx-text-fill: #dee0e4;          /* Textfarbe */
