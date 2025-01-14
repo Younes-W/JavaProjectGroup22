@@ -1,0 +1,66 @@
+.label{
+    -fx-font-family: "Verdana";
+    -fx-font-size: 14px;
+    -fx-text-fill: #dee0e4;
+}
+
+/* TASK BAR */
+
+.myToolbar {
+    -fx-background-color: red; /* Schwarz, 50% transparent */
+}
+
+
+/* LIST VIEW */
+
+.list-view{
+    -fx-padding: 0;
+    -fx-border-insets: 0;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+/* SCROLL BAR */
+
+.scroll-bar{
+    -fx-background-color: #252527;
+}
+
+/*.list-view .scroll-bar:vertical .track {
+    -fx-background-color: #4d4e51;
+}*/
+
+.list-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #4d4e51; /* Farbe des Balkens */
+    -fx-background-insets: 0;      /* Entfernt eventuell zusätzliche Ränder */
+}
+
+.list-view .scroll-bar .thumb:hover {
+    -fx-background-color: #616266; /* Etwas dunkler beim Hovern */
+}
+.list-view .scroll-bar .thumb:pressed {
+    -fx-background-color: #616266; /* Noch dunkler beim Klicken */
+}
+
+/* CELLS */
+
+.list-cell{
+    -fx-background-color: rgb(43, 45, 48);
+    -fx-text-fill: #dee0e4;
+    -fx-cell-size: 25;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #3b559a;
+    -fx-text-fill: #dee0e4;
+}
+
+.list-cell:filled:selected:focused {
+    -fx-background-color: #43454a;
+    -fx-text-fill: #dee0e4;
+}
+
+.mainBackground{
+    -fx-background-color: #1e1f22;
+}

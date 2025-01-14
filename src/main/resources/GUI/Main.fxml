@@ -7,31 +7,74 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Group22.GUI.MainController">
+<TabPane fx:id="mainTabPane" maxHeight="-Infinity" maxWidth="-Infinity"
+         minHeight="-Infinity" minWidth="-Infinity"
+         prefHeight="400.0" prefWidth="600.0"
+         tabClosingPolicy="UNAVAILABLE"
+         xmlns="http://javafx.com/javafx/23.0.1"
+         xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="Group22.GUI.MainController">
+
    <tabs>
-      <Tab text="Drone Information">
+      <!-- Tab 1: Drone Information -->
+      <Tab fx:id="droneTab" text="Drone Information">
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0"
+                        prefHeight="180.0" prefWidth="200.0"
+                        styleClass="mainBackground">
                <children>
-                  <ListView fx:id="droneIdListView" layoutX="14.0" layoutY="17.0" prefHeight="367.0" prefWidth="123.0" />
-                  <Label fx:id="droneTypeLabel" layoutX="152.0" layoutY="42.0" text="DroneType" />
-                  <Label fx:id="droneSerialNumberLabel" layoutX="148.0" layoutY="96.0" text="Serialnumber" />
-                  <Label fx:id="droneCarriageWeightLabel" layoutX="148.0" layoutY="120.0" text="Carriage Weight" />
-                  <Label fx:id="droneCarriageTypeLabel" layoutX="147.0" layoutY="151.0" text="Carriage Type" />
-                  <Button fx:id="refreshButton" layoutX="510.0" layoutY="17.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
-                  <Label fx:id="droneCreatedLabel" layoutX="148.0" layoutY="70.0" text="Created" />
-                  <Label fx:id="noDroneSelectedLabel" layoutX="300.0" layoutY="176.0" text="No Drone Selected" />
-                  <Label fx:id="droneLastSeenLabel" layoutX="147.0" layoutY="183.0" text="Last Seen" />
-                  <Label fx:id="droneStatusLabel" layoutX="147.0" layoutY="210.0" text="Status" />
-                  <Button layoutX="459.0" layoutY="322.0" mnemonicParsing="false" text="Drone Dynamics" />
-                  <Button layoutX="219.0" layoutY="252.0" mnemonicParsing="false" text="Test" />
-               </children></AnchorPane>
+                  <ListView fx:id="droneIdListView" layoutX="14.0" layoutY="17.0"
+                            prefHeight="367.0" prefWidth="123.0" />
+                  <Label fx:id="droneTypeLabel" layoutX="152.0" layoutY="42.0"
+                         text="DroneType" />
+                  <Label fx:id="droneSerialNumberLabel" layoutX="148.0" layoutY="96.0"
+                         text="Serialnumber" />
+                  <Label fx:id="droneCarriageWeightLabel" layoutX="148.0" layoutY="120.0"
+                         text="Carriage Weight" />
+                  <Label fx:id="droneCarriageTypeLabel" layoutX="147.0" layoutY="151.0"
+                         text="Carriage Type" />
+                  <Button fx:id="refreshButton" layoutX="510.0" layoutY="17.0"
+                          mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+                  <Label fx:id="droneCreatedLabel" layoutX="148.0" layoutY="70.0"
+                         text="Created" />
+                  <Label fx:id="noDroneSelectedLabel" layoutX="300.0" layoutY="176.0"
+                         text="No Drone Selected" />
+                  <Button layoutX="459.0" layoutY="322.0" mnemonicParsing="false"
+                          text="Drone Dynamics" />
+               </children>
+            </AnchorPane>
          </content>
       </Tab>
-      <Tab text="Drone Types">
+
+      <!-- Tab 2: Drone Types -->
+      <Tab fx:id="droneTypeTab" text="Drone Types">
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            <AnchorPane minHeight="0.0" minWidth="0.0"
+                        prefHeight="180.0" prefWidth="200.0"
+                        styleClass="mainBackground">
+               <children>
+                  <ListView fx:id="droneTypeIdListView" layoutX="14.0" layoutY="17.0"
+                            prefHeight="367.0" prefWidth="123.0" />
+                  <Label fx:id="noDroneTypeSelectedLabel" layoutX="280.0" layoutY="157.0"
+                         text="No Drone Type Selected" />
+                  <Label fx:id="droneTypeManufacturerLabel" layoutX="164.0" layoutY="69.0"
+                         text="Manufacturer" />
+                  <Label fx:id="droneTypeTypenameLabel" layoutX="164.0" layoutY="39.0"
+                         text="Typename" />
+                  <Label fx:id="droneTypeWeightLabel" layoutX="164.0" layoutY="98.0"
+                         text="Weight" />
+                  <Label fx:id="droneTypeMaximumSpeedLabel" layoutX="164.0" layoutY="129.0"
+                         text="Maximum Speed" />
+                  <Label fx:id="droneTypeBatteryCapacityLabel" layoutX="164.0" layoutY="157.0"
+                         text="Battery Capacity" />
+                  <Label fx:id="droneTypeControlRangeLabel" layoutX="164.0" layoutY="186.0"
+                         text="Control Range" />
+                  <Label fx:id="droneTypeMaximumCarriageLabel" layoutX="164.0" layoutY="215.0"
+                         text="Maximum Carriage" />
+               </children>
+            </AnchorPane>
          </content>
       </Tab>
+
    </tabs>
 </TabPane>

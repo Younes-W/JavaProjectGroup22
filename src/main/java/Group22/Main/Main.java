@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
+import javafx.stage.StageStyle;
 
 
 import java.time.OffsetDateTime;
@@ -43,6 +44,9 @@ public class Main extends Application {
             // Stage Title
             primaryStage.setTitle("Drone Application");
 
+            // Stage Task Bar
+            //primaryStage.initStyle(StageStyle.UNDECORATED);
+
             // Stage Icon
             Image icon = new Image("Tom.png");
             primaryStage.getIcons().add(icon);
@@ -60,6 +64,7 @@ public class Main extends Application {
 
             // Scene Setup
             Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/GUI/style.css").toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.show();
 
