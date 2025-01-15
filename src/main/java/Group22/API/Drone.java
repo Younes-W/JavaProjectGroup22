@@ -44,6 +44,9 @@ public class Drone {
         return carriageType;
     }
 
+    public List<DroneDynamics> getDroneDynamicsList(){
+        return droneDynamicsList;
+    }
     public double getTotalDistanceTravelled() {
         return totalDistanceTravelled;
     }

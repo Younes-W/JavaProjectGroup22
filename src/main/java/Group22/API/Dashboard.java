@@ -8,6 +8,11 @@ public class Dashboard {
     private DroneDynamics selectedDynamics = null;
     private int offset = 0;
 
+    private Thread dynamicsThread;
+    private DynamicsThreadFetcher dynamicsFetcher;
+
+
+
     public Dashboard() {
         droneManager = new DroneManager();
     }
@@ -26,10 +31,34 @@ public class Dashboard {
     public DroneType getDroneType(Drone drone) {
         return droneManager.getDroneTypes().get(drone.getDroneTypeId());
     }
+
+
     public void setSelectedDrone(Drone selectedDrone) {
         this.selectedDrone = selectedDrone;
         //TODO hier muss dann der thread gestartet werden der die dynamics lädt probably
+        stopDynamicsThread();
+
+        dynamicsFetcher = new DynamicsThreadFetcher(selectedDrone);
+        dynamicsThread = new Thread(dynamicsFetcher);
+        dynamicsThread.setDaemon(true);
+        dynamicsThread.start();
+
         this.selectedDrone.setDynamicsFetched(true);
+    }
+    public void stopDynamicsThread() {
+        if (dynamicsFetcher!= null) {
+            dynamicsFetcher.stopFetching();
+        }
+        if(dynamicsThread != null && dynamicsThread.isAlive()) {
+            dynamicsThread.interrupt();
+            try {
+                dynamicsThread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        dynamicsThread = null;
+        dynamicsFetcher = null;
     }
 
     public void updateSelectedDynamics(int change) {
@@ -44,5 +73,6 @@ public class Dashboard {
 
     //TODO methode für API Refresh.(Müsste dann einfach neues DroneManagerobjekt sein
     // und SelectedDrone und SelectedDynamic auf null setzen und offset = 0 setzen)
+
 
 }

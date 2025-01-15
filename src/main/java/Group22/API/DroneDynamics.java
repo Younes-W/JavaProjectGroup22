@@ -2,10 +2,11 @@ package Group22.API;
 
 import org.json.JSONObject;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 public class DroneDynamics {
-    private LocalDateTime timestamp;
+    private int droneInt;
+    private OffsetDateTime timestamp;
     private int speed;
     private double alignRoll;
     private double alignPitch;
@@ -13,11 +14,11 @@ public class DroneDynamics {
     private double longitude;
     private double latitude;
     private int batteryStatus;
-    private LocalDateTime lastSeen;
+    private OffsetDateTime lastSeen;
     private String status;
 
     public DroneDynamics(String timestamp,int speed,double alignRoll,double alignPitch,double alignYaw,double longitude,double latitude,int batteryStatus,String lastSeen,String status) {
-        this.timestamp = LocalDateTime.parse(timestamp);
+        this.timestamp = OffsetDateTime.parse(timestamp);
         this.speed = speed;
         this.alignRoll = alignRoll;
         this.alignPitch = alignPitch;
@@ -25,11 +26,11 @@ public class DroneDynamics {
         this.longitude = longitude;
         this.latitude = latitude;
         this.batteryStatus = batteryStatus;
-        this.lastSeen = LocalDateTime.parse(lastSeen);
+        this.lastSeen = OffsetDateTime.parse(lastSeen);
         this.status = status;
     }
 
-    public LocalDateTime getTimestamp() {
+    public OffsetDateTime getTimestamp() {
         return timestamp;
     }
     public int getSpeed() {
@@ -53,7 +54,7 @@ public class DroneDynamics {
     public int getBatteryStatus() {
         return batteryStatus;
     }
-    public LocalDateTime getLastSeen() {
+    public OffsetDateTime getLastSeen() {
         return lastSeen;
     }
     public String getStatus() {

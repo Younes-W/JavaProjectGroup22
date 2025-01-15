@@ -1,5 +1,6 @@
 package Group22.API;
 
+import Group22.Util.Util;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,6 +14,7 @@ public class DroneManager {
     public DroneManager(){
         initializeDrones();
         initializeDroneTypes();
+        initializeDroneDynamics();
     }
     public Map<Integer, Drone> getDrones(){
         return Map.copyOf(drones);
@@ -65,5 +67,27 @@ public class DroneManager {
             }
         }
     }
+    private void initializeDroneDynamics() {
+        String url = "http://dronesim.facets-labs.com/api/dronedynamics/?limit=" + getDrones().size() *42 +"&offset=0";
+        while (url != null) {
+            DroneAPI droneAPI = new DroneAPI(url);
+            JSONObject wholeFile = droneAPI.fetchJSON();
+
+            JSONArray results = wholeFile.getJSONArray("results");
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject o = results.getJSONObject(i);
+                DroneDynamics dynamic = DroneDynamics.parseDroneDynamics(o);
+
+                String droneUrl = o.getString("drone");
+                int droneId = Util.cut_id(droneUrl);
+                Drone drone = drones.get(droneId);
+                drone.getDroneDynamicsList().add(dynamic);
+
+            }
+            url = null;
+        }
+    }
+
+
 
 }
