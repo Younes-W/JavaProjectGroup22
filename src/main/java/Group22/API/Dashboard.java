@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class Dashboard {
     private DroneManager droneManager;
-    public Drone selectedDrone = null;
+    private Drone selectedDrone = null;
     private DroneDynamics selectedDynamics = null;
     private int offset = 0;
 
@@ -32,6 +32,9 @@ public class Dashboard {
         return droneManager.getDroneTypes().get(drone.getDroneTypeId());
     }
 
+    public Drone getSelectedDrone() {
+        return selectedDrone;
+    }
 
     public void setSelectedDrone(Drone selectedDrone) {
         System.out.println("Thread of selected Drone is running");

@@ -229,7 +229,7 @@ public class MainController {
                     dashboard.setSelectedDrone(selectedDrone);
                     droneDynamicsVBox.setVisible(true);
 
-                    setDroneDynamicsLabels(dashboard.selectedDrone);
+                    setDroneDynamicsLabels(dashboard.getSelectedDrone());
 
                 }else {
                     droneDynamicsVBox.setVisible(false);
