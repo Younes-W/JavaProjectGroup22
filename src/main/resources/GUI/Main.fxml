@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane fx:id="mainTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550" prefWidth="775" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Group22.GUI.MainController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550" prefWidth="775" styleClass="mainTabPane" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Group22.GUI.MainController">
 
    <tabs>
       <!-- Tab 1: Drone Information -->
@@ -31,7 +31,7 @@
                   <Button fx:id="droneDynamicsButton" layoutX="658.0" layoutY="482.0" mnemonicParsing="false" onAction="#setDroneDynamicsButton" text="Drone Dynamics" />
                   <VBox fx:id="droneDynamicsVBox" layoutX="150.0" layoutY="40.0" spacing="10.0">
                      <children>
-                        <Label fx:id="dynamicsDroneLabel" text="Drone" />
+                        <Label fx:id="dynamicsDroneLabel" text="Created" />
                         <Label fx:id="dynamicsStatusLabel" text="Status" />
                         <Label fx:id="dynamicsBatteryStatusLabel" text="Battery Status" />
                         <Label fx:id="dynamicsTimestampLabel" text="Timestamp" />

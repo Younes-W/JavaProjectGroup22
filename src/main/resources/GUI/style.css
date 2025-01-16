@@ -127,3 +127,17 @@
 .mainBackground{
     -fx-background-color: #1e1f22;
 }
+
+#loadingLabel{
+    -fx-font-size: 35;
+    -fx-font-family: "Verdana";
+    -fx-text-fill: #dee0e4;
+}
+
+#progressBar {
+    -fx-accent: #d5996b;
+    -fx-background-color: #2c2d30;
+    -fx-border-color: black;
+    -fx-border-radius: 25;
+    -fx-control-inner-background: #2c2d30
+}

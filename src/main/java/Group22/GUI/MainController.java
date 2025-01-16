@@ -1,16 +1,21 @@
 package Group22.GUI;
 
-import Group22.API.Dashboard;
-import Group22.API.Drone;
-import Group22.API.DroneDynamics;
-import Group22.API.DroneType;
+import Group22.API.*;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 
 import java.util.Map;
+import java.io.IOException;
+
 
 public class MainController {
 
@@ -128,7 +133,7 @@ public class MainController {
 
     private Dashboard dashboard;
 
-    // Maps for Drones and DroneTypes
+    // Maps for Drones and DroneTypes MAYBE DRONE MANAGER BESSER
     private Map<Integer, Drone> droneMap;
     private Map<Integer, DroneType> droneTypeMap;
 
@@ -142,7 +147,8 @@ public class MainController {
     public void initialize() {
         System.out.println("Initializing Main Controller");
 
-        dashboard = new Dashboard();
+        //dashboard = new Dashboard();
+
 
         selectedDroneId = null;
 
@@ -294,11 +300,11 @@ public class MainController {
     }
 
     private void setDroneLabels(Drone selectedDrone){
-        droneTypeLabel.setText("Drone Type: " + (dashboard.getDroneType(selectedDrone)).getTypename());
-        droneCreatedLabel.setText("Drone Created: " + selectedDrone.getCreated());
-        droneSerialNumberLabel.setText("Drone Serial Number: " + selectedDrone.getSerialNumber());
-        droneCarriageWeightLabel.setText("Drone Carriage Weight: " + selectedDrone.getCarriageWeight());
-        droneCarriageTypeLabel.setText("Drone Carriage Type: " + selectedDrone.getCarriageType());
+        droneTypeLabel.setText("Type: " + (dashboard.getDroneType(selectedDrone)).getTypename());
+        droneCreatedLabel.setText("Created: " + selectedDrone.getCreated());
+        droneSerialNumberLabel.setText("Serial Number: " + selectedDrone.getSerialNumber());
+        droneCarriageWeightLabel.setText("Carriage Weight: " + selectedDrone.getCarriageWeight());
+        droneCarriageTypeLabel.setText("Carriage Type: " + selectedDrone.getCarriageType());
     }
 
     private void setDroneTypeLabels(DroneType selectedDroneType){
@@ -312,7 +318,7 @@ public class MainController {
     }
 
     private void setDroneDynamicsLabels(Drone selectedDrone){
-        dynamicsDroneLabel.setText("Drone: " + selectedDrone.getCreated());
+        dynamicsDroneLabel.setText("Created: " + selectedDrone.getCreated());
         dynamicsLatitudeLabel.setText("Latitude:" + selectedDrone.getDynamics(0).getLatitude() );
       // dashboard.setOffset++;
     }
@@ -370,5 +376,9 @@ public class MainController {
             isDroneDynamicsSelected = false;
             droneDynamicsButton.setText("Drone Dynamics");
         }
+    }
+
+    public void setDashboard(Dashboard dashboard){
+        this.dashboard = dashboard;
     }
 }

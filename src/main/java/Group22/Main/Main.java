@@ -8,9 +8,11 @@ import java.util.Map;
 // GUI
 import Group22.GUI.MainController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
@@ -28,19 +30,13 @@ import static javafx.application.Application.launch;
 public class Main extends Application {
 
     public static void main(String[] args) {
-        Dashboard d1 = new Dashboard();
-        Map<Integer,Drone> d = d1.getDrones();
-        for( Integer key : d.keySet() ) {
-            System.out.println(key);
-            System.out.println(d.get(key));
-        }
-
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
         try {
+
             // Stage Title
             primaryStage.setTitle("Drone Application");
 
@@ -58,15 +54,32 @@ public class Main extends Application {
             // Turn off resizable
             primaryStage.setResizable(false);
 
-            // Load FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Main.fxml"));
-            Parent root = loader.load();
-
-            // Scene Setup
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("/GUI/style.css").toExternalForm());
-            primaryStage.setScene(scene);
+            // LoadingScreen Scene Setup
+            FXMLLoader loadingLoader = new FXMLLoader(getClass().getResource("/GUI/LoadingScreen.fxml"));
+            Parent loadingRoot = loadingLoader.load();
+            Scene loadingScreenScene = new Scene(loadingRoot);
+            loadingScreenScene.getStylesheets().add(getClass().getResource("/GUI/style.css").toExternalForm());
+            primaryStage.setScene(loadingScreenScene);
             primaryStage.show();
+
+            // Main Scene Setup
+            FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("/GUI/Main.fxml"));
+            Parent mainRoot = mainLoader.load();
+            Scene mainScene = new Scene(mainRoot);
+            mainScene.getStylesheets().add(getClass().getResource("/GUI/style.css").toExternalForm());
+
+            InitializationThread initThreadTask = new InitializationThread(0);
+            Thread initThread = new Thread(initThreadTask);
+            initThread.setDaemon(true);
+            initThread.start();
+            initThread.join();
+            MainController mainController = new MainController();
+            mainController.setDashboard(initThreadTask.getDashboard());
+
+            Platform.runLater(() -> {
+                    primaryStage.setScene(mainScene);
+            });
+
 
         } catch (IOException e) {
             System.err.println("Error loading FXML file:");
@@ -79,5 +92,6 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+
 
 }
