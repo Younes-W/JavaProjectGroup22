@@ -41,6 +41,9 @@
                         <Label fx:id="dynamicsControlRangeLabel" text="Control Range" />
                         <Label fx:id="dynamicsAlignmentRollLabel" text="Alignment Roll" />
                         <Label fx:id="dynamicsAlignmentYawLabel" text="Alignment Yaw" />
+                        <Label fx:id="dynamicsDistanceLabel" text="Distance" />
+                        <Label fx:id="dynamicsSpeedOTLabel" text="Speed over Time" />
+                        <Label fx:id="dynamicsBatteryPercentLabel" text="Battery in percent" />
                      </children>
                   </VBox>
                </children>

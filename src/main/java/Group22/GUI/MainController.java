@@ -221,11 +221,15 @@ public class MainController {
             selectedDroneId = droneId;
             Drone selectedDrone = droneMap.get(droneId); // Get Drone from ID
 
+
+
             if(selectedDrone != null) {
+
                 if (isDroneDynamicsSelected == true) {
+                    dashboard.setSelectedDrone(selectedDrone);
                     droneDynamicsVBox.setVisible(true);
 
-                    setDroneDynamicsLabels(selectedDrone);
+                    setDroneDynamicsLabels(dashboard.selectedDrone);
 
                 }else {
                     droneDynamicsVBox.setVisible(false);
@@ -309,7 +313,8 @@ public class MainController {
 
     private void setDroneDynamicsLabels(Drone selectedDrone){
         dynamicsDroneLabel.setText("Drone: " + selectedDrone.getCreated());
-
+        dynamicsLatitudeLabel.setText("Latitude:" + selectedDrone.getDynamics(0).getLatitude() );
+      // dashboard.setOffset++;
     }
 
     // --------------
@@ -366,11 +371,4 @@ public class MainController {
             droneDynamicsButton.setText("Drone Dynamics");
         }
     }
-
-
-
-
-
-
-
 }

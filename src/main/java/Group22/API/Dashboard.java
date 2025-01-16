@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class Dashboard {
     private DroneManager droneManager;
-    private Drone selectedDrone = null;
+    public Drone selectedDrone = null;
     private DroneDynamics selectedDynamics = null;
     private int offset = 0;
 
@@ -34,6 +34,7 @@ public class Dashboard {
 
 
     public void setSelectedDrone(Drone selectedDrone) {
+        System.out.println("Thread of selected Drone is running");
         this.selectedDrone = selectedDrone;
         //TODO hier muss dann der thread gestartet werden der die dynamics lädt probably
         stopDynamicsThread();
