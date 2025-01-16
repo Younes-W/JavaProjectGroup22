@@ -68,12 +68,13 @@ public class Main extends Application {
             Scene mainScene = new Scene(mainRoot);
             mainScene.getStylesheets().add(getClass().getResource("/GUI/style.css").toExternalForm());
 
+            MainController mainController = mainLoader.getController();
+
             InitializationThread initThreadTask = new InitializationThread(0);
             Thread initThread = new Thread(initThreadTask);
             initThread.setDaemon(true);
             initThread.start();
             initThread.join();
-            MainController mainController = new MainController();
             mainController.setDashboard(initThreadTask.getDashboard());
 
             Platform.runLater(() -> {
