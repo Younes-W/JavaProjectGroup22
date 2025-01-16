@@ -10,7 +10,7 @@
       <VBox alignment="CENTER" layoutX="250.0" layoutY="112.0" prefHeight="300.0" prefWidth="300.0" spacing="10.0">
          <children>
                   <Label fx:id="loadingLabel" text="Loading..." />
-                  <ProgressBar fx:id="progressBar" prefWidth="200.0" progress="0.0" />
+            <ProgressBar fx:id="progressBar" prefWidth="200.0" progress="0.0" />
          </children>
       </VBox>
     </children>

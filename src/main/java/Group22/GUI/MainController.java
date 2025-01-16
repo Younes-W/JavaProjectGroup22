@@ -153,13 +153,13 @@ public class MainController {
         selectedDroneId = null;
 
         // Load Drones into List View
-        loadDroneIds();
+        //loadDroneIds();
 
         // Load Drone Types into List View
-        loadDroneTypeIds();
+        //loadDroneTypeIds();
 
         // Label
-        resetLabels();
+        //resetLabels();
 
         // Listener for Drones
         droneIdListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)
@@ -360,6 +360,10 @@ public class MainController {
 
         // Refresh everything
         initialize();
+
+        loadDroneIds();
+        loadDroneTypeIds();
+        resetLabels();
     }
 
     @FXML
@@ -380,5 +384,9 @@ public class MainController {
 
     public void setDashboard(Dashboard dashboard){
         this.dashboard = dashboard;
+
+        loadDroneIds();
+        loadDroneTypeIds();
+        resetLabels();
     }
 }

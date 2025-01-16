@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550" prefWidth="775" styleClass="mainTabPane" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Group22.GUI.MainController">
 
@@ -16,7 +17,7 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="mainBackground">
                <children>
-                  <ListView fx:id="droneIdListView" layoutX="14.0" layoutY="17.0" prefHeight="544.0" prefWidth="123.0" />
+                  <ListView fx:id="droneIdListView" layoutX="14.0" layoutY="17.0" prefHeight="490.0" prefWidth="123.0" />
                   <VBox fx:id="droneInfoVBox" layoutX="150.0" layoutY="40.0" spacing="10">
                      <children>
                         <Label fx:id="droneTypeLabel" text="DroneType" />
@@ -26,8 +27,11 @@
                         <Label fx:id="droneCreatedLabel" text="Created" />
                      </children>
                   </VBox>
-                  <Button fx:id="refreshButton" layoutX="705.0" layoutY="14.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
-                  <Label fx:id="noDroneSelectedLabel" layoutX="300.0" layoutY="176.0" text="No Drone Selected" />
+                  <Button fx:id="refreshButton" layoutX="711.0" layoutY="17.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+                  <Label fx:id="noDroneSelectedLabel" layoutX="283.0" layoutY="225.0" styleClass="noSelected" text="No Drone Selected">
+                     <font>
+                        <Font size="25.0" />
+                     </font></Label>
                   <Button fx:id="droneDynamicsButton" layoutX="658.0" layoutY="482.0" mnemonicParsing="false" onAction="#setDroneDynamicsButton" text="Drone Dynamics" />
                   <VBox fx:id="droneDynamicsVBox" layoutX="150.0" layoutY="40.0" spacing="10.0">
                      <children>
@@ -57,7 +61,7 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="mainBackground">
                <children>
-                  <ListView fx:id="droneTypeIdListView" layoutX="14.0" layoutY="17.0" prefHeight="367.0" prefWidth="123.0" />
+                  <ListView fx:id="droneTypeIdListView" layoutX="14.0" layoutY="17.0" prefHeight="490.0" prefWidth="123.0" />
                   <VBox fx:id="droneTypesVBox" layoutX="150.0" layoutY="40.0" spacing="10.0">
                      <children>
                         <Label fx:id="droneTypeManufacturerLabel" text="Manufacturer" />

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 // GUI
+import Group22.GUI.LoadingScreenController;
 import Group22.GUI.MainController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -71,15 +72,15 @@ public class Main extends Application {
             MainController mainController = mainLoader.getController();
 
             InitializationThread initThreadTask = new InitializationThread(0);
-            Thread initThread = new Thread(initThreadTask);
+            Thread initThread = new Thread(() -> {
+                initThreadTask.run();
+                Platform.runLater(() -> {
+                    mainController.setDashboard(initThreadTask.getDashboard());
+                    primaryStage.setScene(mainScene);
+                });
+            });
             initThread.setDaemon(true);
             initThread.start();
-            initThread.join();
-            mainController.setDashboard(initThreadTask.getDashboard());
-
-            Platform.runLater(() -> {
-                    primaryStage.setScene(mainScene);
-            });
 
 
         } catch (IOException e) {
