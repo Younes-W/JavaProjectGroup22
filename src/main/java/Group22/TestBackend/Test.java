@@ -1,16 +1,25 @@
 package Group22.TestBackend;
 import Group22.API.Dashboard;
 import Group22.API.Drone;
+import Group22.API.InitializationThread;
 
 
 public class Test {
     public static void main(String[] args) throws InterruptedException {
-        Dashboard d1 = new Dashboard();
+        InitializationThread initThreadTask = new InitializationThread(0);
+        Thread initThread = new Thread(initThreadTask);
+        initThread.setDaemon(true);
+        initThread.start();
+        initThread.join();
+
+        Dashboard d1 = initThreadTask.getDashboard();
+        System.out.println("Dashboard initialisiert und bereit zur Nutzung.");
 
         Drone drone = d1.getDrones().get(131);
         System.out.println(drone.getDynamicsCount());
         d1.setSelectedDrone(drone);
-        Thread.sleep(65000);
+        Thread.sleep(5000);
+
         System.out.println(drone.getDynamicsCount());
         d1.stopDynamicsThread();
 

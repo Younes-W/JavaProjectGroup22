@@ -4,13 +4,12 @@ import javafx.application.Platform;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class DynamicsThreadFetcher implements Runnable {
-    private Drone drone;
-    private volatile boolean running = true;
-    private final long milliSeconds = 5000;
+public class DynamicsThreadFetcher extends BaseThread {
+    private final Drone drone;
     private int currentOffset;
 
-    public DynamicsThreadFetcher(Drone drone) {
+    public DynamicsThreadFetcher(long milliSeconds,Drone drone ) {
+        super(milliSeconds);
         this.drone = drone;
         this.currentOffset = drone.getDynamicsCount();
     }
@@ -19,12 +18,7 @@ public class DynamicsThreadFetcher implements Runnable {
     public void run() {
         while (running) {
             fetchAndUpdateDynamics();
-            try {
-                Thread.sleep(milliSeconds);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                break;
-            }
+            sleepInterval();
         }
     }
 

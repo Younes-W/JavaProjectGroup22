@@ -42,7 +42,7 @@ public class Dashboard {
         //TODO hier muss dann der thread gestartet werden der die dynamics lädt probably
         stopDynamicsThread();
 
-        dynamicsFetcher = new DynamicsThreadFetcher(selectedDrone);
+        dynamicsFetcher = new DynamicsThreadFetcher(5000,selectedDrone);
         dynamicsThread = new Thread(dynamicsFetcher);
         dynamicsThread.setDaemon(true);
         dynamicsThread.start();
