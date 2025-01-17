@@ -1,5 +1,6 @@
 package Group22.Main;
 import Group22.API.*;
+import Group22.Errorhandling.Logging;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -36,6 +37,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        Logging.initialize("Logfile.log");
         try {
 
             // Stage Title

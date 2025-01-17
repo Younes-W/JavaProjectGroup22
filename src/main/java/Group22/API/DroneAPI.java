@@ -1,5 +1,7 @@
 package Group22.API;
 
+import Group22.Errorhandling.ConnectionFailedException;
+import Group22.Errorhandling.Logging;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -28,17 +30,15 @@ public class DroneAPI {
             String data = fetchData(connection);
             returnJson = new JSONObject(data);
             connection.disconnect();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch(Exception e) {
+            Logging.error("Connection failed. Make sure you are connected to the internet.");
         }
-        System.out.println("fetche gerade");
         return returnJson;
     }
-
-    private String fetchData(HttpURLConnection connection) throws Exception {
+    private String fetchData(HttpURLConnection connection) throws Exception  {
         int responseCode = connection.getResponseCode();
         if(responseCode != 200){
-            throw new Exception("Failed : HTTP error code : " + responseCode); //TODO richtiges errorhandling
+            throw new ConnectionFailedException("Connection failed. Response code: " + responseCode);
         }
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String inputLine;
@@ -47,7 +47,6 @@ public class DroneAPI {
             response.append(inputLine);
         }
         in.close();
-        System.out.println("Bin grad bei fetchData");
         return response.toString();
     }
 

@@ -68,21 +68,4 @@ public class DroneDynamics {
         return 100.00 - BatteryPercentage;
     }
 
-
-
-    public static DroneDynamics parseDroneDynamics(JSONObject o) {
-        String timestamp = o.getString("timestamp");
-        String lastSeen = o.getString("last_seen");
-        String status = o.getString("status");
-        double alignRoll = o.getDouble("align_roll");
-        double alignPitch = o.getDouble("align_pitch");
-        double alignYaw = o.getDouble("align_yaw");
-        double latitude = o.getDouble("latitude");
-        double longitude = o.getDouble("longitude");
-        int batteryStatus = o.getInt("battery_status");
-        int speed = o.getInt("speed");
-
-        return new DroneDynamics(timestamp, speed, alignRoll, alignPitch, alignYaw, longitude, latitude, batteryStatus,
-                lastSeen, status);
-    }
 }

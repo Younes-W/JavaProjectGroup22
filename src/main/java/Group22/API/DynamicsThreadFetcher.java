@@ -1,5 +1,6 @@
 package Group22.API;
 
+import Group22.Util.DroneDynamicsParser;
 import javafx.application.Platform;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,10 +36,10 @@ public class DynamicsThreadFetcher extends BaseThread {
             return;
         }
         int loadedCount = 0;
-
+        DroneDynamicsParser droneDynamicsParser = new DroneDynamicsParser();
         for (int i = 0; i < results.length(); i++) {
             JSONObject o = results.getJSONObject(i);
-            DroneDynamics newDynamics = DroneDynamics.parseDroneDynamics(o);
+            DroneDynamics newDynamics = droneDynamicsParser.parse(o);
 //            Platform.runLater(() -> {
 //                drone.getDroneDynamicsList().add(newDynamics);
 //                // Eventuell GUI-Komponenten aktualisieren, falls nötig.

@@ -73,18 +73,6 @@ public class Drone {
         this.dynamicsFetched = dynamicsFetched;
     }
 
-    public static Drone parseDrone(JSONObject o) {
-        int id = o.getInt("id");
-        String created = o.getString("created");
-        String serialNumber = o.getString("serialnumber");
-        String droneType = o.getString("dronetype");
-        int droneTypeId = Util.cut_id(droneType);
-        int carriageWeight = o.getInt("carriage_weight");
-        String carriageType = o.getString("carriage_type");
-
-        return new Drone(id,droneTypeId,created,serialNumber,carriageWeight,carriageType);
-    }
-
     //Maybe Useless
     public void calculateTotalDistance(int offset) {
         if(offset == 0){

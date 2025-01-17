@@ -1,5 +1,7 @@
 package Group22.API;
 
+import Group22.Errorhandling.Logging;
+
 import java.util.Map;
 
 public class Dashboard {
@@ -38,8 +40,8 @@ public class Dashboard {
 
     public void setSelectedDrone(Drone selectedDrone) {
         System.out.println("Thread of selected Drone is running");
+        Logging.info("fetching dynamics of Drone " + selectedDrone.getID());
         this.selectedDrone = selectedDrone;
-        //TODO hier muss dann der thread gestartet werden der die dynamics lädt probably
         stopDynamicsThread();
 
         dynamicsFetcher = new DynamicsThreadFetcher(0,selectedDrone);
@@ -48,6 +50,7 @@ public class Dashboard {
         dynamicsThread.start();
 
         this.selectedDrone.setDynamicsFetched(true);
+        Logging.info("fetched dynamics of Drone " + selectedDrone.getID());
     }
     public void stopDynamicsThread() {
         if (dynamicsFetcher!= null) {
