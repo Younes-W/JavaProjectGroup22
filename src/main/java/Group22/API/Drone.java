@@ -4,17 +4,19 @@ import Group22.Util.Util;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 public class Drone {
     private int id;
     private int droneTypeId;
-    private  String created;
+    private  String created; // muss DateTime
     private  String serialNumber;
     private  int carriageWeight;
     private  String carriageType;
-    private List<DroneDynamics> droneDynamicsList = new ArrayList<>();
+    private List<DroneDynamics> droneDynamicsList = Collections.synchronizedList(new ArrayList<>());
     private double totalDistanceTravelled = 0.0;
     private boolean dynamicsFetched = false;
+    private double speedOvertime;
 
     public Drone(int id, int droneTypeId, String created, String serialNumber, int carriageWeight, String carriageType) {
         this.id = id;
@@ -51,6 +53,10 @@ public class Drone {
         return totalDistanceTravelled;
     }
 
+    public double getSpeedOvertime() {
+        return speedOvertime;
+    }
+
     public boolean getDynamicsFetched(){
         return dynamicsFetched;
     }
@@ -79,6 +85,7 @@ public class Drone {
         return new Drone(id,droneTypeId,created,serialNumber,carriageWeight,carriageType);
     }
 
+    //Maybe Useless
     public void calculateTotalDistance(int offset) {
         if(offset == 0){
             totalDistanceTravelled = 0.0;
@@ -91,6 +98,40 @@ public class Drone {
             double distance = haversine(lon1, lat1, lon2, lat2);
             totalDistanceTravelled += distance;
         }
+    }
+
+    //TEST TODO
+    public double calculateDistanceUpTo(int offset) {
+        if (offset >= getDynamicsCount()) {
+            offset = getDynamicsCount() - 1;
+        }
+        double sum = 0.0;
+        for (int i = 1; i <= offset; i++) {
+            double lon1 = droneDynamicsList.get(i - 1).getLongitude();
+            double lat1 = droneDynamicsList.get(i - 1).getLatitude();
+            double lon2 = droneDynamicsList.get(i).getLongitude();
+            double lat2 = droneDynamicsList.get(i).getLatitude();
+            sum += haversine(lon1, lat1, lon2, lat2);
+        }
+        return sum;
+    }
+
+    //TEST TODO
+    public double calculateAverageSpeedUpTo(int offset) {
+        if (offset < 1 || offset >= getDynamicsCount()) {
+            return 0.0;
+        }
+        DroneDynamics first = droneDynamicsList.get(0);
+        DroneDynamics nth   = droneDynamicsList.get(offset);
+
+        long seconds = java.time.Duration.between(first.getTimestamp(), nth.getTimestamp()).getSeconds();
+        if (seconds == 0) {
+            return 0.0;
+        }
+        double hours = seconds / 3600.0;
+
+        double distanceUpToN = calculateDistanceUpTo(offset);
+        return distanceUpToN / hours;
     }
 
     private double haversine(double lon1, double lat1, double lon2, double lat2) {
@@ -108,19 +149,20 @@ public class Drone {
         return R * c;
     }
 
-    public double calculateAverageSpeedDistanceTime() {
+    public void calculateAverageSpeedDistanceTime() {
         if (droneDynamicsList.size() < 2) {
-            return droneDynamicsList.getFirst().getSpeed();
+            this.speedOvertime = droneDynamicsList.getFirst().getSpeed();
         }
         DroneDynamics first = droneDynamicsList.getFirst();
         DroneDynamics last = droneDynamicsList.getLast();
         long seconds = java.time.Duration.between(first.getTimestamp(), last.getTimestamp()).getSeconds(); //SEKUNDEN
         double totalHours = seconds / 3600.0;
         if (totalHours == 0) {
-            return 0.0;
+            return;
         }
-        return totalDistanceTravelled / totalHours;
+        this.speedOvertime = totalDistanceTravelled / totalHours;
     }
+
 }
 
 

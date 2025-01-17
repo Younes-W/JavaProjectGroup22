@@ -68,7 +68,7 @@ public class DroneManager {
         }
     }
     private void initializeDroneDynamics() {
-        String url = "http://dronesim.facets-labs.com/api/dronedynamics/?limit=" + getDrones().size() *42 +"&offset=0";
+        String url = "http://dronesim.facets-labs.com/api/dronedynamics/?limit=" + getDrones().size()*42  +"&offset=0";
         while (url != null) {
             DroneAPI droneAPI = new DroneAPI(url);
             JSONObject wholeFile = droneAPI.fetchJSON();
@@ -82,7 +82,8 @@ public class DroneManager {
                 int droneId = Util.cut_id(droneUrl);
                 Drone drone = drones.get(droneId);
                 drone.getDroneDynamicsList().add(dynamic);
-
+                drone.calculateTotalDistance(drone.getDynamicsCount() - 1);
+                drone.calculateAverageSpeedDistanceTime();
             }
             url = null;
         }

@@ -23,11 +23,17 @@ public class DynamicsThreadFetcher extends BaseThread {
     }
 
     private void fetchAndUpdateDynamics() {
-        String url = "http://dronesim.facets-labs.com/api/" + drone.getID() + "/dynamics/?limit=500&offset=" + currentOffset;
+        String url = "http://dronesim.facets-labs.com/api/" + drone.getID() + "/dynamics/?limit=5761&offset=" + currentOffset;
 
         DroneAPI droneAPI = new DroneAPI(url);
         JSONObject response = droneAPI.fetchJSON();
         JSONArray results = response.getJSONArray("results");
+
+        if (results.isEmpty()) {
+            System.out.println("Keine neuen Dynamics mehr vorhanden. Beende Thread.");
+            running = false;
+            return;
+        }
         int loadedCount = 0;
 
         for (int i = 0; i < results.length(); i++) {
@@ -38,6 +44,8 @@ public class DynamicsThreadFetcher extends BaseThread {
 //                // Eventuell GUI-Komponenten aktualisieren, falls nötig.
 //            });
             drone.getDroneDynamicsList().add(newDynamics);
+            drone.calculateTotalDistance(drone.getDynamicsCount() - 1);
+            drone.calculateAverageSpeedDistanceTime();
             currentOffset++;
             loadedCount++;
 

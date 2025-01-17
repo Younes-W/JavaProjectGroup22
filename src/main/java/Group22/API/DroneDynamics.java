@@ -61,6 +61,14 @@ public class DroneDynamics {
         return status;
     }
 
+    public double getBatteryPercentage(DroneType type) {
+        return ((double) this.batteryStatus / type.getBatteryCapacity()) * 100;
+    }
+    public double getBatteryConsumptionInPercent(double BatteryPercentage) {
+        return 100.00 - BatteryPercentage;
+    }
+
+
 
     public static DroneDynamics parseDroneDynamics(JSONObject o) {
         String timestamp = o.getString("timestamp");

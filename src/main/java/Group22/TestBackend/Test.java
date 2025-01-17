@@ -14,13 +14,17 @@ public class Test {
 
         Dashboard d1 = initThreadTask.getDashboard();
         System.out.println("Dashboard initialisiert und bereit zur Nutzung.");
+       Drone drone = d1.getDrones().get(131);
+       System.out.println(drone.getDynamicsCount());
+       System.out.println(drone.getTotalDistanceTravelled());
+       System.out.println(drone.getSpeedOvertime());
 
-        Drone drone = d1.getDrones().get(131);
+       d1.setSelectedDrone(drone);
+       Thread.sleep(5000);
         System.out.println(drone.getDynamicsCount());
-        d1.setSelectedDrone(drone);
-        Thread.sleep(5000);
-
-        System.out.println(drone.getDynamicsCount());
+        System.out.println(drone.getTotalDistanceTravelled());
+        System.out.println(drone.getSpeedOvertime());
+        System.out.println(drone.getDynamics(5760).getSpeed());
         d1.stopDynamicsThread();
 
     }

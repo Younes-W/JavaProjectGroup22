@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.HBox?>
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550" prefWidth="775" styleClass="mainTabPane" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Group22.GUI.MainController">
 
    <tabs>
@@ -33,21 +34,36 @@
                         <Font size="25.0" />
                      </font></Label>
                   <Button fx:id="droneDynamicsButton" layoutX="658.0" layoutY="482.0" mnemonicParsing="false" onAction="#setDroneDynamicsButton" text="Drone Dynamics" />
+                  <HBox fx:id = "navigationButtons" spacing="5.0" layoutX="160" layoutY="482.0" alignment="CENTER" visible="false">
+                     <!-- Buttons für rückwerts Schritte TODO-->
+                     <Button fx:id="prevDynamicButton500" text="-500" onAction="#onPrevDynamicClicked500" prefWidth="70" prefHeight="10"/>
+                     <Button fx:id="prevDynamicButton50" text="-50" onAction="#onPrevDynamicClicked50" prefWidth="60" prefHeight="10"/>
+                     <Button fx:id="prevDynamicButton5" text="-5" onAction="#onPrevDynamicClicked5" prefWidth="50" prefHeight="10"/>
+                     <Button fx:id="prevDynamicButton1" text="-1" onAction="#onPrevDynamicClicked1" prefWidth="40" prefHeight="10"/>
+                     <Button fx:id="nextDynamicButton1" text="+1" onAction="#onNextDynamicClicked1" prefWidth="40" prefHeight="10"/>
+                     <Button fx:id="nextDynamicButton5" text="+5" onAction="#onNextDynamicClicked5" prefWidth="50" prefHeight="10"/>
+                     <Button fx:id="nextDynamicButton50" text="+50" onAction="#onNextDynamicClicked50" prefWidth="60" prefHeight="10"/>
+                     <Button fx:id="nextDynamicButton500" text="+500" onAction="#onNextDynamicClicked500" prefWidth="70" prefHeight="10"/>
+                  </HBox>
+
+
                   <VBox fx:id="droneDynamicsVBox" layoutX="150.0" layoutY="40.0" spacing="10.0">
                      <children>
-                        <Label fx:id="dynamicsDroneLabel" text="Created" />
                         <Label fx:id="dynamicsStatusLabel" text="Status" />
                         <Label fx:id="dynamicsBatteryStatusLabel" text="Battery Status" />
                         <Label fx:id="dynamicsTimestampLabel" text="Timestamp" />
                         <Label fx:id="dynamicsLatitudeLabel" text="Latitude" />
                         <Label fx:id="dynamicsLongitudeLabel" text="Longitude" />
                         <Label fx:id="dynamicsSpeedLabel" text="Speed" />
-                        <Label fx:id="dynamicsControlRangeLabel" text="Control Range" />
                         <Label fx:id="dynamicsAlignmentRollLabel" text="Alignment Roll" />
+                        <Label fx:id="dynamicsAlignmentPitchLabel" text="Alignment Pitch" />
                         <Label fx:id="dynamicsAlignmentYawLabel" text="Alignment Yaw" />
+                        <Label fx:id="dynamicsLastSeenLabel" text="Last Seen" />
                         <Label fx:id="dynamicsDistanceLabel" text="Distance" />
                         <Label fx:id="dynamicsSpeedOTLabel" text="Speed over Time" />
                         <Label fx:id="dynamicsBatteryPercentLabel" text="Battery in percent" />
+                        <Label fx:id="dynamicsBatteryConsumptionLabel" text="Battery Consumption in percent" />
+
                      </children>
                   </VBox>
                </children>

@@ -1,6 +1,8 @@
 package Group22.GUI;
 
 import Group22.API.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,10 +10,12 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.util.Duration;
 
 import java.util.Map;
 import java.io.IOException;
@@ -70,6 +74,8 @@ public class MainController {
 
     @FXML
     private Label dynamicsBatteryStatusLabel;
+    @FXML
+    private Label dynamicsBatteryPercentLabel;
 
     @FXML
     private Label dynamicsTimestampLabel;
@@ -84,12 +90,22 @@ public class MainController {
     private Label dynamicsSpeedLabel;
 
     @FXML
-    private Label dynamicsControlRangeLabel;
-
-    @FXML
     private Label dynamicsAlignmentRollLabel;
     @FXML
     private Label dynamicsAlignmentYawLabel;
+    @FXML
+    private Label dynamicsAlignmentPitchLabel;
+    @FXML
+    private Label dynamicsLastSeenLabel;
+    @FXML
+    private Label dynamicsDistanceLabel;
+    @FXML
+    private Label dynamicsSpeedOTLabel;
+    @FXML
+    private Label dynamicsBatteryConsumptionLabel;
+    @FXML
+    private HBox navigationButtons;
+
 
 
     // Tab 2
@@ -161,6 +177,9 @@ public class MainController {
         // Label
         //resetLabels();
 
+        //AUTO API REFRESH 5 Minutes TODO
+        startPeriodicRefresh(15);
+
         // Listener for Drones
         droneIdListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)
                 -> onDroneSelected(newValue));
@@ -170,6 +189,31 @@ public class MainController {
 
         // Click-Event for doneTypeLabel
         droneTypeLabel.setOnMouseClicked(event -> onDroneTypeLabelClicked());
+    }
+
+    //API Auto-refresh TODO
+    private void startPeriodicRefresh(int minutes) {
+        Timeline timeline = new Timeline(
+                new KeyFrame(
+                        Duration.minutes(minutes),
+                        event -> {
+                            // 1) Dashboard refreshen
+                            dashboard.apiRefresh();
+
+                            resetLabels();
+                            loadDroneIds();
+                            loadDroneTypeIds();
+                            // Falls du mehr machen willst, z. B. selectedDrone neu anzeigen,
+                            // kannst du das hier ebenfalls tun.
+
+                            System.out.println("Automatischer API-Refresh um "
+                                    + java.time.LocalTime.now());
+                        }
+                )
+        );
+        // Unendlich oft wiederholen
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 
     // LIST VIEW
@@ -222,6 +266,8 @@ public class MainController {
 
     // Gets called when Drone is selected
     private void onDroneSelected(Integer droneId) {
+        //Offset == 0, etc.
+        dashboard.uiRefresh();
         // When Drone was found, show Info
         if(droneId != null && droneMap.containsKey(droneId)) {
             selectedDroneId = droneId;
@@ -230,6 +276,7 @@ public class MainController {
 
 
             if(selectedDrone != null) {
+                noDroneSelectedLabel.setVisible(false);
 
                 if (isDroneDynamicsSelected == true) {
                     dashboard.setSelectedDrone(selectedDrone);
@@ -318,9 +365,26 @@ public class MainController {
     }
 
     private void setDroneDynamicsLabels(Drone selectedDrone){
-        dynamicsDroneLabel.setText("Created: " + selectedDrone.getCreated());
-        dynamicsLatitudeLabel.setText("Latitude:" + selectedDrone.getDynamics(0).getLatitude() );
-      // dashboard.setOffset++;
+        int offset = dashboard.getOffset(); //TODO Refresh button Offset Backend
+        if (offset >= selectedDrone.getDynamicsCount() || offset < 0) {
+            return;
+        }
+        DroneDynamics firstDynamics = selectedDrone.getDynamics(offset);
+        dynamicsTimestampLabel.setText("Timestamp: " + firstDynamics.getTimestamp());
+        dynamicsSpeedLabel.setText("Speed: " + firstDynamics.getSpeed());
+        dynamicsAlignmentRollLabel.setText("Align Roll: " + firstDynamics.getAlignRoll());
+        dynamicsAlignmentPitchLabel.setText("Align Pitch: " + firstDynamics.getAlignPitch());
+        dynamicsAlignmentYawLabel.setText("Align Yaw: " + firstDynamics.getAlignYaw());
+        dynamicsLongitudeLabel.setText("Longitude: " + firstDynamics.getLongitude());
+        dynamicsLatitudeLabel.setText("Latitude: " + firstDynamics.getLatitude());
+        dynamicsBatteryStatusLabel.setText("Battery Status: " + firstDynamics.getBatteryStatus());
+        dynamicsLastSeenLabel.setText("Last Seen: " + firstDynamics.getLastSeen());
+        dynamicsStatusLabel.setText("Status: " + firstDynamics.getStatus());
+        dynamicsDistanceLabel.setText("Distance: " + String.format("%.2f",selectedDrone.calculateDistanceUpTo(offset)) + " km"); //TODO Younes
+        dynamicsSpeedOTLabel.setText("Speed Over Time: " + String.format("%.2f", selectedDrone.calculateAverageSpeedUpTo(offset)) + " km/h"); //TODO Younes
+        dynamicsBatteryPercentLabel.setText("Battery In Percent: " + String.format("%.2f", firstDynamics.getBatteryPercentage(dashboard.getDroneType(selectedDrone))));
+        dynamicsBatteryConsumptionLabel.setText("Battery Consumption In Percent: " + String.format("%.2f",firstDynamics.getBatteryConsumptionInPercent(firstDynamics.getBatteryPercentage(dashboard.getDroneType(selectedDrone)))));
+
     }
 
     // --------------
@@ -359,7 +423,7 @@ public class MainController {
         System.out.println("Refreshing..");
 
         // Refresh everything
-        initialize();
+        //initialize(); TODO
 
         loadDroneIds();
         loadDroneTypeIds();
@@ -374,11 +438,21 @@ public class MainController {
             isDroneDynamicsSelected = true;
             droneDynamicsButton.setText("Drone Information");
 
+            navigationButtons.setVisible(true);
+
+            //NEW: Dynamics filling instant TODO
+            Drone selectedDrone = droneMap.get(selectedDroneId);
+            if(selectedDrone!=null){
+                dashboard.setSelectedDrone(selectedDrone);
+                setDroneDynamicsLabels(selectedDrone);
+            }
+
         }else {
             droneDynamicsVBox.setVisible(false);
             droneInfoVBox.setVisible(true);
             isDroneDynamicsSelected = false;
             droneDynamicsButton.setText("Drone Dynamics");
+            navigationButtons.setVisible(false);
         }
     }
 
@@ -389,4 +463,51 @@ public class MainController {
         loadDroneTypeIds();
         resetLabels();
     }
+
+    //RÜCKWERTS / VORWÄRTS
+    @FXML
+    private void onNextDynamicClicked1() {
+        proceedNextDynamic(1);
+    }
+    @FXML
+    private void onNextDynamicClicked5() {
+        proceedNextDynamic(5);
+    }
+    @FXML
+    private void onNextDynamicClicked50() {
+        proceedNextDynamic(50);
+    }
+    @FXML
+    private void onNextDynamicClicked500() {
+        proceedNextDynamic(500);
+    }
+    @FXML
+    private void onPrevDynamicClicked1() {
+        proceedNextDynamic(-1);
+    }
+    @FXML
+    private void onPrevDynamicClicked5() {
+        proceedNextDynamic(-5);
+    }
+    @FXML
+    private void onPrevDynamicClicked50() {
+        proceedNextDynamic(-50);
+    }
+    @FXML
+    private void onPrevDynamicClicked500() {
+        proceedNextDynamic(-500);
+    }
+
+
+
+    private void proceedNextDynamic(int steps) {
+        Drone selectedDrone = dashboard.getSelectedDrone();
+        if (selectedDrone == null) {
+            return;
+        }
+
+        dashboard.updateSelectedDynamics(steps);
+        setDroneDynamicsLabels(selectedDrone);
+    }
+
 }
