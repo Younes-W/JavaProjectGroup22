@@ -304,7 +304,6 @@ public class MainController {
     private void makeDroneTypeLabelsVisible(){
         noDroneTypeSelectedLabel.setVisible(false);
         droneTypesVBox.setVisible(true);
-
     }
 
     private void makeDroneDynamicsLabelsVisible() {
@@ -402,35 +401,47 @@ public class MainController {
         loadDroneIds();
 
         loadDroneTypeIds();
+
+        // Reset Drone Dynamics Button
+        droneDynamicsButton.setText("Drone Dynamics");
+        isDroneDynamicsSelected = false;
+        navigationButtons.setVisible(false);
+        updateDroneDynamicsButtonStyle();
+
+        // Reset Drone Id so no drone is selected
+        selectedDroneId = null;
     }
 
     @FXML
     private void setDroneDynamicsButton(){
-        if (isDroneDynamicsSelected== false){
-            droneInfoVBox.setVisible(false);
-            droneDynamicsVBox.setVisible(true);
-            isDroneDynamicsSelected = true;
-            droneDynamicsButton.setText("Drone Information");
+        if(selectedDroneId != null){
+            if (isDroneDynamicsSelected== false){
+                droneInfoVBox.setVisible(false);
+                droneDynamicsVBox.setVisible(true);
+                isDroneDynamicsSelected = true;
+                droneDynamicsButton.setText("Drone Information");
 
-            navigationButtons.setVisible(true);
+                navigationButtons.setVisible(true);
 
-            //NEW: Dynamics filling instant TODO
-            Drone selectedDrone = (dashboard.getDrones()).get(selectedDroneId);
-            if(selectedDrone!=null){
-                dashboard.setSelectedDrone(selectedDrone);
-                setDroneDynamicsLabels(selectedDrone);
+                //NEW: Dynamics filling instant TODO
+                Drone selectedDrone = (dashboard.getDrones()).get(selectedDroneId);
+                if(selectedDrone!=null){
+                    dashboard.setSelectedDrone(selectedDrone);
+                    setDroneDynamicsLabels(selectedDrone);
+                }
+
+            }else {
+                droneDynamicsVBox.setVisible(false);
+                droneInfoVBox.setVisible(true);
+                isDroneDynamicsSelected = false;
+                droneDynamicsButton.setText("Drone Dynamics");
+                navigationButtons.setVisible(false);
             }
 
-        }else {
-            droneDynamicsVBox.setVisible(false);
-            droneInfoVBox.setVisible(true);
-            isDroneDynamicsSelected = false;
-            droneDynamicsButton.setText("Drone Dynamics");
-            navigationButtons.setVisible(false);
+            // Refresh Button CSS Style
+            updateDroneDynamicsButtonStyle();
         }
 
-        // Refresh Button CSS Style
-        updateDroneDynamicsButtonStyle();
     }
 
     @FXML

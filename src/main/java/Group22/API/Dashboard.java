@@ -39,6 +39,13 @@ public class Dashboard {
     }
 
     public void setSelectedDrone(Drone selectedDrone) {
+
+        if (selectedDrone == null) {
+            // Falls `null` übergeben wird, Thread stoppen und `selectedDrone` zurücksetzen
+            this.selectedDrone = null;
+            return;
+        }
+
         System.out.println("Thread of selected Drone is running");
         Logging.info("fetching dynamics of Drone " + selectedDrone.getID());
         this.selectedDrone = selectedDrone;

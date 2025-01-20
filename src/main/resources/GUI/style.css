@@ -161,5 +161,15 @@
     -fx-font-family: "Montserrat";
 }
 
+.button-dynamics-selected {
+    -fx-background-color: #3b559a; /* Farbe für 'true' */
+    -fx-text-fill: #ffffff;        /* Weißer Text */
+}
+
+.button-dynamics-unselected {
+    -fx-background-color: #686b73; /* Farbe für 'false' */
+    -fx-text-fill: #ffffff;        /* Weißer Text */
+}
+
 
 
