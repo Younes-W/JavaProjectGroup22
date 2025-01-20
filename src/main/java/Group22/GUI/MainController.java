@@ -1,6 +1,7 @@
 package Group22.GUI;
 
 import Group22.API.*;
+import Group22.Errorhandling.Logging;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -106,8 +107,6 @@ public class MainController {
     @FXML
     private HBox navigationButtons;
 
-
-
     // Tab 2
 
     @FXML
@@ -143,39 +142,23 @@ public class MainController {
     @FXML
     private VBox droneTypesVBox;
 
-
-
     // ----------
 
     private Dashboard dashboard;
-
-    // Maps for Drones and DroneTypes MAYBE DRONE MANAGER BESSER
-    private Map<Integer, Drone> droneMap;
-    private Map<Integer, DroneType> droneTypeMap;
 
     private Integer selectedDroneId = null;
 
     private boolean isDroneDynamicsSelected = false;
 
+    private Logging logging;
+
     // ----------
 
     // happens automatically
     public void initialize() {
-        System.out.println("Initializing Main Controller");
-
-        //dashboard = new Dashboard();
-
+        logging.info("Initializing Main Controller");
 
         selectedDroneId = null;
-
-        // Load Drones into List View
-        //loadDroneIds();
-
-        // Load Drone Types into List View
-        //loadDroneTypeIds();
-
-        // Label
-        //resetLabels();
 
         //AUTO API REFRESH 5 Minutes TODO
         startPeriodicRefresh(15);
@@ -206,7 +189,7 @@ public class MainController {
                             // Falls du mehr machen willst, z. B. selectedDrone neu anzeigen,
                             // kannst du das hier ebenfalls tun.
 
-                            System.out.println("Automatischer API-Refresh um "
+                            logging.info("Automatischer API-Refresh um "
                                     + java.time.LocalTime.now());
                         }
                 )
@@ -219,12 +202,9 @@ public class MainController {
     // LIST VIEW
 
     // Fill List View with Drone Ids
-    private void loadDroneIds() {
-        // Load Drones into Map
-        droneMap = dashboard.getDrones();
-
+    public void loadDroneIds() {
         // Create ObservableList
-        ObservableList<Integer> droneIds = FXCollections.observableArrayList(droneMap.keySet());
+        ObservableList<Integer> droneIds = FXCollections.observableArrayList((dashboard.getDrones()).keySet());
 
         // Sort List
         FXCollections.sort(droneIds);
@@ -240,12 +220,9 @@ public class MainController {
     }
 
     // Fill List View with DroneType Ids
-    private void loadDroneTypeIds() {
-        // Load DroneTypes into Map
-        droneTypeMap = dashboard.getDroneTypes();
-
+    public void loadDroneTypeIds() {
         // Create ObservableList
-        ObservableList<Integer> droneTypeIds = FXCollections.observableArrayList(droneTypeMap.keySet());
+        ObservableList<Integer> droneTypeIds = FXCollections.observableArrayList((dashboard.getDroneTypes()).keySet());
 
         // Sort List
         FXCollections.sort(droneTypeIds);
@@ -269,11 +246,9 @@ public class MainController {
         //Offset == 0, etc.
         dashboard.uiRefresh();
         // When Drone was found, show Info
-        if(droneId != null && droneMap.containsKey(droneId)) {
+        if(droneId != null && (dashboard.getDrones()).containsKey(droneId)) {
             selectedDroneId = droneId;
-            Drone selectedDrone = droneMap.get(droneId); // Get Drone from ID
-
-
+            Drone selectedDrone = (dashboard.getDrones()).get(droneId); // Get Drone from ID
 
             if(selectedDrone != null) {
                 noDroneSelectedLabel.setVisible(false);
@@ -299,8 +274,8 @@ public class MainController {
     // Gets called when Drone Type is selected
     private void onDroneTypeSelected(Integer droneTypeId) {
         // Test if Id is valid
-        if(droneTypeId != null && droneTypeMap.containsKey(droneTypeId)) {
-            DroneType selectedDroneType = droneTypeMap.get(droneTypeId);
+        if(droneTypeId != null && (dashboard.getDroneTypes()).containsKey(droneTypeId)) {
+            DroneType selectedDroneType = (dashboard.getDroneTypes()).get(droneTypeId);
 
                 // Make Labels Visable
                 makeDroneTypeLabelsVisable();
@@ -310,7 +285,7 @@ public class MainController {
         }
     }
 
-    private void resetLabels() {
+    public void resetLabels() {
         // Tab 1
         noDroneSelectedLabel.setVisible(true);
         droneInfoVBox.setVisible(false);
@@ -320,8 +295,6 @@ public class MainController {
 
         // Tab 2
         droneTypesVBox.setVisible(false);
-
-
     }
 
     private void makeDroneLabelsVisable(){
@@ -384,7 +357,6 @@ public class MainController {
         dynamicsSpeedOTLabel.setText("Speed Over Time: " + String.format("%.2f", selectedDrone.calculateAverageSpeedUpTo(offset)) + " km/h"); //TODO Younes
         dynamicsBatteryPercentLabel.setText("Battery In Percent: " + String.format("%.2f", firstDynamics.getBatteryPercentage(dashboard.getDroneType(selectedDrone))));
         dynamicsBatteryConsumptionLabel.setText("Battery Consumption In Percent: " + String.format("%.2f",firstDynamics.getBatteryConsumptionInPercent(firstDynamics.getBatteryPercentage(dashboard.getDroneType(selectedDrone)))));
-
     }
 
     // --------------
@@ -397,7 +369,7 @@ public class MainController {
             return; // Keine Drohne ausgewählt
         }
 
-        Drone selectedDrone = droneMap.get(selectedDroneId);
+        Drone selectedDrone = (dashboard.getDrones()).get(selectedDroneId);
         if (selectedDrone == null) {
             return;
         }
@@ -420,14 +392,15 @@ public class MainController {
 
     @FXML
     private void refresh() {
-        System.out.println("Refreshing..");
+        logging.info("Refreshing.. ");
 
         // Refresh everything
         //initialize(); TODO
 
+        dashboard.apiRefresh();
+        resetLabels();
         loadDroneIds();
         loadDroneTypeIds();
-        resetLabels();
     }
 
     @FXML
@@ -441,7 +414,7 @@ public class MainController {
             navigationButtons.setVisible(true);
 
             //NEW: Dynamics filling instant TODO
-            Drone selectedDrone = droneMap.get(selectedDroneId);
+            Drone selectedDrone = (dashboard.getDrones()).get(selectedDroneId);
             if(selectedDrone!=null){
                 dashboard.setSelectedDrone(selectedDrone);
                 setDroneDynamicsLabels(selectedDrone);
@@ -458,10 +431,6 @@ public class MainController {
 
     public void setDashboard(Dashboard dashboard){
         this.dashboard = dashboard;
-
-        loadDroneIds();
-        loadDroneTypeIds();
-        resetLabels();
     }
 
     //RÜCKWERTS / VORWÄRTS

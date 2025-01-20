@@ -78,6 +78,9 @@ public class Main extends Application {
                 initThreadTask.run();
                 Platform.runLater(() -> {
                     mainController.setDashboard(initThreadTask.getDashboard());
+                    mainController.loadDroneIds();
+                    mainController.loadDroneTypeIds();
+                    mainController.resetLabels();
                     primaryStage.setScene(mainScene);
                 });
             });
