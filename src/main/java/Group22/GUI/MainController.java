@@ -163,6 +163,9 @@ public class MainController {
 
         // Click-Event for doneTypeLabel
         droneTypeLabel.setOnMouseClicked(event -> onDroneTypeLabelClicked());
+
+        // Reset Drone Dynamics Button
+        updateDroneDynamicsButtonStyle();
     }
 
     //API Auto-refresh TODO
@@ -425,10 +428,22 @@ public class MainController {
             droneDynamicsButton.setText("Drone Dynamics");
             navigationButtons.setVisible(false);
         }
+
+        // Refresh Button CSS Style
+        updateDroneDynamicsButtonStyle();
     }
 
-    public void setDashboard(Dashboard dashboard){
-        this.dashboard = dashboard;
+    @FXML
+    private void updateDroneDynamicsButtonStyle() {
+        // Reset CSS Class
+        droneDynamicsButton.getStyleClass().removeAll("button-dynamics-selected", "button-dynamics-unselected");
+
+        // Add new CSS Class
+        if (isDroneDynamicsSelected) {
+            droneDynamicsButton.getStyleClass().add("button-dynamics-selected");
+        } else {
+            droneDynamicsButton.getStyleClass().add("button-dynamics-unselected");
+        }
     }
 
     //RÜCKWERTS / VORWÄRTS
@@ -473,5 +488,9 @@ public class MainController {
 
         dashboard.updateSelectedDynamics(steps);
         setDroneDynamicsLabels(selectedDrone);
+    }
+
+    public void setDashboard(Dashboard dashboard){
+        this.dashboard = dashboard;
     }
 }
