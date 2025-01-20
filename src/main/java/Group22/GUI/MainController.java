@@ -4,22 +4,13 @@ import Group22.API.*;
 import Group22.Errorhandling.Logging;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.util.Duration;
-
-import java.util.Map;
-import java.io.IOException;
 
 
 public class MainController {
@@ -203,6 +194,10 @@ public class MainController {
 
     // Fill List View with Drone Ids
     public void loadDroneIds() {
+
+        // Reset Selection
+        droneIdListView.getSelectionModel().clearSelection();
+
         // Create ObservableList
         ObservableList<Integer> droneIds = FXCollections.observableArrayList((dashboard.getDrones()).keySet());
 
@@ -212,15 +207,15 @@ public class MainController {
         // Put Ids into ListView
         droneIdListView.setItems(droneIds);
 
-        // Reset Selection
-        droneIdListView.getSelectionModel().clearSelection();
-
         // Reset Scroll Bar
         droneIdListView.scrollTo(0);
     }
 
     // Fill List View with DroneType Ids
     public void loadDroneTypeIds() {
+        // Reset Selection
+        droneTypeIdListView.getSelectionModel().clearSelection();
+
         // Create ObservableList
         ObservableList<Integer> droneTypeIds = FXCollections.observableArrayList((dashboard.getDroneTypes()).keySet());
 
@@ -229,9 +224,6 @@ public class MainController {
 
         // Put Ids into ListView
         droneTypeIdListView.setItems(droneTypeIds);
-
-        // Reset Selection
-        droneTypeIdListView.getSelectionModel().clearSelection();
 
         // Reset Scroll Bar
         droneTypeIdListView.scrollTo(0);
@@ -254,15 +246,16 @@ public class MainController {
                 noDroneSelectedLabel.setVisible(false);
 
                 if (isDroneDynamicsSelected == true) {
-                    dashboard.setSelectedDrone(selectedDrone);
-                    droneDynamicsVBox.setVisible(true);
 
+                    dashboard.setSelectedDrone(selectedDrone);
+                    makeDroneDynamicsLabelsVisible();
                     setDroneDynamicsLabels(dashboard.getSelectedDrone());
 
                 }else {
+
                     droneDynamicsVBox.setVisible(false);
                     // Make Labels Visable
-                    makeDroneLabelsVisable();
+                    makeDroneLabelsVisible();
 
                     // Show Information
                     setDroneLabels(selectedDrone);
@@ -278,7 +271,7 @@ public class MainController {
             DroneType selectedDroneType = (dashboard.getDroneTypes()).get(droneTypeId);
 
                 // Make Labels Visable
-                makeDroneTypeLabelsVisable();
+                makeDroneTypeLabelsVisible();
 
                 // Show Information
                 setDroneTypeLabels(selectedDroneType);
@@ -295,21 +288,23 @@ public class MainController {
 
         // Tab 2
         droneTypesVBox.setVisible(false);
+
+        System.out.println("Resetlabels fertig");
     }
 
-    private void makeDroneLabelsVisable(){
+    private void makeDroneLabelsVisible(){
         noDroneSelectedLabel.setVisible(false);
         droneInfoVBox.setVisible(true);
         droneDynamicsVBox.setVisible(false);
     }
 
-    private void makeDroneTypeLabelsVisable(){
+    private void makeDroneTypeLabelsVisible(){
         noDroneTypeSelectedLabel.setVisible(false);
         droneTypesVBox.setVisible(true);
 
     }
 
-    private void makeDroneDynamicsLabelsVisable() {
+    private void makeDroneDynamicsLabelsVisible() {
         // Tab 1
         droneInfoVBox.setVisible(false);
         droneDynamicsVBox.setVisible(true);
@@ -370,6 +365,7 @@ public class MainController {
         }
 
         Drone selectedDrone = (dashboard.getDrones()).get(selectedDroneId);
+
         if (selectedDrone == null) {
             return;
         }
@@ -380,7 +376,7 @@ public class MainController {
         }
 
         Integer droneTypeId = droneType.getID();
-        // Der Key, der in `droneTypeMap` verwendet wird.
+        // Get Id von Drone
 
         // 2) Wechsle in den 2. Tab
         mainTabPane.getSelectionModel().select(droneTypeTab);
@@ -394,12 +390,14 @@ public class MainController {
     private void refresh() {
         logging.info("Refreshing.. ");
 
-        // Refresh everything
-        //initialize(); TODO
+        System.out.println("Refresh");
 
         dashboard.apiRefresh();
+
         resetLabels();
+
         loadDroneIds();
+
         loadDroneTypeIds();
     }
 
@@ -466,8 +464,6 @@ public class MainController {
     private void onPrevDynamicClicked500() {
         proceedNextDynamic(-500);
     }
-
-
 
     private void proceedNextDynamic(int steps) {
         Drone selectedDrone = dashboard.getSelectedDrone();
