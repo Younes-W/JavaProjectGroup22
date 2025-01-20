@@ -1,22 +1,40 @@
 package Group22.API;
 
-public class InitializationThread extends BaseThread {
-    private Dashboard dashboard;  // Feld zum Speichern des Dashboards
+import Group22.Errorhandling.Logging;
 
-    // hier erklärung einfügen
+/**
+ * A thread responsible for initializing the dashboard, which in turn initializes drones,
+ * drone types, and dynamics data.
+ */
+public class InitializationThread extends BaseThread {
+    private Dashboard dashboard;
+
+    /**
+     * Constructs an InitializationThread with the specified sleep interval.
+     * //TODO no usage rn
+     * @param milliSeconds the interval in milliseconds between operations (not used here).
+     */
     public InitializationThread(long milliSeconds) {
         super(milliSeconds);
     }
 
-    // hier erklärung einfügen younes
+    /**
+     * Runs the initialization process by creating a new Dashboard instance.
+     * After initialization, sets the running flag to false.
+     */
     @Override
     public void run() {
-        System.out.println("Initialisiere Drohnen, Types und Dynamics...");
+        Logging.info("Initialisiere Drohnen, Types und Dynamics...");
         dashboard = new Dashboard();
-        System.out.println("Initialisierung abgeschlossen.");
+        Logging.info("Initialisierung abgeschlossen.");
         running = false;
     }
 
+    /**
+     * Retrieves the initialized Dashboard instance.
+     *
+     * @return the Dashboard that was initialized by this thread.
+     */
     public Dashboard getDashboard() {
         return dashboard;
     }

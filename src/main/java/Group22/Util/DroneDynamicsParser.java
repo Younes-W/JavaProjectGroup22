@@ -3,9 +3,16 @@ package Group22.Util;
 import Group22.API.DroneDynamics;
 import org.json.JSONObject;
 
-public class DroneDynamicsParser implements Parser<DroneDynamics>{
-    public DroneDynamics parse(JSONObject o){
-
+/**
+ * Parser for converting JSON objects into DroneDynamics instances.
+ */
+public class DroneDynamicsParser implements Parser<DroneDynamics> {
+    /**
+     * Parses a JSONObject into a DroneDynamics instance.
+     * @param o the JSONObject representing drone dynamics data.
+     * @return a new DroneDynamics object.
+     */
+    public DroneDynamics parse(JSONObject o) {
         String timestamp = o.getString("timestamp");
         String lastSeen = o.getString("last_seen");
         String status = o.getString("status");
@@ -17,8 +24,6 @@ public class DroneDynamicsParser implements Parser<DroneDynamics>{
         int batteryStatus = o.getInt("battery_status");
         int speed = o.getInt("speed");
 
-        return new DroneDynamics(timestamp, speed, alignRoll, alignPitch, alignYaw, longitude, latitude, batteryStatus,
-                lastSeen, status);
+        return new DroneDynamics(timestamp, speed, alignRoll, alignPitch, alignYaw, longitude, latitude, batteryStatus, lastSeen, status);
     }
-
 }

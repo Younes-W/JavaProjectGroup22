@@ -1,0 +1,7 @@
+no usages:
+- milliseconds initializierungsthread
+- connectionFailedException
+- 3 Labels in MainController
+- Main iwie arsch mit Thread
+- updateProgress in Loading class
+- TODO Stream and Files einbauen

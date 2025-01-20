@@ -1,28 +1,11 @@
-[20.01.2025 19:24:42] [INFO] Log file has been initialized
-[20.01.2025 19:24:46] [INFO] Initializing Main Controller
-[20.01.2025 19:24:46] [INFO] fetching Drones
-[20.01.2025 19:24:47] [INFO] fetched 40 Drones
-[20.01.2025 19:24:47] [INFO] fetching DroneTypes
-[20.01.2025 19:24:47] [INFO] fetched 20 DroneTypes
-[20.01.2025 19:24:47] [INFO] fetching initial DroneDynamics
-[20.01.2025 19:24:47] [INFO] fetched 42 dynamics per drone
-[20.01.2025 19:24:59] [INFO] fetching dynamics of Drone 142
-[20.01.2025 19:24:59] [INFO] fetched dynamics of Drone 142
-[20.01.2025 19:25:01] [INFO] Refreshing.. 
-[20.01.2025 19:25:01] [INFO] fetching Drones
-[20.01.2025 19:25:01] [INFO] fetched 40 Drones
-[20.01.2025 19:25:01] [INFO] fetching DroneTypes
-[20.01.2025 19:25:01] [INFO] fetched 20 DroneTypes
-[20.01.2025 19:25:01] [INFO] fetching initial DroneDynamics
-[20.01.2025 19:25:02] [INFO] fetched 42 dynamics per drone
-[20.01.2025 19:25:11] [INFO] fetching dynamics of Drone 143
-[20.01.2025 19:25:12] [INFO] fetched dynamics of Drone 143
-[20.01.2025 19:25:12] [INFO] fetching dynamics of Drone 143
-[20.01.2025 19:25:13] [INFO] fetched dynamics of Drone 143
-[20.01.2025 19:25:14] [INFO] Refreshing.. 
-[20.01.2025 19:25:14] [INFO] fetching Drones
-[20.01.2025 19:25:14] [INFO] fetched 40 Drones
-[20.01.2025 19:25:14] [INFO] fetching DroneTypes
-[20.01.2025 19:25:14] [INFO] fetched 20 DroneTypes
-[20.01.2025 19:25:14] [INFO] fetching initial DroneDynamics
-[20.01.2025 19:25:15] [INFO] fetched 42 dynamics per drone
+[20.01.2025 22:27:06] [INFO] Log file has been initialized
+[20.01.2025 22:27:11] [INFO] Initializing Main Controller
+[20.01.2025 22:27:11] [INFO] Initialisiere Drohnen, Types und Dynamics...
+[20.01.2025 22:27:11] [INFO] fetching Drones
+[20.01.2025 22:27:12] [INFO] fetched 40 Drones
+[20.01.2025 22:27:12] [INFO] fetching DroneTypes
+[20.01.2025 22:27:12] [INFO] fetched 20 DroneTypes
+[20.01.2025 22:27:12] [INFO] fetching initial DroneDynamics
+[20.01.2025 22:27:13] [INFO] fetched 42 dynamics per drone
+[20.01.2025 22:27:13] [INFO] Initialisierung abgeschlossen.
+[20.01.2025 22:27:13] [INFO] Resetting Labels done

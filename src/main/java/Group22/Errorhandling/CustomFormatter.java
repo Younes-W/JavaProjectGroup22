@@ -4,7 +4,16 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
-public class CustomFormatter extends Formatter{
+/**
+ * Custom log formatter to structure log messages with a specific timestamp and format.
+ */
+public class CustomFormatter extends Formatter {
+    /**
+     * Formats the given log record as a string with a timestamp, log level, and message.
+     *
+     * @param record the log record to format.
+     * @return the formatted log message.
+     */
     @Override
     public String format(LogRecord record) {
         String timestamp = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(record.getMillis());
