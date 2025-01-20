@@ -478,5 +478,4 @@ public class MainController {
         dashboard.updateSelectedDynamics(steps);
         setDroneDynamicsLabels(selectedDrone);
     }
-
 }
