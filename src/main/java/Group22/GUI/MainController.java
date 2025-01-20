@@ -5,12 +5,24 @@ import Group22.API.Drone;
 import Group22.API.DroneDynamics;
 import Group22.API.DroneType;
 import Group22.Errorhandling.Logging;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.scene.web.WebView;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controller class for the main UI of the Drone Application.
@@ -58,6 +70,7 @@ public class MainController {
     @FXML private Label droneTypeControlRangeLabel;
     @FXML private Label droneTypeMaximumCarriageLabel;
     @FXML private VBox droneTypesVBox;
+    @FXML private Button exportButton;
 
     private Dashboard dashboard;
 
@@ -72,6 +85,7 @@ public class MainController {
                 (obs, oldVal, newVal) -> onDroneTypeSelected(newVal));
         droneTypeLabel.setOnMouseClicked(event -> onDroneTypeLabelClicked());
         updateDroneDynamicsButtonStyle();
+
     }
 
     /**
@@ -228,6 +242,7 @@ public class MainController {
         loadDroneTypeIds();
         droneDynamicsButton.setText("Drone Dynamics");
         navigationButtons.setVisible(false);
+        exportButton.setVisible(false);
         updateDroneDynamicsButtonStyle();
     }
 
@@ -244,6 +259,7 @@ public class MainController {
                 droneDynamicsVBox.setVisible(true);
                 droneDynamicsButton.setText("Drone Information");
                 navigationButtons.setVisible(true);
+                exportButton.setVisible(true);
                 Drone selectedDrone = dashboard.getDrone(currentSelection);
                 if(selectedDrone != null){
                     dashboard.setSelectedDrone(selectedDrone);
@@ -254,6 +270,7 @@ public class MainController {
                 droneInfoVBox.setVisible(true);
                 droneDynamicsButton.setText("Drone Dynamics");
                 navigationButtons.setVisible(false);
+                exportButton.setVisible(false);
             }
             updateDroneDynamicsButtonStyle();
         }
@@ -301,4 +318,60 @@ public class MainController {
     public void setDashboard(Dashboard dashboard){
         this.dashboard = dashboard;
     }
+
+    /**
+     * Exports the selected drone and its dynamics data to an HTML file.
+     * The file contains a table with details like timestamp, speed, alignment, position, and battery status.
+     * The file is saved as "selected_drone_{droneId}.html" in the current directory.
+     *
+     * If no drone is selected, the export is skipped with a log message.
+     */
+    @FXML
+    private void exportSelectedDroneWithDynamics() {
+        if (dashboard.getSelectedDrone() == null) {
+            Logging.warning("No drone selected.");
+            return;
+        }
+
+        String fileName = "selected_drone_" + dashboard.getSelectedDrone().getId() + ".html";
+        try (FileWriter writer = new FileWriter(fileName)) {
+            // HTML Header
+            writer.write("<html><head><title>Drone Export</title></head><body>");
+            writer.write("<h1>Drone Dynamics for Drone ID: " + dashboard.getSelectedDrone().getId() + "</h1>");
+            writer.write("<table border='1'>");
+            writer.write("<tr><th>Timestamp</th><th>Speed</th><th>AlignRoll</th><th>AlignPitch</th>" +
+                    "<th>AlignYaw</th><th>Longitude</th><th>Latitude</th><th>BatteryStatus</th>" +
+                    "<th>LastSeen</th><th>Status</th></tr>");
+
+            // Dynamics Data
+            List<DroneDynamics> dynamicsCopy = new ArrayList<>(dashboard.getSelectedDrone().getDroneDynamicsList());
+            for (DroneDynamics dynamics : dynamicsCopy) {
+                writer.write(String.format(
+                        "<tr><td>%s</td><td>%d</td><td>%.2f</td><td>%.2f</td><td>%.2f</td>" +
+                                "<td>%.6f</td><td>%.6f</td><td>%d</td><td>%s</td><td>%s</td></tr>",
+                        dynamics.getTimestamp().toString(),
+                        dynamics.getSpeed(),
+                        dynamics.getAlignRoll(),
+                        dynamics.getAlignPitch(),
+                        dynamics.getAlignYaw(),
+                        dynamics.getLongitude(),
+                        dynamics.getLatitude(),
+                        dynamics.getBatteryStatus(),
+                        dynamics.getLastSeen().toString(),
+                        dynamics.getStatus()
+                ));
+            }
+
+            // HTML Footer
+            writer.write("</table></body></html>");
+
+            Logging.info("Drone and dynamics exported to: " + fileName);
+        } catch (IOException e) {
+            Logging.error("Error writing HTML file: " + e.getMessage());
+        }
+    }
+
+
+
+
 }

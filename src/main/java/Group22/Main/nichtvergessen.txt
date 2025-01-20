@@ -4,5 +4,5 @@ no usages:
 - 3 Labels in MainController
 - Main iwie arsch mit Thread
 - updateProgress in Loading class
-- TODO Stream and Files einbauen
 - Maybe Thread bei +1 runnen und nicht beim setten drone
+- export maybe different formats

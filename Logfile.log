@@ -1,11 +1,15 @@
-[20.01.2025 22:27:06] [INFO] Log file has been initialized
-[20.01.2025 22:27:11] [INFO] Initializing Main Controller
-[20.01.2025 22:27:11] [INFO] Initialisiere Drohnen, Types und Dynamics...
-[20.01.2025 22:27:11] [INFO] fetching Drones
-[20.01.2025 22:27:12] [INFO] fetched 40 Drones
-[20.01.2025 22:27:12] [INFO] fetching DroneTypes
-[20.01.2025 22:27:12] [INFO] fetched 20 DroneTypes
-[20.01.2025 22:27:12] [INFO] fetching initial DroneDynamics
-[20.01.2025 22:27:13] [INFO] fetched 42 dynamics per drone
-[20.01.2025 22:27:13] [INFO] Initialisierung abgeschlossen.
-[20.01.2025 22:27:13] [INFO] Resetting Labels done
+[21.01.2025 00:23:01] [INFO] Log file has been initialized
+[21.01.2025 00:23:06] [INFO] Initializing Main Controller
+[21.01.2025 00:23:06] [INFO] Initialisiere Drohnen, Types und Dynamics...
+[21.01.2025 00:23:06] [INFO] fetching Drones
+[21.01.2025 00:23:07] [INFO] fetched 40 Drones
+[21.01.2025 00:23:07] [INFO] fetching DroneTypes
+[21.01.2025 00:23:07] [INFO] fetched 20 DroneTypes
+[21.01.2025 00:23:07] [INFO] fetching initial DroneDynamics
+[21.01.2025 00:23:08] [INFO] fetched 42 dynamics per drone
+[21.01.2025 00:23:08] [INFO] Initialisierung abgeschlossen.
+[21.01.2025 00:23:08] [INFO] Resetting Labels done
+[21.01.2025 00:23:15] [INFO] Thread of selected Drone is running
+[21.01.2025 00:23:15] [INFO] fetching dynamics of Drone 131
+[21.01.2025 00:23:15] [INFO] fetched dynamics of Drone 131
+[21.01.2025 00:23:21] [INFO] No new dynamics found. Close Thread.
