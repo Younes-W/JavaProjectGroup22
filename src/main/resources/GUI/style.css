@@ -161,14 +161,21 @@
     -fx-font-family: "Montserrat";
 }
 
-.button-dynamics-selected {
-    -fx-background-color: #3b559a; /* Farbe für 'true' */
-    -fx-text-fill: #ffffff;        /* Weißer Text */
+.button {
+    -fx-text-fill: #dee0e4;        /* Weißer Text */
+    -fx-translate-x: -10px;
 }
 
-.button-dynamics-unselected {
-    -fx-background-color: #686b73; /* Farbe für 'false' */
-    -fx-text-fill: #ffffff;        /* Weißer Text */
+.button:hover{
+    -fx-scale-x: 1.05; /* Skalierung in der Breite */
+    -fx-scale-y: 1.05; /* Skalierung in der Höhe */
+    -fx-text-fill: #d5996b;
+}
+
+.button-dynamics-selected{
+    -fx-text-fill: #d5996b;        /* Weißer Text */
+    -fx-translate-x: -10px;
+    -fx-border-color: #d5996b;
 }
 
 
