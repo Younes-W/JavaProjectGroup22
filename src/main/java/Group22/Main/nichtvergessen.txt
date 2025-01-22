@@ -1,8 +1,0 @@
-no usages:
-- milliseconds initializierungsthread
-- connectionFailedException
-- 3 Labels in MainController
-- Main iwie arsch mit Thread
-- updateProgress in Loading class
-- Maybe Thread bei +1 runnen und nicht beim setten drone
-- export maybe different formats
