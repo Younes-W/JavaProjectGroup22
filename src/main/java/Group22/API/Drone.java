@@ -1,15 +1,10 @@
 package Group22.API;
 
-import Group22.Util.Util;
-import org.json.JSONObject;
-
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.time.Duration;
-import java.time.Instant;
+
 
 /**
  * Represents a drone with attributes such as type, creation time, serial number, and associated dynamics data.
@@ -18,7 +13,7 @@ import java.time.Instant;
 public class Drone {
     private int id;
     private int droneTypeId;
-    private OffsetDateTime created; // TODO Should be DateTime ideally.
+    private OffsetDateTime created;
     private String serialNumber;
     private int carriageWeight;
     private String carriageType;

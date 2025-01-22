@@ -1,6 +1,5 @@
 package Group22.API;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 /**
  * Represents the dynamics data of a drone at a specific point in time, including

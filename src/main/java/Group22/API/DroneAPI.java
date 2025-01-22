@@ -2,14 +2,12 @@ package Group22.API;
 
 import Group22.Errorhandling.ConnectionFailedException;
 import Group22.Errorhandling.IllegalJSONFormatException;
-import Group22.Errorhandling.Logging;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URI;
-import java.util.logging.Logger;
 
 
 /**

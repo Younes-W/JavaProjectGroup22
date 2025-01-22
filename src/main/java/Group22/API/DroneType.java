@@ -1,6 +1,5 @@
 package Group22.API;
 
-import org.json.JSONObject;
 
 /**
  * Represents a type of drone, including specifications like manufacturer, weight, speed, battery capacity, etc.
