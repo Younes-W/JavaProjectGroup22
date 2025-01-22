@@ -11,8 +11,7 @@ public class DroneParser extends BaseParser<Drone> {
     /**
      * Parses a JSONObject into a Drone instance.
      *
-     * @param o the JSONObject representing a drone.
-     * @return a new Drone object.
+     *
      */
     public DroneParser() {}
     @Override
