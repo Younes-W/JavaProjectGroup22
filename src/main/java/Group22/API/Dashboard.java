@@ -4,8 +4,8 @@ import Group22.Errorhandling.Logging;
 import java.util.Map;
 
 /**
- * The Dashboard class manages a collection of drones, handling selection, dynamics fetching,
- * and refresh operations for both API and UI contexts.
+ * The Dashboard class manages a collection of drones, handling selection,
+ * dynamics fetching, and refresh operations for both API and UI contexts.
  */
 public class Dashboard {
     private DroneManager droneManager;
@@ -27,7 +27,7 @@ public class Dashboard {
      *
      * @return a map with drone IDs as keys and Drone objects as values.
      */
-    public Map<Integer,Drone> getDrones(){
+    public Map<Integer, Drone> getDrones() {
         return droneManager.getDrones();
     }
 
@@ -36,7 +36,7 @@ public class Dashboard {
      *
      * @return a map with drone type IDs as keys and DroneType objects as values.
      */
-    public Map<Integer,DroneType> getDroneTypes(){
+    public Map<Integer, DroneType> getDroneTypes() {
         return droneManager.getDroneTypes();
     }
 
@@ -80,49 +80,33 @@ public class Dashboard {
     }
 
     /**
-     * Sets the selected drone and starts fetching its dynamics in a separate thread.
-     * If null is passed, it stops any ongoing dynamics fetching and resets the selection.
+     * Sets the selected drone, interrupts any ongoing dynamics fetching,
+     * and starts fetching its dynamics in a new thread.
      *
      * @param selectedDrone the Drone to select or null to reset selection.
      */
     public void setSelectedDrone(Drone selectedDrone) {
         if (selectedDrone == null) {
-            // If null is passed, stop thread and reset selectedDrone.
             this.selectedDrone = null;
             return;
         }
 
-        Logging.info("Thread of selected Drone is running");
-        Logging.info("fetching dynamics of Drone " + selectedDrone.getId());
+        Logging.info("Fetching dynamics of Drone " + selectedDrone.getId());
+
+        // Interrupt any running dynamics thread before starting a new one
+        if (dynamicsThread != null && dynamicsThread.isAlive()) {
+            dynamicsThread.interrupt();
+        }
+
         this.selectedDrone = selectedDrone;
-        stopDynamicsThread();
-        dynamicsFetcher = new DynamicsThreadFetcher(0, selectedDrone);
+
+        dynamicsFetcher = new DynamicsThreadFetcher(selectedDrone);
         dynamicsThread = new Thread(dynamicsFetcher);
         dynamicsThread.setDaemon(true);
         dynamicsThread.start();
 
         this.selectedDrone.setDynamicsFetched(true);
-        Logging.info("fetched dynamics of Drone " + selectedDrone.getId());
-    }
-
-    /**
-     * Stops the dynamics fetching thread if it is running.
-     * Ensures threads are properly interrupted and joined.
-     */
-    public void stopDynamicsThread() {
-        if (dynamicsFetcher != null) {
-            dynamicsFetcher.stopFetching();
-        }
-        if (dynamicsThread != null && dynamicsThread.isAlive()) {
-            dynamicsThread.interrupt();
-            try {
-                dynamicsThread.join();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-        dynamicsThread = null;
-        dynamicsFetcher = null;
+        Logging.info("Started fetching dynamics for Drone " + selectedDrone.getId());
     }
 
     /**
@@ -132,13 +116,15 @@ public class Dashboard {
      * @param change the amount to change the current offset by.
      */
     public void updateSelectedDynamics(int change) {
-        offset = offset + change;
+        offset += change;
         if (offset < 0) {
             offset = 0;
-        } else if (offset >= selectedDrone.getDynamicsCount()) {
+        } else if (selectedDrone != null && offset >= selectedDrone.getDynamicsCount()) {
             offset = selectedDrone.getDynamicsCount() - 1;
         }
-        selectedDynamics = selectedDrone.getDynamics(offset);
+        if (selectedDrone != null) {
+            selectedDynamics = selectedDrone.getDynamics(offset);
+        }
     }
 
     /**
@@ -160,12 +146,12 @@ public class Dashboard {
     }
 
     /**
-     * Refreshes the API by reinitializing the DroneManager, stopping dynamics thread,
-     * and resetting selection and offset.
+     * Refreshes the API by reinitializing the DroneManager,
+     * resetting offsets and selections.
+     * Note: This method does not stop any running threads.
      */
     public void apiRefresh() {
         droneManager = new DroneManager();
-        stopDynamicsThread();
         offset = 0;
         this.selectedDrone = null;
         this.selectedDynamics = null;
@@ -173,11 +159,10 @@ public class Dashboard {
     }
 
     /**
-     * Refreshes the UI by stopping dynamics thread and resetting selection and offset
+     * Refreshes the UI by resetting offsets and selections
      * without reinitializing the DroneManager.
      */
     public void uiRefresh() {
-        stopDynamicsThread();
         offset = 0;
         this.selectedDrone = null;
         this.selectedDynamics = null;

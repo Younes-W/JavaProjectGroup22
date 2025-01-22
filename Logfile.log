@@ -1,15 +1,41 @@
-[21.01.2025 00:23:01] [INFO] Log file has been initialized
-[21.01.2025 00:23:06] [INFO] Initializing Main Controller
-[21.01.2025 00:23:06] [INFO] Initialisiere Drohnen, Types und Dynamics...
-[21.01.2025 00:23:06] [INFO] fetching Drones
-[21.01.2025 00:23:07] [INFO] fetched 40 Drones
-[21.01.2025 00:23:07] [INFO] fetching DroneTypes
-[21.01.2025 00:23:07] [INFO] fetched 20 DroneTypes
-[21.01.2025 00:23:07] [INFO] fetching initial DroneDynamics
-[21.01.2025 00:23:08] [INFO] fetched 42 dynamics per drone
-[21.01.2025 00:23:08] [INFO] Initialisierung abgeschlossen.
-[21.01.2025 00:23:08] [INFO] Resetting Labels done
-[21.01.2025 00:23:15] [INFO] Thread of selected Drone is running
-[21.01.2025 00:23:15] [INFO] fetching dynamics of Drone 131
-[21.01.2025 00:23:15] [INFO] fetched dynamics of Drone 131
-[21.01.2025 00:23:21] [INFO] No new dynamics found. Close Thread.
+[22.01.2025 10:03:30] [INFO] Log file has been initialized
+[22.01.2025 10:03:39] [INFO] Initializing Main Controller
+[22.01.2025 10:03:39] [INFO] fetching Drones
+[22.01.2025 10:03:39] [INFO] fetched 40 Drones
+[22.01.2025 10:03:39] [INFO] fetching DroneTypes
+[22.01.2025 10:03:40] [INFO] fetched 20 DroneTypes
+[22.01.2025 10:03:40] [INFO] fetching initial DroneDynamics
+[22.01.2025 10:03:40] [INFO] fetched 42 dynamics per drone
+[22.01.2025 10:03:40] [INFO] Resetting Labels done
+[22.01.2025 10:04:00] [INFO] Fetching dynamics of Drone 131
+[22.01.2025 10:04:00] [INFO] Started fetching dynamics for Drone 131
+[22.01.2025 10:04:00] [INFO] Fetching all dynamics for drone 131...
+[22.01.2025 10:04:03] [INFO] Refreshing.. 
+[22.01.2025 10:04:03] [INFO] fetching Drones
+[22.01.2025 10:04:04] [INFO] fetched 40 Drones
+[22.01.2025 10:04:04] [INFO] fetching DroneTypes
+[22.01.2025 10:04:04] [INFO] fetched 20 DroneTypes
+[22.01.2025 10:04:04] [INFO] fetching initial DroneDynamics
+[22.01.2025 10:04:04] [INFO] fetched 42 dynamics per drone
+[22.01.2025 10:04:04] [INFO] API Refresh in Dashboard ...
+[22.01.2025 10:04:04] [INFO] Resetting Labels done
+[22.01.2025 10:04:06] [INFO] No more new dynamics found.
+[22.01.2025 10:04:06] [INFO] Fetching completed for drone 131
+[22.01.2025 10:04:11] [INFO] Refreshing.. 
+[22.01.2025 10:04:11] [INFO] fetching Drones
+[22.01.2025 10:04:12] [INFO] fetched 40 Drones
+[22.01.2025 10:04:12] [INFO] fetching DroneTypes
+[22.01.2025 10:04:12] [INFO] fetched 20 DroneTypes
+[22.01.2025 10:04:12] [INFO] fetching initial DroneDynamics
+[22.01.2025 10:04:13] [INFO] fetched 42 dynamics per drone
+[22.01.2025 10:04:13] [INFO] API Refresh in Dashboard ...
+[22.01.2025 10:04:13] [INFO] Resetting Labels done
+[22.01.2025 10:04:42] [INFO] Refreshing.. 
+[22.01.2025 10:04:42] [INFO] fetching Drones
+[22.01.2025 10:04:42] [INFO] fetched 40 Drones
+[22.01.2025 10:04:42] [INFO] fetching DroneTypes
+[22.01.2025 10:04:43] [INFO] fetched 20 DroneTypes
+[22.01.2025 10:04:43] [INFO] fetching initial DroneDynamics
+[22.01.2025 10:04:43] [INFO] fetched 42 dynamics per drone
+[22.01.2025 10:04:43] [INFO] API Refresh in Dashboard ...
+[22.01.2025 10:04:43] [INFO] Resetting Labels done

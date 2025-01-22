@@ -23,19 +23,16 @@ import java.util.List;
 public class MainController {
 
     @FXML private TabPane mainTabPane;
-    @FXML private Tab droneTab;
     @FXML private ListView<Integer> droneIdListView;
     @FXML private Label droneTypeLabel;
     @FXML private Label droneCreatedLabel;
     @FXML private Label droneSerialNumberLabel;
     @FXML private Label droneCarriageWeightLabel;
     @FXML private Label droneCarriageTypeLabel;
-    @FXML private Button refreshButton;
     @FXML private Label noDroneSelectedLabel;
     @FXML private Button droneDynamicsButton;
     @FXML private VBox droneInfoVBox;
     @FXML private VBox droneDynamicsVBox;
-    @FXML private Label dynamicsDroneLabel;
     @FXML private Label dynamicsStatusLabel;
     @FXML private Label dynamicsBatteryStatusLabel;
     @FXML private Label dynamicsBatteryPercentLabel;
@@ -77,7 +74,6 @@ public class MainController {
                 (obs, oldVal, newVal) -> onDroneTypeSelected(newVal));
         droneTypeLabel.setOnMouseClicked(event -> onDroneTypeLabelClicked());
         updateDroneDynamicsButtonStyle();
-
     }
 
     /**
@@ -104,15 +100,16 @@ public class MainController {
 
     /**
      * Handles selection of a drone from the list view and updates UI accordingly.
+     *
      * @param droneId the selected drone's ID.
      */
     private void onDroneSelected(Integer droneId) {
         dashboard.uiRefresh();
-        if(droneId != null && dashboard.getDrones().containsKey(droneId)) {
+        if (droneId != null && dashboard.getDrones().containsKey(droneId)) {
             Drone selectedDrone = dashboard.getDrone(droneId);
-            if(selectedDrone != null) {
+            if (selectedDrone != null) {
                 noDroneSelectedLabel.setVisible(false);
-                if(droneDynamicsVBox.isVisible()) {
+                if (droneDynamicsVBox.isVisible()) {
                     dashboard.setSelectedDrone(selectedDrone);
                     makeDroneDynamicsLabelsVisible();
                     setDroneDynamicsLabels(selectedDrone);
@@ -127,10 +124,11 @@ public class MainController {
 
     /**
      * Handles selection of a drone type from the list view and updates UI accordingly.
+     *
      * @param droneTypeId the selected drone type's ID.
      */
     private void onDroneTypeSelected(Integer droneTypeId) {
-        if(droneTypeId != null && dashboard.getDroneTypes().containsKey(droneTypeId)) {
+        if (droneTypeId != null && dashboard.getDroneTypes().containsKey(droneTypeId)) {
             DroneType selectedDroneType = dashboard.getDroneTypes().get(droneTypeId);
             makeDroneTypeLabelsVisible();
             setDroneTypeLabels(selectedDroneType);
@@ -148,13 +146,13 @@ public class MainController {
         Logging.info("Resetting Labels done");
     }
 
-    private void makeDroneLabelsVisible(){
+    private void makeDroneLabelsVisible() {
         noDroneSelectedLabel.setVisible(false);
         droneInfoVBox.setVisible(true);
         droneDynamicsVBox.setVisible(false);
     }
 
-    private void makeDroneTypeLabelsVisible(){
+    private void makeDroneTypeLabelsVisible() {
         noDroneTypeSelectedLabel.setVisible(false);
         droneTypesVBox.setVisible(true);
     }
@@ -166,15 +164,16 @@ public class MainController {
         droneTypesVBox.setVisible(false);
     }
 
-    private void setDroneLabels(Drone selectedDrone){
-        droneTypeLabel.setText("Type: " + dashboard.getDroneType(selectedDrone).getTypename());
+    private void setDroneLabels(Drone selectedDrone) {
+        DroneType type = dashboard.getDroneType(selectedDrone);
+        droneTypeLabel.setText("Type: " + (type != null ? type.getTypename() : "Unknown"));
         droneCreatedLabel.setText("Created: " + selectedDrone.getCreated());
         droneSerialNumberLabel.setText("Serial Number: " + selectedDrone.getSerialNumber());
         droneCarriageWeightLabel.setText("Carriage Weight: " + selectedDrone.getCarriageWeight());
         droneCarriageTypeLabel.setText("Carriage Type: " + selectedDrone.getCarriageType());
     }
 
-    private void setDroneTypeLabels(DroneType selectedDroneType){
+    private void setDroneTypeLabels(DroneType selectedDroneType) {
         droneTypeManufacturerLabel.setText("Manufacturer: " + selectedDroneType.getManufacturer());
         droneTypeTypenameLabel.setText("Typename: " + selectedDroneType.getTypename());
         droneTypeWeightLabel.setText("Weight: " + selectedDroneType.getWeight());
@@ -184,7 +183,7 @@ public class MainController {
         droneTypeMaximumCarriageLabel.setText("Maximum Carriage: " + selectedDroneType.getMaxCarriage());
     }
 
-    private void setDroneDynamicsLabels(Drone selectedDrone){
+    private void setDroneDynamicsLabels(Drone selectedDrone) {
         int offset = dashboard.getOffset();
         if (offset >= selectedDrone.getDynamicsCount() || offset < 0) {
             return;
@@ -200,10 +199,15 @@ public class MainController {
         dynamicsBatteryStatusLabel.setText("Battery Status: " + firstDynamics.getBatteryStatus());
         dynamicsLastSeenLabel.setText("Last Seen: " + firstDynamics.getLastSeen());
         dynamicsStatusLabel.setText("Status: " + firstDynamics.getStatus());
-        dynamicsDistanceLabel.setText("Distance: " + String.format("%.2f", selectedDrone.calculateDistanceUpTo(offset)) + " km");
-        dynamicsSpeedOTLabel.setText("Speed Over Time: " + String.format("%.2f", selectedDrone.calculateAverageSpeedUpTo(offset)) + " km/h");
-        dynamicsBatteryPercentLabel.setText("Battery In Percent: " + String.format("%.2f", firstDynamics.getBatteryPercentage(dashboard.getDroneType(selectedDrone))));
-        dynamicsBatteryConsumptionLabel.setText("Battery Consumption In Percent: " + String.format("%.2f", firstDynamics.getBatteryConsumptionInPercent(firstDynamics.getBatteryPercentage(dashboard.getDroneType(selectedDrone)))));
+        dynamicsDistanceLabel.setText("Distance: " +
+                String.format("%.2f", selectedDrone.calculateDistanceUpTo(offset)) + " km");
+        dynamicsSpeedOTLabel.setText("Speed Over Time: " +
+                String.format("%.2f", selectedDrone.calculateAverageSpeedUpTo(offset)) + " km/h");
+        DroneType type = dashboard.getDroneType(selectedDrone);
+        double batteryPercent = firstDynamics.getBatteryPercentage(type);
+        dynamicsBatteryPercentLabel.setText("Battery In Percent: " + String.format("%.2f", batteryPercent));
+        dynamicsBatteryConsumptionLabel.setText("Battery Consumption In Percent: " +
+                String.format("%.2f", firstDynamics.getBatteryConsumptionInPercent(batteryPercent)));
     }
 
     /**
@@ -211,11 +215,11 @@ public class MainController {
      */
     private void onDroneTypeLabelClicked() {
         Integer selectedId = droneIdListView.getSelectionModel().getSelectedItem();
-        if(selectedId == null) return;
+        if (selectedId == null) return;
         Drone selectedDrone = dashboard.getDrone(selectedId);
-        if(selectedDrone == null) return;
+        if (selectedDrone == null) return;
         DroneType droneType = dashboard.getDroneType(selectedDrone);
-        if(droneType == null) return;
+        if (droneType == null) return;
         Integer droneTypeId = droneType.getId();
         mainTabPane.getSelectionModel().select(droneTypeTab);
         droneTypeIdListView.getSelectionModel().select(droneTypeId);
@@ -242,9 +246,9 @@ public class MainController {
      * Toggles between drone dynamics view and drone information view.
      */
     @FXML
-    private void setDroneDynamicsButton(){
+    private void setDroneDynamicsButton() {
         Integer currentSelection = droneIdListView.getSelectionModel().getSelectedItem();
-        if(currentSelection != null) {
+        if (currentSelection != null) {
             boolean showingDynamics = droneDynamicsVBox.isVisible();
             if (!showingDynamics) {
                 droneInfoVBox.setVisible(false);
@@ -253,7 +257,7 @@ public class MainController {
                 navigationButtons.setVisible(true);
                 exportButton.setVisible(true);
                 Drone selectedDrone = dashboard.getDrone(currentSelection);
-                if(selectedDrone != null){
+                if (selectedDrone != null) {
                     dashboard.setSelectedDrone(selectedDrone);
                     setDroneDynamicsLabels(selectedDrone);
                 }
@@ -274,13 +278,14 @@ public class MainController {
     @FXML
     private void updateDroneDynamicsButtonStyle() {
         droneDynamicsButton.getStyleClass().removeAll("button-dynamics-selected", "button-dynamics-unselected");
-        if(droneDynamicsVBox.isVisible()) {
+        if (droneDynamicsVBox.isVisible()) {
             droneDynamicsButton.getStyleClass().add("button-dynamics-selected");
         } else {
             droneDynamicsButton.getStyleClass().add("button-dynamics-unselected");
         }
     }
 
+    // Navigation for drone dynamics pagination
     @FXML private void onNextDynamicClicked1() { proceedNextDynamic(1); }
     @FXML private void onNextDynamicClicked5() { proceedNextDynamic(5); }
     @FXML private void onNextDynamicClicked50() { proceedNextDynamic(50); }
@@ -292,6 +297,7 @@ public class MainController {
 
     /**
      * Advances or goes back in dynamics data by a given number of steps.
+     *
      * @param steps the number of dynamics steps to move.
      */
     private void proceedNextDynamic(int steps) {
@@ -305,18 +311,15 @@ public class MainController {
 
     /**
      * Sets the dashboard instance for the controller.
+     *
      * @param dashboard the Dashboard to set.
      */
-    public void setDashboard(Dashboard dashboard){
+    public void setDashboard(Dashboard dashboard) {
         this.dashboard = dashboard;
     }
 
     /**
-     * Exports the selected drone and its dynamics data to an HTML file.
-     * The file contains a table with details like timestamp, speed, alignment, position, and battery status.
-     * The file is saved as "selected_drone_{droneId}.html" in the current directory.
-     *
-     * If no drone is selected, the export is skipped with a log message.
+     * Exports the selected drone's dynamics data to a CSV file.
      */
     @FXML
     private void exportSelectedDroneWithDynamics() {
@@ -325,45 +328,32 @@ public class MainController {
             return;
         }
 
-        String fileName = "selected_drone_" + dashboard.getSelectedDrone().getId() + ".html";
+        Drone selectedDrone = dashboard.getSelectedDrone();
+        String fileName = "selected_drone_" + selectedDrone.getId() + ".csv";
+
         try (FileWriter writer = new FileWriter(fileName)) {
-            // HTML Header
-            writer.write("<html><head><title>Drone Export</title></head><body>");
-            writer.write("<h1>Drone Dynamics for Drone ID: " + dashboard.getSelectedDrone().getId() + "</h1>");
-            writer.write("<table border='1'>");
-            writer.write("<tr><th>Timestamp</th><th>Speed</th><th>AlignRoll</th><th>AlignPitch</th>" +
-                    "<th>AlignYaw</th><th>Longitude</th><th>Latitude</th><th>BatteryStatus</th>" +
-                    "<th>LastSeen</th><th>Status</th></tr>");
+            writer.write("Timestamp,Speed,AlignRoll,AlignPitch,AlignYaw,Longitude,Latitude,BatteryStatus,LastSeen,Status,"
+                    + "Distance(KM),SpeedOverTime(KM/H),BatteryPercent(%),BatteryConsumption(%)\n");
 
-            // Dynamics Data
-            List<DroneDynamics> dynamicsCopy = new ArrayList<>(dashboard.getSelectedDrone().getDroneDynamicsList());
-            for (DroneDynamics dynamics : dynamicsCopy) {
-                writer.write(String.format(
-                        "<tr><td>%s</td><td>%d</td><td>%.2f</td><td>%.2f</td><td>%.2f</td>" +
-                                "<td>%.6f</td><td>%.6f</td><td>%d</td><td>%s</td><td>%s</td></tr>",
-                        dynamics.getTimestamp().toString(),
-                        dynamics.getSpeed(),
-                        dynamics.getAlignRoll(),
-                        dynamics.getAlignPitch(),
-                        dynamics.getAlignYaw(),
-                        dynamics.getLongitude(),
-                        dynamics.getLatitude(),
-                        dynamics.getBatteryStatus(),
-                        dynamics.getLastSeen().toString(),
-                        dynamics.getStatus()
-                ));
+            List<DroneDynamics> dynamicsCopy = new ArrayList<>(selectedDrone.getDroneDynamicsList());
+            for (DroneDynamics d : dynamicsCopy) {
+                double distanceUpToI = selectedDrone.calculateDistanceUpTo(dynamicsCopy.indexOf(d));
+                double speedOverTime = selectedDrone.calculateAverageSpeedUpTo(dynamicsCopy.indexOf(d));
+                DroneType droneType = dashboard.getDroneType(selectedDrone);
+                double batteryPercent = d.getBatteryPercentage(droneType);
+                double batteryConsumption = d.getBatteryConsumptionInPercent(batteryPercent);
+
+                String line = String.format(java.util.Locale.ROOT,
+                        "%s,%d,%.2f,%.2f,%.2f,%.6f,%.6f,%d,%s,%s,%.2f,%.2f,%.2f,%.2f\n",
+                        d.getTimestamp().toString(), d.getSpeed(), d.getAlignRoll(), d.getAlignPitch(),
+                        d.getAlignYaw(), d.getLongitude(), d.getLatitude(), d.getBatteryStatus(),
+                        d.getLastSeen().toString(), d.getStatus(), distanceUpToI, speedOverTime,
+                        batteryPercent, batteryConsumption);
+                writer.write(line);
             }
-
-            // HTML Footer
-            writer.write("</table></body></html>");
-
-            Logging.info("Drone and dynamics exported to: " + fileName);
+            Logging.info("Drone dynamics exported to CSV: " + fileName);
         } catch (IOException e) {
-            Logging.error("Error writing HTML file: " + e.getMessage());
+            Logging.error("Error writing CSV file: " + e.getMessage());
         }
     }
-
-
-
-
 }

@@ -1,12 +1,10 @@
 package Group22.Main;
 
 import Group22.API.Dashboard;
-import Group22.API.InitializationThread;
 import Group22.Errorhandling.Logging;
 import Group22.GUI.MainController;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,26 +13,20 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Entry point for the Drone Application. Initializes the application and transitions from loading screen to main UI.
+ * Entry point for the Drone Application. Initializes the application
+ * and transitions from the loading screen to the main UI.
  */
 public class Main extends Application {
 
-    /**
-     * Main method that launches the JavaFX application.
-     * @param args command-line arguments.
-     */
     public static void main(String[] args) {
         launch(args);
     }
 
-    /**
-     * Starts the JavaFX application, sets up initial scenes and background initialization.
-     * @param primaryStage the primary stage for the application.
-     */
     @Override
     public void start(Stage primaryStage) {
         Logging.initialize("Logfile.log");
         try {
+            // Configure primary stage settings
             primaryStage.setTitle("Drone Application");
             Image icon = new Image("drone.png");
             primaryStage.getIcons().add(icon);
@@ -42,27 +34,28 @@ public class Main extends Application {
             primaryStage.setHeight(600);
             primaryStage.setResizable(false);
 
+            // Load the loading screen
             FXMLLoader loadingLoader = new FXMLLoader(getClass().getResource("/GUI/LoadingScreen.fxml"));
             Parent loadingRoot = loadingLoader.load();
             Scene loadingScreenScene = new Scene(loadingRoot);
-            loadingScreenScene.getStylesheets()
-                    .add(getClass().getResource("/GUI/style.css").toExternalForm());
+            loadingScreenScene.getStylesheets().add(getClass().getResource("/GUI/style.css").toExternalForm());
             primaryStage.setScene(loadingScreenScene);
             primaryStage.show();
 
+            // Prepare the main scene
             FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("/GUI/Main.fxml"));
             Parent mainRoot = mainLoader.load();
             Scene mainScene = new Scene(mainRoot);
-            mainScene.getStylesheets()
-                    .add(getClass().getResource("/GUI/style.css").toExternalForm());
+            mainScene.getStylesheets().add(getClass().getResource("/GUI/style.css").toExternalForm());
             MainController mainController = mainLoader.getController();
 
-            Task<Void> initTask = new Task<Void>() {
-                @Override
-                protected Void call() throws Exception {
-                    InitializationThread initThreadTask = new InitializationThread(0);
-                    initThreadTask.run();
-                    Dashboard dashboard = initThreadTask.getDashboard();
+            // Background thread to create the dashboard
+            Thread initThread = new Thread(() -> {
+                try {
+                    // Create Dashboard in the background
+                    Dashboard dashboard = new Dashboard();
+
+                    // After successful creation, update the UI on the JavaFX Application Thread
                     Platform.runLater(() -> {
                         mainController.setDashboard(dashboard);
                         mainController.loadDroneIds();
@@ -70,12 +63,11 @@ public class Main extends Application {
                         mainController.resetLabels();
                         primaryStage.setScene(mainScene);
                     });
-                    return null;
+                } catch (Exception ex) {
+                    Logging.error("Error during initialization: " + ex.getMessage());
+                    ex.printStackTrace();
                 }
-            };
-
-            Thread initThread = new Thread(initTask);
-            initThread.setDaemon(true);
+            });
             initThread.start();
 
         } catch (IOException e) {

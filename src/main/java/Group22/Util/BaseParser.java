@@ -3,14 +3,17 @@ package Group22.Util;
 import org.json.JSONObject;
 
 /**
- * A generic interface for parsing a JSONObject into an object of type T.
+ * Abstract base class for parsing JSON objects into specific types.
+ *
  * @param <T> the type of object to be returned by the parser.
  */
-public interface Parser<T> {
+public abstract class BaseParser<T> implements Parser<T> {
     /**
      * Parses a JSONObject into an object of type T.
+     *
      * @param o the JSONObject to parse.
      * @return an instance of type T.
      */
-    T parse(JSONObject o);
+    @Override
+    public abstract T parse(JSONObject o);
 }

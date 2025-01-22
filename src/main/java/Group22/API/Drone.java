@@ -15,7 +15,7 @@ import java.time.Instant;
 public class Drone {
     private int id;
     private int droneTypeId;
-    private String created; // Should be DateTime ideally.
+    private String created; // TODO Should be DateTime ideally.
     private String serialNumber;
     private int carriageWeight;
     private String carriageType;
@@ -161,7 +161,7 @@ public class Drone {
      * @return the distance in kilometers between the two points.
      */
     private double haversine(double lon1, double lat1, double lon2, double lat2) {
-        final int R = 6371; // Radius of Earth in kilometers
+        final int R = 6371;
         double phi1 = Math.toRadians(lat1);
         double phi2 = Math.toRadians(lat2);
         double deltaPhi = Math.toRadians(lat2 - lat1);

@@ -2,77 +2,67 @@ package Group22.API;
 
 import Group22.Errorhandling.Logging;
 import Group22.Util.DroneDynamicsParser;
-import javafx.application.Platform;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * A thread that continuously fetches new dynamics data for a specific drone at regular intervals.
- * Extends {@link BaseThread} to utilize periodic sleeping and thread management.
+ * A runnable that fetches all dynamics data for a specific drone in a continuous loop
+ * until no new data is found or the thread is interrupted.
  */
-public class DynamicsThreadFetcher extends BaseThread {
+public class DynamicsThreadFetcher implements Runnable {
     private final Drone drone;
     private int currentOffset;
 
     /**
      * Constructs a DynamicsThreadFetcher for a specific drone.
      *
-     * @param milliSeconds the interval in milliseconds between fetch operations.
-     * @param drone        the drone for which dynamics data will be fetched.
+     * @param drone the drone for which dynamics data will be fetched.
      */
-    public DynamicsThreadFetcher(long milliSeconds, Drone drone) {
-        super(milliSeconds);
+    public DynamicsThreadFetcher(Drone drone) {
         this.drone = drone;
         this.currentOffset = drone.getDynamicsCount();
     }
 
     /**
-     * Continuously runs the fetch loop until interrupted or no new dynamics are available.
+     * Continuously fetches new dynamics data until no more data is available
+     * or the thread is interrupted.
      */
     @Override
     public void run() {
-        while (running && !Thread.currentThread().isInterrupted()) {
-            fetchAndUpdateDynamics();
-            sleepInterval();
+        Logging.info("Fetching all dynamics for drone " + drone.getId() + "...");
+        while (!Thread.currentThread().isInterrupted()) {
+            String baseUrl = "http://dronesim.facets-labs.com/api/" + drone.getId() + "/dynamics/";
+            int totalCount = fetchCount(baseUrl);
+            String url = baseUrl + "?limit=" + totalCount + "&offset=" + currentOffset;
+
+            DroneAPI droneAPI = new DroneAPI(url);
+            JSONObject response = droneAPI.fetchJSON();
+            if (response == null) {
+                Logging.error("Error: No valid response");
+                break;
+            }
+
+            JSONArray results = response.getJSONArray("results");
+            if (results.isEmpty()) {
+                Logging.info("No more new dynamics found.");
+                break;
+            }
+
+            DroneDynamicsParser droneDynamicsParser = new DroneDynamicsParser();
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject o = results.getJSONObject(i);
+                DroneDynamics newDynamics = droneDynamicsParser.parse(o);
+                drone.getDroneDynamicsList().add(newDynamics);
+                drone.calculateDistanceUpTo(currentOffset);
+                drone.calculateAverageSpeedUpTo(currentOffset);
+                currentOffset++;
+            }
         }
+        Logging.info("Fetching completed for drone " + drone.getId());
     }
 
     /**
-     * Fetches new dynamics data for the associated drone and updates its dynamics list.
-     */
-    private void fetchAndUpdateDynamics() {
-        String baseUrl = "http://dronesim.facets-labs.com/api/" + drone.getId() + "/dynamics/";
-        int totalCount = fetchCount(baseUrl);
-        String url = baseUrl + "?limit=" + totalCount + "&offset=" + currentOffset;
-
-        DroneAPI droneAPI = new DroneAPI(url);
-        JSONObject response = droneAPI.fetchJSON();
-        if (response == null) {
-            Logging.error("Error: No valid response");
-            running = false;
-            return;
-        }
-
-        JSONArray results = response.getJSONArray("results");
-        if (results.isEmpty()) {
-            Logging.info("No new dynamics found. Close Thread.");
-            running = false;
-            return;
-        }
-
-        DroneDynamicsParser droneDynamicsParser = new DroneDynamicsParser();
-        for (int i = 0; i < results.length(); i++) {
-            JSONObject o = results.getJSONObject(i);
-            DroneDynamics newDynamics = droneDynamicsParser.parse(o);
-            drone.getDroneDynamicsList().add(newDynamics);
-            drone.calculateDistanceUpTo(currentOffset);
-            drone.calculateAverageSpeedUpTo(currentOffset);
-            currentOffset++;
-        }
-    }
-
-    /**
-     * Fetches the total count of dynamics available for the drone.
+     * Fetches the total count of dynamics available for the drone from the specified base URL.
      *
      * @param baseUrl the base URL to fetch the count from.
      * @return the total count of available dynamics.
@@ -85,13 +75,5 @@ public class DynamicsThreadFetcher extends BaseThread {
             Logging.error("Error: no valid JSON response");
             return 0;
         }
-    }
-
-    /**
-     * Stops the fetching process by setting the running flag to false and interrupting the thread.
-     */
-    public void stopFetching() {
-        running = false;
-        Thread.currentThread().interrupt();
     }
 }
