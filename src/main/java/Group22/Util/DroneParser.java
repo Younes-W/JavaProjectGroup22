@@ -1,6 +1,7 @@
 package Group22.Util;
 
 import Group22.API.Drone;
+import Group22.Errorhandling.IllegalJSONFormatException;
 import org.json.JSONObject;
 
 /**
@@ -13,16 +14,30 @@ public class DroneParser extends BaseParser<Drone> {
      * @param o the JSONObject representing a drone.
      * @return a new Drone object.
      */
+    public DroneParser() {}
     @Override
-    public Drone parse(JSONObject o) {
-        int id = o.getInt("id");
-        String created = o.getString("created");
-        String serialNumber = o.getString("serialnumber");
-        String droneType = o.getString("dronetype");
-        int droneTypeId = Util.cut_id(droneType);
-        int carriageWeight = o.getInt("carriage_weight");
-        String carriageType = o.getString("carriage_type");
+    public Drone parse(JSONObject o) throws IllegalJSONFormatException {
+       if(validate(o)){
+           int id = o.getInt("id");
+           String created = o.optString("created", "");
+           String serialNumber = o.getString("serialnumber");
+           String droneType = o.getString("dronetype");
+           int droneTypeId = Util.cut_id(droneType);
+           int carriageWeight = o.optInt("carriage_weight",0);
+           String carriageType = o.optString("carriage_type","Not");
+           return new Drone(id, droneTypeId, created, serialNumber, carriageWeight, carriageType);
+       }else{
+           throw new IllegalJSONFormatException();
+       }
+    }
 
-        return new Drone(id, droneTypeId, created, serialNumber, carriageWeight, carriageType);
+    private boolean validate(JSONObject o) {
+        String[] attributes = {"id","dronetype","serialnumber"};
+        for(String attribute : attributes){
+            if(!o.has(attribute)){
+                return false;
+            }
+        }
+        return true;
     }
 }

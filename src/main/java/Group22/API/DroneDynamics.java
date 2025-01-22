@@ -1,8 +1,7 @@
 package Group22.API;
 
-import org.json.JSONObject;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-
 /**
  * Represents the dynamics data of a drone at a specific point in time, including
  * positional, alignment, speed, battery, and status information.

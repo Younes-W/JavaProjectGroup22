@@ -1,5 +1,6 @@
 package Group22.Util;
 
+import Group22.Errorhandling.IllegalJSONFormatException;
 import org.json.JSONObject;
 
 /**
@@ -15,5 +16,6 @@ public abstract class BaseParser<T> implements Parser<T> {
      * @return an instance of type T.
      */
     @Override
-    public abstract T parse(JSONObject o);
+    public abstract T parse(JSONObject o) throws IllegalJSONFormatException;
+
 }

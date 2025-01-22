@@ -1,15 +1,16 @@
 package Group22.API;
 
 import Group22.Errorhandling.ConnectionFailedException;
+import Group22.Errorhandling.IllegalJSONFormatException;
 import Group22.Errorhandling.Logging;
 import org.json.JSONObject;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.util.logging.Logger;
+
 
 /**
  * Provides methods to fetch JSON data from a given URL using HTTP GET requests.
@@ -19,7 +20,6 @@ public class DroneAPI {
     private static final String TOKEN = "Token 140c969fed7748aafd5f1ac7dc1ed246aab72acd";
     private static final String USER_AGENT = "Group22";
     private final String url;
-
     /**
      * Constructs a DroneAPI instance with the specified URL.
      *
@@ -34,7 +34,7 @@ public class DroneAPI {
      *
      * @return the fetched data as a JSONObject, or null if fetching fails.
      */
-    public JSONObject fetchJSON() {
+    public JSONObject fetchJSON() throws ConnectionFailedException, IllegalJSONFormatException {
         JSONObject returnJson = null;
         try {
             URI uri = new URI(url);
@@ -44,7 +44,10 @@ public class DroneAPI {
             returnJson = new JSONObject(data);
             connection.disconnect();
         } catch(Exception e) {
-            Logging.error("Connection failed. Make sure you are connected to the internet.");
+            throw new ConnectionFailedException();
+        }
+        if(!validateJSON(returnJson)){
+            throw new IllegalJSONFormatException();
         }
         return returnJson;
     }
@@ -59,7 +62,7 @@ public class DroneAPI {
     private String fetchData(HttpURLConnection connection) throws Exception {
         int responseCode = connection.getResponseCode();
         if(responseCode != 200){
-            throw new ConnectionFailedException("Connection failed. Response code: " + responseCode);
+            throw new Exception();
         }
 
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -68,7 +71,6 @@ public class DroneAPI {
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
         }
-
         in.close();
         return response.toString();
     }
@@ -83,5 +85,11 @@ public class DroneAPI {
         connection.setRequestProperty("Authorization", TOKEN);
         connection.setRequestMethod("GET");
         connection.setRequestProperty("User-Agent", USER_AGENT);
+    }
+    private boolean validateJSON(JSONObject o) {
+        if(!o.has("count") || !o.has("results")){
+            return false;
+        }
+        return true;
     }
 }

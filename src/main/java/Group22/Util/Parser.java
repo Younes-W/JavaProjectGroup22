@@ -1,5 +1,6 @@
 package Group22.Util;
 
+import Group22.Errorhandling.IllegalJSONFormatException;
 import org.json.JSONObject;
 
 /**
@@ -12,5 +13,5 @@ public interface Parser<T> {
      * @param o the JSONObject to parse.
      * @return an instance of type T.
      */
-    T parse(JSONObject o);
+    T parse(JSONObject o) throws IllegalJSONFormatException;
 }

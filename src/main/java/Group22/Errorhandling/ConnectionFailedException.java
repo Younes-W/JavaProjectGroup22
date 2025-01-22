@@ -3,7 +3,7 @@ package Group22.Errorhandling;
 /**
  * A custom exception indicating a failure to connect to a remote service or resource.
  */
-public class ConnectionFailedException extends RuntimeException {
+public class ConnectionFailedException extends Exception {
     /** Constructs a new ConnectionFailedException */
     public ConnectionFailedException() {}
 

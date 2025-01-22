@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -167,7 +168,8 @@ public class MainController {
     private void setDroneLabels(Drone selectedDrone) {
         DroneType type = dashboard.getDroneType(selectedDrone);
         droneTypeLabel.setText("Type: " + (type != null ? type.getTypename() : "Unknown"));
-        droneCreatedLabel.setText("Created: " + selectedDrone.getCreated());
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+        droneCreatedLabel.setText("Created: " + selectedDrone.getCreated().format(dateFormat));
         droneSerialNumberLabel.setText("Serial Number: " + selectedDrone.getSerialNumber());
         droneCarriageWeightLabel.setText("Carriage Weight: " + selectedDrone.getCarriageWeight());
         droneCarriageTypeLabel.setText("Carriage Type: " + selectedDrone.getCarriageType());
@@ -189,7 +191,8 @@ public class MainController {
             return;
         }
         DroneDynamics firstDynamics = selectedDrone.getDynamics(offset);
-        dynamicsTimestampLabel.setText("Timestamp: " + firstDynamics.getTimestamp());
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+        dynamicsTimestampLabel.setText("Timestamp: " + firstDynamics.getTimestamp().format(dateFormat));
         dynamicsSpeedLabel.setText("Speed: " + firstDynamics.getSpeed());
         dynamicsAlignmentRollLabel.setText("Align Roll: " + firstDynamics.getAlignRoll());
         dynamicsAlignmentPitchLabel.setText("Align Pitch: " + firstDynamics.getAlignPitch());
@@ -197,7 +200,7 @@ public class MainController {
         dynamicsLongitudeLabel.setText("Longitude: " + firstDynamics.getLongitude());
         dynamicsLatitudeLabel.setText("Latitude: " + firstDynamics.getLatitude());
         dynamicsBatteryStatusLabel.setText("Battery Status: " + firstDynamics.getBatteryStatus());
-        dynamicsLastSeenLabel.setText("Last Seen: " + firstDynamics.getLastSeen());
+        dynamicsLastSeenLabel.setText("Last Seen: " + firstDynamics.getLastSeen().format(dateFormat));
         dynamicsStatusLabel.setText("Status: " + firstDynamics.getStatus());
         dynamicsDistanceLabel.setText("Distance: " +
                 String.format("%.2f", selectedDrone.calculateDistanceUpTo(offset)) + " km");

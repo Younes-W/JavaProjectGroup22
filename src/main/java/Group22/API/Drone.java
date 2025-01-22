@@ -2,6 +2,9 @@ package Group22.API;
 
 import Group22.Util.Util;
 import org.json.JSONObject;
+
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +18,7 @@ import java.time.Instant;
 public class Drone {
     private int id;
     private int droneTypeId;
-    private String created; // TODO Should be DateTime ideally.
+    private OffsetDateTime created; // TODO Should be DateTime ideally.
     private String serialNumber;
     private int carriageWeight;
     private String carriageType;
@@ -35,7 +38,7 @@ public class Drone {
     public Drone(int id, int droneTypeId, String created, String serialNumber, int carriageWeight, String carriageType) {
         this.id = id;
         this.droneTypeId = droneTypeId;
-        this.created = created;
+        this.created = OffsetDateTime.parse(created);
         this.serialNumber = serialNumber;
         this.carriageWeight = carriageWeight;
         this.carriageType = carriageType;
@@ -52,7 +55,7 @@ public class Drone {
     }
 
     /** @return the creation timestamp of the drone */
-    public String getCreated() {
+    public OffsetDateTime getCreated() {
         return created;
     }
 

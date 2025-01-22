@@ -12,14 +12,14 @@ public class Dashboard {
     private Drone selectedDrone = null;
     private DroneDynamics selectedDynamics = null;
     private int offset = 0;
-    private Thread dynamicsThread;
-    private DynamicsThreadFetcher dynamicsFetcher;
+    private final ThreadManager threadManager;
 
     /**
      * Constructs a new Dashboard instance and initializes the DroneManager.
      */
     public Dashboard() {
         droneManager = new DroneManager();
+        threadManager = new ThreadManager();
     }
 
     /**
@@ -91,22 +91,8 @@ public class Dashboard {
             return;
         }
 
-        Logging.info("Fetching dynamics of Drone " + selectedDrone.getId());
-
-        // Interrupt any running dynamics thread before starting a new one
-        if (dynamicsThread != null && dynamicsThread.isAlive()) {
-            dynamicsThread.interrupt();
-        }
-
         this.selectedDrone = selectedDrone;
-
-        dynamicsFetcher = new DynamicsThreadFetcher(selectedDrone);
-        dynamicsThread = new Thread(dynamicsFetcher);
-        dynamicsThread.setDaemon(true);
-        dynamicsThread.start();
-
-        this.selectedDrone.setDynamicsFetched(true);
-        Logging.info("Started fetching dynamics for Drone " + selectedDrone.getId());
+        threadManager.startDynamicsFetchingThread(selectedDrone);
     }
 
     /**
