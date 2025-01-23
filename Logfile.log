@@ -1,11 +1,11 @@
-[22.01.2025 17:48:23] [INFO] Log file has been initialized
-[22.01.2025 17:48:35] [INFO] Initializing Main Controller
-[22.01.2025 17:48:35] [INFO] fetching Drones
-[22.01.2025 17:48:36] [INFO] successfully fetched 40 Drones
-[22.01.2025 17:48:36] [INFO] fetching DroneTypes
-[22.01.2025 17:48:37] [INFO] successfully fetched 20 DroneTypes
-[22.01.2025 17:48:37] [INFO] fetching initial DroneDynamics
-[22.01.2025 17:48:39] [INFO] successfully fetched 42 dynamics per drone
-[22.01.2025 17:48:39] [INFO] Resetting Labels done
-[22.01.2025 17:48:58] [INFO] Fetching all dynamics for drone 131...
-[22.01.2025 17:49:02] [INFO] Fetching completed for drone 131
+[23.01.2025 13:02:19] [INFO] Log file has been initialized
+[23.01.2025 13:02:23] [INFO] Initializing Main Controller
+[23.01.2025 13:02:23] [INFO] fetching Drones
+[23.01.2025 13:02:23] [INFO] successfully fetched 40 Drones
+[23.01.2025 13:02:23] [INFO] fetching DroneTypes
+[23.01.2025 13:02:23] [INFO] successfully fetched 20 DroneTypes
+[23.01.2025 13:02:23] [INFO] fetching initial DroneDynamics
+[23.01.2025 13:02:24] [INFO] successfully fetched 42 dynamics per drone
+[23.01.2025 13:02:24] [INFO] Resetting Labels done
+[23.01.2025 13:02:28] [INFO] Fetching all dynamics for drone 131...
+[23.01.2025 13:02:29] [INFO] Fetching completed for drone 131

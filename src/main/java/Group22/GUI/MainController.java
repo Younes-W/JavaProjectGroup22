@@ -60,7 +60,6 @@ public class MainController {
     @FXML private Label droneTypeControlRangeLabel;
     @FXML private Label droneTypeMaximumCarriageLabel;
     @FXML private VBox droneTypesVBox;
-    @FXML private Button exportButton;
 
     private Dashboard dashboard;
 
@@ -241,7 +240,6 @@ public class MainController {
         loadDroneTypeIds();
         droneDynamicsButton.setText("Drone Dynamics");
         navigationButtons.setVisible(false);
-        exportButton.setVisible(false);
         updateDroneDynamicsButtonStyle();
     }
 
@@ -258,7 +256,6 @@ public class MainController {
                 droneDynamicsVBox.setVisible(true);
                 droneDynamicsButton.setText("Drone Information");
                 navigationButtons.setVisible(true);
-                exportButton.setVisible(true);
                 Drone selectedDrone = dashboard.getDrone(currentSelection);
                 if (selectedDrone != null) {
                     dashboard.setSelectedDrone(selectedDrone);
@@ -269,7 +266,6 @@ public class MainController {
                 droneInfoVBox.setVisible(true);
                 droneDynamicsButton.setText("Drone Dynamics");
                 navigationButtons.setVisible(false);
-                exportButton.setVisible(false);
             }
             updateDroneDynamicsButtonStyle();
         }
@@ -321,42 +317,4 @@ public class MainController {
         this.dashboard = dashboard;
     }
 
-    /**
-     * Exports the selected drone's dynamics data to a CSV file.
-     */
-    @FXML
-    private void exportSelectedDroneWithDynamics() {
-        if (dashboard.getSelectedDrone() == null) {
-            Logging.warning("No drone selected.");
-            return;
-        }
-
-        Drone selectedDrone = dashboard.getSelectedDrone();
-        String fileName = "selected_drone_" + selectedDrone.getId() + ".csv";
-
-        try (FileWriter writer = new FileWriter(fileName)) {
-            writer.write("Timestamp,Speed,AlignRoll,AlignPitch,AlignYaw,Longitude,Latitude,BatteryStatus,LastSeen,Status,"
-                    + "Distance(KM),SpeedOverTime(KM/H),BatteryPercent(%),BatteryConsumption(%)\n");
-
-            List<DroneDynamics> dynamicsCopy = new ArrayList<>(selectedDrone.getDroneDynamicsList());
-            for (DroneDynamics d : dynamicsCopy) {
-                double distanceUpToI = selectedDrone.calculateDistanceUpTo(dynamicsCopy.indexOf(d));
-                double speedOverTime = selectedDrone.calculateAverageSpeedUpTo(dynamicsCopy.indexOf(d));
-                DroneType droneType = dashboard.getDroneType(selectedDrone);
-                double batteryPercent = d.getBatteryPercentage(droneType);
-                double batteryConsumption = d.getBatteryConsumptionInPercent(batteryPercent);
-
-                String line = String.format(java.util.Locale.ROOT,
-                        "%s,%d,%.2f,%.2f,%.2f,%.6f,%.6f,%d,%s,%s,%.2f,%.2f,%.2f,%.2f\n",
-                        d.getTimestamp().toString(), d.getSpeed(), d.getAlignRoll(), d.getAlignPitch(),
-                        d.getAlignYaw(), d.getLongitude(), d.getLatitude(), d.getBatteryStatus(),
-                        d.getLastSeen().toString(), d.getStatus(), distanceUpToI, speedOverTime,
-                        batteryPercent, batteryConsumption);
-                writer.write(line);
-            }
-            Logging.info("Drone dynamics exported to CSV: " + fileName);
-        } catch (IOException e) {
-            Logging.error("Error writing CSV file: " + e.getMessage());
-        }
-    }
 }
