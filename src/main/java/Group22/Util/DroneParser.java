@@ -11,7 +11,6 @@ public class DroneParser extends BaseParser<Drone> {
     /**
      * Parses a JSONObject into a Drone instance.
      *
-     *
      */
     public DroneParser() {}
     @Override
@@ -29,7 +28,11 @@ public class DroneParser extends BaseParser<Drone> {
            throw new IllegalJSONFormatException();
        }
     }
-
+    /**
+     * validates the drone json object.
+     * @param o the JSONObject of the drone.
+     * @return true if JSONObject is valid, false otherwise.
+     * */
     private boolean validate(JSONObject o) {
         String[] attributes = {"id","dronetype","serialnumber"};
         for(String attribute : attributes){

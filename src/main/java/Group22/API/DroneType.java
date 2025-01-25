@@ -1,10 +1,11 @@
 package Group22.API;
 
-
-/**
- * Represents a type of drone, including specifications like manufacturer, weight, speed, battery capacity, etc.
- */
 public class DroneType {
+
+    /**
+     * Represents a dronetype, including specifications like manufacturer, weight, speed, battery capacity, etc.
+     */
+
     private int id;
     private String manufacturer;
     private String typename;
@@ -19,7 +20,7 @@ public class DroneType {
      *
      * @param id              the unique identifier of the drone type
      * @param manufacturer    the manufacturer of the drone type
-     * @param typename        the model name or type name
+     * @param typename        the type name
      * @param weight          the weight of the drone
      * @param maxSpeed        the maximum speed of the drone
      * @param batteryCapacity the battery capacity of the drone
@@ -48,7 +49,7 @@ public class DroneType {
         return manufacturer;
     }
 
-    /** @return the type name or model name of this drone type */
+    /** @return the type name of this drone type */
     public String getTypename() {
         return typename;
     }

@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
 /**
  * Represents a drone with attributes such as type, creation time, serial number, and associated dynamics data.
  * Provides utility methods to calculate distance traveled and average speed based on its dynamics.
+ * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
  */
+
 public class Drone {
     private int id;
     private int droneTypeId;
@@ -69,7 +70,7 @@ public class Drone {
         return carriageType;
     }
 
-    /** @return the list of dynamics data associated with the drone */
+    /** @return the list of dynamics data associated with this drone */
     public List<DroneDynamics> getDroneDynamicsList() {
         return droneDynamicsList;
     }
@@ -79,7 +80,7 @@ public class Drone {
         return dynamicsFetched;
     }
 
-    /** @return the number of dynamics data points available */
+    /** @return the number of dynamics available for this drone */
     public int getDynamicsCount() {
         return droneDynamicsList.size();
     }
@@ -95,8 +96,7 @@ public class Drone {
     }
 
     /**
-     * Sets the flag indicating whether dynamics data has been fetched.
-     *
+     * Sets the flag indicating whether the dynamics have been fetched.
      * @param dynamicsFetched true if dynamics data has been fetched, false otherwise.
      */
     public void setDynamicsFetched(boolean dynamicsFetched) {
@@ -136,7 +136,7 @@ public class Drone {
         if (offset < 1 || offset >= getDynamicsCount()) {
             return 0.0;
         }
-        DroneDynamics first = droneDynamicsList.get(0);
+        DroneDynamics first = droneDynamicsList.getFirst();
         DroneDynamics nth   = droneDynamicsList.get(offset);
 
         long seconds = java.time.Duration.between(first.getTimestamp(), nth.getTimestamp()).getSeconds();

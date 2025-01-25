@@ -1,10 +1,13 @@
 package Group22.API;
 
 import java.time.OffsetDateTime;
+
 /**
- * Represents the dynamics data of a drone at a specific point in time, including
- * positional, alignment, speed, battery, and status information.
+ * Represents the dynamics of a drone at a specific point in time, including
+ * positional information, alignment, speed, battery, and status information.
+ * @author Younes Wimmer, Tobias ilcken, Parnia Esfahani
  */
+
 public class DroneDynamics {
     private OffsetDateTime timestamp;
     private int speed;
@@ -18,9 +21,9 @@ public class DroneDynamics {
     private String status;
 
     /**
-     * Constructs a DroneDynamics object by parsing the provided string values.
+     * Constructs a DroneDynamics object with specified attributes.
      *
-     * @param timestamp     ISO-8601 formatted timestamp of the dynamics.
+     * @param timestamp     timestamp of the dynamics.
      * @param speed         the speed of the drone at the given timestamp.
      * @param alignRoll     roll alignment value.
      * @param alignPitch    pitch alignment value.
@@ -28,8 +31,8 @@ public class DroneDynamics {
      * @param longitude     longitude coordinate.
      * @param latitude      latitude coordinate.
      * @param batteryStatus current battery status.
-     * @param lastSeen      ISO-8601 formatted timestamp indicating when the drone was last seen.
-     * @param status        status message or code.
+     * @param lastSeen      timestamp indicating when the drone was last seen.
+     * @param status        status of the drone.
      */
     public DroneDynamics(String timestamp, int speed, double alignRoll, double alignPitch, double alignYaw,
                          double longitude, double latitude, int batteryStatus, String lastSeen, String status) {
@@ -90,7 +93,7 @@ public class DroneDynamics {
         return lastSeen;
     }
 
-    /** @return the status message or code */
+    /** @return the status of the drone */
     public String getStatus() {
         return status;
     }
@@ -98,7 +101,7 @@ public class DroneDynamics {
     /**
      * Calculates the battery percentage relative to the drone type's battery capacity.
      *
-     * @param type the DroneType to compare against
+     * @param type the DroneType of the drone
      * @return the battery percentage as a value between 0 and 100.
      */
     public double getBatteryPercentage(DroneType type) {

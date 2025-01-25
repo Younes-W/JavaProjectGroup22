@@ -9,22 +9,22 @@ import Group22.Util.DroneTypeParser;
 import Group22.Util.Util;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Manages the collection of drones and drone types, including initializing data and
- * fetching associated dynamics for each drone.
+ * Manages a collection of available drones and drone types and initializes them.
+ * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
  */
-public class DroneManager {
+
+public class DroneCollection {
     private final HashMap<Integer, DroneType> droneTypes = new HashMap<>();
     private final HashMap<Integer, Drone> drones = new HashMap<>();
 
     /**
-     * Constructs a DroneManager and initializes drones, drone types, and dynamics data.
+     * Constructs a DroneCollection and initializes drones, drone types, and dynamics data.
      */
-    public DroneManager() {
+    public DroneCollection() {
         initializeDrones();
         initializeDroneTypes();
         initializeDroneDynamics();
@@ -32,7 +32,6 @@ public class DroneManager {
 
     /**
      * Provides an unmodifiable map of drones.
-     *
      * @return an unmodifiable view of the drones map.
      */
     public Map<Integer, Drone> getDrones() {
@@ -41,25 +40,14 @@ public class DroneManager {
 
     /**
      * Provides an unmodifiable map of drone types.
-     *
      * @return an unmodifiable view of the droneTypes map.
      */
     public Map<Integer, DroneType> getDroneTypes() {
         return Map.copyOf(droneTypes);
     }
 
-    /** @return the number of drones managed */
-    public int getDroneCount() {
-        return drones.size();
-    }
-
-    /** @return the number of drone types managed */
-    public int getDroneTypeCount() {
-        return droneTypes.size();
-    }
-
     /**
-     * Initializes the drone types by fetching data from an external API and parsing it.
+     * Initializes the drone types by fetching data from the drone API and parsing it.
      */
     private void initializeDroneTypes() {
         Logging.info("fetching DroneTypes");
@@ -92,7 +80,7 @@ public class DroneManager {
     }
 
     /**
-     * Initializes the drones by fetching data from an API and parsing it.
+     * Initializes the drones by fetching data from the drone API and parsing it.
      */
     private void initializeDrones() {
         Logging.info("fetching Drones");
@@ -124,12 +112,13 @@ public class DroneManager {
     }
 
     /**
-     * Initializes the dynamics data for each drone by fetching from an API.
+     * Initializes the dynamics data for each drone by fetching them from the drone API.
      * It fetches a fixed number of dynamics per drone and assigns them accordingly.
      */
     private void initializeDroneDynamics() {
+        int initialDynamics = 42;
         Logging.info("fetching initial DroneDynamics");
-        String url = "http://dronesim.facets-labs.com/api/dronedynamics/?limit=" + getDrones().size() * 42 + "&offset=0";
+        String url = "http://dronesim.facets-labs.com/api/dronedynamics/?limit=" + getDrones().size() * initialDynamics + "&offset=0";
         DroneDynamicsParser droneDynamicsParser = new DroneDynamicsParser();
         DroneAPI droneAPI = new DroneAPI(url);
         try {

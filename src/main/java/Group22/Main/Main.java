@@ -65,17 +65,13 @@ public class Main extends Application {
                     });
                 } catch (Exception ex) {
                     Logging.error("Error during initialization: " + ex.getMessage());
-                    ex.printStackTrace();
                 }
             });
             initThread.start();
 
-        } catch (IOException e) {
-            Logging.error("Error loading FXML file:");
-            e.printStackTrace();
-        } catch (Exception e) {
-            Logging.error("Unexpected error:");
-            e.printStackTrace();
+        }catch(IOException e){
+            Logging.error("Error during GUI initialization " + e.getMessage());
         }
     }
 }
+

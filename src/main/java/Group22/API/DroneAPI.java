@@ -9,11 +9,12 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URI;
 
-
 /**
  * Provides methods to fetch JSON data from a given URL using HTTP GET requests.
- * Handles connection properties, data fetching, and error logging.
+ * Handles the connection.
+ * @author Tobias Ilcken, Younes Wimmer, Parnia Esfahani
  */
+
 public class DroneAPI {
     private static final String TOKEN = "Token 140c969fed7748aafd5f1ac7dc1ed246aab72acd";
     private static final String USER_AGENT = "Group22";
@@ -31,6 +32,8 @@ public class DroneAPI {
      * Fetches JSON data from the configured URL.
      *
      * @return the fetched data as a JSONObject, or null if fetching fails.
+     * @throws ConnectionFailedException if the connection to the server fails.
+     * @throws IllegalJSONFormatException if the received JSON is not valid.
      */
     public JSONObject fetchJSON() throws ConnectionFailedException, IllegalJSONFormatException {
         JSONObject returnJson = null;
@@ -55,7 +58,6 @@ public class DroneAPI {
      *
      * @param connection the HttpURLConnection to read data from.
      * @return the response data as a String.
-     * @throws Exception if the connection fails or the response code is not 200.
      */
     private String fetchData(HttpURLConnection connection) throws Exception {
         int responseCode = connection.getResponseCode();
@@ -84,6 +86,12 @@ public class DroneAPI {
         connection.setRequestMethod("GET");
         connection.setRequestProperty("User-Agent", USER_AGENT);
     }
+
+    /**
+     * Validates a given JSONObject.
+     * @param o JSONObject to be validated
+     * @return true if JSON object is valid, false otherwise
+     */
     private boolean validateJSON(JSONObject o) {
         if(!o.has("count") || !o.has("results")){
             return false;

@@ -1,7 +1,7 @@
 package Group22.Errorhandling;
 
 /**
- * A custom exception indicating a failure to connect to a remote service or resource.
+ * A custom exception indicating a failure to connect to the server.
  */
 public class ConnectionFailedException extends Exception {
     /** Constructs a new ConnectionFailedException */

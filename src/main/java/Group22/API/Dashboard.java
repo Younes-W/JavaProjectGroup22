@@ -4,40 +4,43 @@ import Group22.Errorhandling.Logging;
 import java.util.Map;
 
 /**
- * The Dashboard class manages a collection of drones, handling selection,
- * dynamics fetching, and refresh operations for both API and UI contexts.
+ * The Dashboard class is the intersection of the backend and the GUI.
+ * It can be used to get all relevant information for each drone, drone type and drone dynamic.
+ * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
  */
+
 public class Dashboard {
-    private DroneManager droneManager;
+    private DroneCollection droneCollection;
     private Drone selectedDrone = null;
     private DroneDynamics selectedDynamics = null;
     private int offset = 0;
     private final ThreadManager threadManager;
 
     /**
-     * Constructs a new Dashboard instance and initializes the DroneManager.
+     * Constructs a new Dashboard instance and initializes the DroneCollection as well as the thread manager.
+     * @see ThreadManager
+     * @see DroneCollection
      */
     public Dashboard() {
-        droneManager = new DroneManager();
+        droneCollection = new DroneCollection();
         threadManager = new ThreadManager();
     }
 
     /**
-     * Retrieves a map of all drones managed by the DroneManager.
-     *
-     * @return a map with drone IDs as keys and Drone objects as values.
+     * Retrieves a map of all drones managed by the DroneCollection.
+     * @return a map of all drones with drone ids as the keys.
      */
     public Map<Integer, Drone> getDrones() {
-        return droneManager.getDrones();
+        return droneCollection.getDrones();
     }
 
     /**
-     * Retrieves a map of all drone types managed by the DroneManager.
+     * Retrieves a map of all drone types managed by the DroneCollection.
      *
      * @return a map with drone type IDs as keys and DroneType objects as values.
      */
     public Map<Integer, DroneType> getDroneTypes() {
-        return droneManager.getDroneTypes();
+        return droneCollection.getDroneTypes();
     }
 
     /**
@@ -47,7 +50,7 @@ public class Dashboard {
      * @return the Drone object corresponding to the given ID, or null if not found.
      */
     public Drone getDrone(int id) {
-        return droneManager.getDrones().get(id);
+        return droneCollection.getDrones().get(id);
     }
 
     /**
@@ -57,7 +60,7 @@ public class Dashboard {
      * @return the DroneType object corresponding to the given ID, or null if not found.
      */
     public DroneType getDroneType(int id) {
-        return droneManager.getDroneTypes().get(id);
+        return droneCollection.getDroneTypes().get(id);
     }
 
     /**
@@ -67,7 +70,7 @@ public class Dashboard {
      * @return the DroneType of the provided drone, or null if not found.
      */
     public DroneType getDroneType(Drone drone) {
-        return droneManager.getDroneTypes().get(drone.getDroneTypeId());
+        return droneCollection.getDroneTypes().get(drone.getDroneTypeId());
     }
 
     /**
@@ -80,9 +83,7 @@ public class Dashboard {
     }
 
     /**
-     * Sets the selected drone, interrupts any ongoing dynamics fetching,
-     * and starts fetching its dynamics in a new thread.
-     *
+     * Sets the selected drone and starts fetching the dynamics.
      * @param selectedDrone the Drone to select or null to reset selection.
      */
     public void setSelectedDrone(Drone selectedDrone) {
@@ -90,7 +91,6 @@ public class Dashboard {
             this.selectedDrone = null;
             return;
         }
-
         this.selectedDrone = selectedDrone;
         threadManager.startDynamicsFetchingThread(selectedDrone);
     }
@@ -134,10 +134,9 @@ public class Dashboard {
     /**
      * Refreshes the API by reinitializing the DroneManager,
      * resetting offsets and selections.
-     * Note: This method does not stop any running threads.
      */
     public void apiRefresh() {
-        droneManager = new DroneManager();
+        droneCollection = new DroneCollection();
         offset = 0;
         this.selectedDrone = null;
         this.selectedDynamics = null;
