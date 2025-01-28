@@ -10,7 +10,7 @@
 
 /* BUTTONS */
 
-#droneTypeLabel:hover{
+.button:hover{
     -fx-scale-x: 1.05; /* Skalierung in der Breite */
     -fx-scale-y: 1.05; /* Skalierung in der Höhe */
     -fx-text-fill: #d5996b;
@@ -159,17 +159,6 @@
     -fx-text-fill: #2f3033;
     -fx-font-size: 30px;
     -fx-font-family: "Montserrat";
-}
-
-.button {
-    -fx-text-fill: #dee0e4;        /* Weißer Text */
-    -fx-translate-x: -10px;
-}
-
-.button:hover{
-    -fx-scale-x: 1.05; /* Skalierung in der Breite */
-    -fx-scale-y: 1.05; /* Skalierung in der Höhe */
-    -fx-text-fill: #d5996b;
 }
 
 .button-dynamics-selected{

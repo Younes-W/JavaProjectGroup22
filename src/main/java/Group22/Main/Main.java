@@ -28,8 +28,8 @@ public class Main extends Application {
         try {
             // Configure primary stage settings
             primaryStage.setTitle("Drone Application");
-            Image icon = new Image("drone.png");
-            primaryStage.getIcons().add(icon);
+            //Image icon = new Image("drone.png");
+            //primaryStage.getIcons().add(icon);
             primaryStage.setWidth(800);
             primaryStage.setHeight(600);
             primaryStage.setResizable(false);

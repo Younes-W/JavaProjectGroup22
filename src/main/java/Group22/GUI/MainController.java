@@ -50,6 +50,7 @@ public class MainController {
     @FXML private Label dynamicsBatteryConsumptionLabel;
     @FXML private HBox navigationButtons;
     @FXML private Tab droneTypeTab;
+    @FXML private Tab droneTab;
     @FXML private ListView<Integer> droneTypeIdListView;
     @FXML private Label droneTypeManufacturerLabel;
     @FXML private Label noDroneTypeSelectedLabel;
@@ -73,7 +74,6 @@ public class MainController {
         droneTypeIdListView.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldVal, newVal) -> onDroneTypeSelected(newVal));
         droneTypeLabel.setOnMouseClicked(event -> onDroneTypeLabelClicked());
-        updateDroneDynamicsButtonStyle();
     }
 
     /**
@@ -240,6 +240,7 @@ public class MainController {
         loadDroneTypeIds();
         droneDynamicsButton.setText("Drone Dynamics");
         navigationButtons.setVisible(false);
+        mainTabPane.getSelectionModel().select(droneTab);
         updateDroneDynamicsButtonStyle();
     }
 

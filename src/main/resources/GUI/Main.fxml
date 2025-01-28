@@ -33,7 +33,7 @@
                      <font>
                         <Font size="25.0" />
                      </font></Label>
-                  <Button fx:id="droneDynamicsButton" layoutX="658.0" layoutY="482.0" mnemonicParsing="false" onAction="#setDroneDynamicsButton" text="Drone Dynamics" />
+                  <Button styleClass="button" fx:id="droneDynamicsButton" layoutX="658.0" layoutY="482.0" mnemonicParsing="false" onAction="#setDroneDynamicsButton" text="Drone Dynamics" />
                   <HBox fx:id = "navigationButtons" spacing="5.0" layoutX="160" layoutY="482.0" alignment="CENTER" visible="false">
                      <Button fx:id="prevDynamicButton500" text="-500" onAction="#onPrevDynamicClicked500" prefWidth="70" prefHeight="10"/>
                      <Button fx:id="prevDynamicButton50" text="-50" onAction="#onPrevDynamicClicked50" prefWidth="60" prefHeight="10"/>
@@ -44,7 +44,6 @@
                      <Button fx:id="nextDynamicButton50" text="+50" onAction="#onNextDynamicClicked50" prefWidth="60" prefHeight="10"/>
                      <Button fx:id="nextDynamicButton500" text="+500" onAction="#onNextDynamicClicked500" prefWidth="70" prefHeight="10"/>
                   </HBox>
-
 
                   <VBox fx:id="droneDynamicsVBox" layoutX="150.0" layoutY="40.0" spacing="10.0">
                      <children>
@@ -88,6 +87,7 @@
                         <Label fx:id="droneTypeMaximumCarriageLabel" text="Maximum Carriage" />
                      </children>
                   </VBox>
+                  <Button fx:id="refreshButton2" layoutX="711.0" layoutY="17.0" mnemonicParsing="false" onAction="#refreshButton" text="Refresh" />
                   <Label fx:id="noDroneTypeSelectedLabel" layoutX="235.0" layoutY="177.0" text="No Drone Type Selected" />
                </children>
             </AnchorPane>
