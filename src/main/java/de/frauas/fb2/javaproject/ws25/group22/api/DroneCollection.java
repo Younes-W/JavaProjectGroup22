@@ -1,16 +1,16 @@
-package Group22.API;
+package de.frauas.fb2.javaproject.ws25.group22.api;
 
-import Group22.Errorhandling.ConnectionFailedException;
-import Group22.Errorhandling.IllegalJSONFormatException;
-import Group22.Errorhandling.Logging;
-import Group22.Util.DroneDynamicsParser;
-import Group22.Util.DroneParser;
-import Group22.Util.DroneTypeParser;
-import Group22.Util.Util;
+import de.frauas.fb2.javaproject.ws25.group22.errorhandling.ConnectionFailedException;
+import de.frauas.fb2.javaproject.ws25.group22.errorhandling.IllegalJSONFormatException;
+import de.frauas.fb2.javaproject.ws25.group22.util.DroneDynamicsParser;
+import de.frauas.fb2.javaproject.ws25.group22.util.DroneParser;
+import de.frauas.fb2.javaproject.ws25.group22.util.DroneTypeParser;
+import de.frauas.fb2.javaproject.ws25.group22.util.Util;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Manages a collection of available drones and drone types and initializes them.
@@ -18,6 +18,7 @@ import java.util.Map;
  */
 
 public class DroneCollection {
+    private static final Logger LOGGER = Logger.getLogger(DroneCollection.class.getName());
     private final HashMap<Integer, DroneType> droneTypes = new HashMap<>();
     private final HashMap<Integer, Drone> drones = new HashMap<>();
 
@@ -50,7 +51,7 @@ public class DroneCollection {
      * Initializes the drone types by fetching data from the drone API and parsing it.
      */
     private void initializeDroneTypes() {
-        Logging.info("fetching DroneTypes");
+        LOGGER.info("fetching DroneTypes");
         String url = "http://dronesim.facets-labs.com/api/dronetypes/?format=json";
         DroneTypeParser droneTypeParser = new DroneTypeParser();
         try{
@@ -70,11 +71,11 @@ public class DroneCollection {
                     droneTypes.put(key, droneType);
                 }
         }
-            Logging.info("successfully fetched " + droneTypes.size() + " DroneTypes");
+            LOGGER.info("successfully fetched " + droneTypes.size() + " DroneTypes");
         }catch(ConnectionFailedException e){
-            Logging.error("Connection failed. Make sure you are connected to the internet.");
+            LOGGER.severe("Connection failed. Make sure you are connected to the internet.");
         }catch(IllegalJSONFormatException e){
-            Logging.error("Illegal JSON format. Could not fetch drone types.");
+            LOGGER.severe("Illegal JSON format. Could not fetch drone types.");
         }
 
     }
@@ -83,7 +84,7 @@ public class DroneCollection {
      * Initializes the drones by fetching data from the drone API and parsing it.
      */
     private void initializeDrones() {
-        Logging.info("fetching Drones");
+        LOGGER.info("fetching Drones");
         String url = "http://dronesim.facets-labs.com/api/drones/?format=json";
         DroneParser droneParser = new DroneParser();
         try{
@@ -103,11 +104,11 @@ public class DroneCollection {
                     drones.put(key, drone);
                 }
             }
-            Logging.info("successfully fetched " + drones.size() + " Drones");
+            LOGGER.info("successfully fetched " + drones.size() + " Drones");
         }catch(ConnectionFailedException e){
-            Logging.error("Connection failed. Make sure you are connected to the internet.");
+            LOGGER.severe("Connection failed. Make sure you are connected to the internet.");
         }catch(IllegalJSONFormatException e){
-            Logging.error("Illegal JSON format. Could not fetch drones.");
+            LOGGER.severe("Illegal JSON format. Could not fetch drones.");
         }
     }
 
@@ -117,7 +118,7 @@ public class DroneCollection {
      */
     private void initializeDroneDynamics() {
         int initialDynamics = 42;
-        Logging.info("fetching initial DroneDynamics");
+        LOGGER.info("fetching initial DroneDynamics");
         String url = "http://dronesim.facets-labs.com/api/dronedynamics/?limit=" + getDrones().size() * initialDynamics + "&offset=0";
         DroneDynamicsParser droneDynamicsParser = new DroneDynamicsParser();
         DroneAPI droneAPI = new DroneAPI(url);
@@ -134,11 +135,11 @@ public class DroneCollection {
                     drone.getDroneDynamicsList().add(dynamic);
                 }
             }
-            Logging.info("successfully fetched 42 dynamics per drone");
+            LOGGER.info("successfully fetched 42 dynamics per drone");
         }catch(ConnectionFailedException e){
-            Logging.error("Connection failed. Make sure you are connected to the internet.");
+            LOGGER.severe("Connection failed. Make sure you are connected to the internet.");
         }catch(IllegalJSONFormatException e){
-            Logging.error("Illegal JSON format. Could not fetch drone dynamics.");
+            LOGGER.severe("Illegal JSON format. Could not fetch drone dynamics.");
         }
     }
 }

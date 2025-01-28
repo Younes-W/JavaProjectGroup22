@@ -1,23 +1,23 @@
-package Group22.Main;
+package de.frauas.fb2.javaproject.ws25.group22.main;
 
-import Group22.API.Dashboard;
-import Group22.Errorhandling.Logging;
-import Group22.GUI.MainController;
+import de.frauas.fb2.javaproject.ws25.group22.api.Dashboard;
+import de.frauas.fb2.javaproject.ws25.group22.errorhandling.Logging;
+import de.frauas.fb2.javaproject.ws25.group22.gui.MainController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Entry point for the Drone Application. Initializes the application
  * and transitions from the loading screen to the main UI.
  */
 public class Main extends Application {
-
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) {
         launch(args);
     }
@@ -64,13 +64,13 @@ public class Main extends Application {
                         primaryStage.setScene(mainScene);
                     });
                 } catch (Exception ex) {
-                    Logging.error("Error during initialization: " + ex.getMessage());
+                    LOGGER.severe("Error during initialization: " + ex.getMessage());
                 }
             });
             initThread.start();
 
         }catch(IOException e){
-            Logging.error("Error during GUI initialization " + e.getMessage());
+            LOGGER.severe("Error during GUI initialization " + e.getMessage());
         }
     }
 }

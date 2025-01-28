@@ -1,4 +1,4 @@
-package Group22.API;
+package de.frauas.fb2.javaproject.ws25.group22.api;
 
 import java.util.ArrayList;
 import java.util.List;

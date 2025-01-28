@@ -1,4 +1,4 @@
-package Group22.Errorhandling;
+package de.frauas.fb2.javaproject.ws25.group22.errorhandling;
 
 /**
  * A custom exception indicating a failure to connect to the server.

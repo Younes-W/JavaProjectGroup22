@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="mainBackground" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Group22.GUI.LoadingScreenController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="mainBackground" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.frauas.fb2.javaproject.ws25.group22.gui.LoadingScreenController">
     <children>
       <VBox alignment="CENTER" layoutX="250.0" layoutY="112.0" prefHeight="300.0" prefWidth="300.0" spacing="10.0">
          <children>

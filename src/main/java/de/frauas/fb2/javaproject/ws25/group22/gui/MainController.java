@@ -1,21 +1,17 @@
-package Group22.GUI;
+package de.frauas.fb2.javaproject.ws25.group22.gui;
 
-import Group22.API.Dashboard;
-import Group22.API.Drone;
-import Group22.API.DroneDynamics;
-import Group22.API.DroneType;
-import Group22.Errorhandling.Logging;
+import de.frauas.fb2.javaproject.ws25.group22.api.Dashboard;
+import de.frauas.fb2.javaproject.ws25.group22.api.Drone;
+import de.frauas.fb2.javaproject.ws25.group22.api.DroneDynamics;
+import de.frauas.fb2.javaproject.ws25.group22.api.DroneType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Controller class for the main UI of the Drone Application.
@@ -61,14 +57,14 @@ public class MainController {
     @FXML private Label droneTypeControlRangeLabel;
     @FXML private Label droneTypeMaximumCarriageLabel;
     @FXML private VBox droneTypesVBox;
-
+    private static final Logger LOGGER = Logger.getLogger(MainController.class.getName());
     private Dashboard dashboard;
 
     /**
      * Initializes the MainController by setting up listeners and default UI states.
      */
     public void initialize() {
-        Logging.info("Initializing Main Controller");
+        LOGGER.info("Initializing Main Controller");
         droneIdListView.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> onDroneSelected(newValue));
         droneTypeIdListView.getSelectionModel().selectedItemProperty().addListener(
@@ -143,7 +139,7 @@ public class MainController {
         droneInfoVBox.setVisible(false);
         droneDynamicsVBox.setVisible(false);
         droneTypesVBox.setVisible(false);
-        Logging.info("Resetting Labels done");
+        LOGGER.info("Resetting Labels done");
     }
 
     private void makeDroneLabelsVisible() {
@@ -233,7 +229,7 @@ public class MainController {
      */
     @FXML
     private void refreshButton() {
-        Logging.info("Refreshing.. ");
+        LOGGER.info("Refreshing.. ");
         dashboard.apiRefresh();
         resetLabels();
         loadDroneIds();

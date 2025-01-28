@@ -1,4 +1,4 @@
-package Group22.GUI;
+package de.frauas.fb2.javaproject.ws25.group22.gui;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;

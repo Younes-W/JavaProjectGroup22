@@ -1,20 +1,20 @@
+package de.frauas.fb2.javaproject.ws25.group22.api;
+
+import de.frauas.fb2.javaproject.ws25.group22.errorhandling.ConnectionFailedException;
+import de.frauas.fb2.javaproject.ws25.group22.errorhandling.IllegalJSONFormatException;
+import de.frauas.fb2.javaproject.ws25.group22.util.DroneDynamicsParser;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.logging.Logger;
+
 /**
  * A runnable that fetches all dynamics data for a specific drone in a continuous loop
  * until no new data is found or the thread is interrupted.
  * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
  */
-
-package Group22.API;
-
-import Group22.Errorhandling.ConnectionFailedException;
-import Group22.Errorhandling.IllegalJSONFormatException;
-import Group22.Errorhandling.Logging;
-import Group22.Util.DroneDynamicsParser;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-
 public class DynamicsFetcher implements Runnable {
+    private static final Logger LOGGER = Logger.getLogger(DynamicsFetcher.class.getName());
     private final Drone drone;
     private final int dynamicsCount;
 
@@ -33,7 +33,7 @@ public class DynamicsFetcher implements Runnable {
      */
     @Override
     public void run() {
-        Logging.info("Fetching all dynamics for drone " + drone.getId() + "...");
+        LOGGER.info("Fetching all dynamics for drone " + drone.getId() + "...");
         String baseUrl = "http://dronesim.facets-labs.com/api/" + drone.getId() + "/dynamics/";
         int totalCount = fetchCount(baseUrl);
         String url = baseUrl + "?limit=" + totalCount + "&offset=" + dynamicsCount;
@@ -47,12 +47,12 @@ public class DynamicsFetcher implements Runnable {
                 DroneDynamics newDynamics = droneDynamicsParser.parse(o);
                 drone.getDroneDynamicsList().add(newDynamics);
             }
-            Logging.info("Fetching completed for drone " + drone.getId());
+            LOGGER.info("Fetching completed for drone " + drone.getId());
             drone.setDynamicsFetched(true);
         } catch (ConnectionFailedException e) {
-            Logging.error("Connection failed. Make sure you are connected to the internet.");
+            LOGGER.severe("Connection failed. Make sure you are connected to the internet.");
         } catch(IllegalJSONFormatException e) {
-            Logging.error("Illegal JSON format. Failed to fetch dynamics.");
+            LOGGER.severe("Illegal JSON format. Failed to fetch dynamics.");
         }
     }
 
@@ -68,12 +68,12 @@ public class DynamicsFetcher implements Runnable {
             if (response.has("count")) {
                 return response.getInt("count");
             } else {
-                Logging.error("Could not fetch the droneDynamics count");
+                LOGGER.severe("Could not fetch the droneDynamics count");
             }
         }catch(ConnectionFailedException e){
-            Logging.error("Connection failed. Make sure you are connected to the internet.");
+            LOGGER.severe("Connection failed. Make sure you are connected to the internet.");
         }catch(IllegalJSONFormatException e){
-            Logging.error("Illegal JSON format. Failed to fetch count.");
+            LOGGER.severe("Illegal JSON format. Failed to fetch count.");
         }
         return 0;
     }

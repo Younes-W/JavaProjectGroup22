@@ -1,4 +1,4 @@
-package Group22.Errorhandling;
+package de.frauas.fb2.javaproject.ws25.group22.errorhandling;
 
 import java.text.SimpleDateFormat;
 import java.util.logging.Formatter;

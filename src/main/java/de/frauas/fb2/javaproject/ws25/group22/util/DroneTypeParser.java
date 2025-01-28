@@ -1,7 +1,7 @@
-package Group22.Util;
+package de.frauas.fb2.javaproject.ws25.group22.util;
 
-import Group22.API.DroneType;
-import Group22.Errorhandling.IllegalJSONFormatException;
+import de.frauas.fb2.javaproject.ws25.group22.api.DroneType;
+import de.frauas.fb2.javaproject.ws25.group22.errorhandling.IllegalJSONFormatException;
 import org.json.JSONObject;
 
 /**

@@ -1,7 +1,7 @@
-package Group22.API;
+package de.frauas.fb2.javaproject.ws25.group22.api;
 
-import Group22.Errorhandling.ConnectionFailedException;
-import Group22.Errorhandling.IllegalJSONFormatException;
+import de.frauas.fb2.javaproject.ws25.group22.errorhandling.ConnectionFailedException;
+import de.frauas.fb2.javaproject.ws25.group22.errorhandling.IllegalJSONFormatException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

@@ -1,7 +1,7 @@
-package Group22.API;
+package de.frauas.fb2.javaproject.ws25.group22.api;
 
-import Group22.Errorhandling.Logging;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * The Dashboard class is the intersection of the backend and the GUI.
@@ -10,6 +10,7 @@ import java.util.Map;
  */
 
 public class Dashboard {
+    private static final Logger LOGGER = Logger.getLogger(Dashboard.class.getName());
     private DroneCollection droneCollection;
     private Drone selectedDrone = null;
     private DroneDynamics selectedDynamics = null;
@@ -140,7 +141,7 @@ public class Dashboard {
         offset = 0;
         this.selectedDrone = null;
         this.selectedDynamics = null;
-        Logging.info("API Refresh in Dashboard ...");
+        LOGGER.info("API Refresh in Dashboard ...");
     }
 
     /**
