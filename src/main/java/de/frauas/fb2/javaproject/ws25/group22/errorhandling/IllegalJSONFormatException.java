@@ -3,7 +3,7 @@ package de.frauas.fb2.javaproject.ws25.group22.errorhandling;
 /**
  * Exception thrown when a JSON file has an illegal format.
  *
- * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
+ * @author Tobias Ilcken
  */
 public class IllegalJSONFormatException extends Exception {
     /**

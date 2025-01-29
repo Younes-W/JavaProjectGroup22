@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * Controller class for the main UI of the Drone Application.
  * Handles user interactions and updates UI components based on drone data.
  *
- * @author Maxim Wenkemann, Torben Fechner
+ * @author Maxim Wenkemann, Torben Fechner, Younes Wimmer
  */
 public class MainController {
 

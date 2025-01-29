@@ -3,7 +3,7 @@ package de.frauas.fb2.javaproject.ws25.group22.api;
 /**
  * Represents a drone type, including specifications like manufacturer, weight, speed, battery capacity, etc.
  *
- * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
+ * @author Parnia Esfahani
  */
 public class DroneType {
 

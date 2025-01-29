@@ -8,7 +8,7 @@ import org.json.JSONObject;
  *
  * @param <T> the type of object to be returned by the parser.
  *
- * @author Younes Wimmer, Tobias Ilcker, Parnia Esfahani
+ * @author Younes Wimmer, Tobias Ilcken
  */
 public abstract class BaseParser<T> implements Parser<T> {
     /**

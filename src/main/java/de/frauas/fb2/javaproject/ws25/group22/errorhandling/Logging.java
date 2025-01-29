@@ -9,7 +9,7 @@ import java.util.logging.Logger;
  * Provides static utility methods for logging information, warnings, and errors.
  * Utilizes Java's built-in logging framework with a custom formatter.
  *
- * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
+ * @author Tobias Ilcken
  */
 public class Logging {
     private static final Logger LOGGER = Logger.getLogger(Logging.class.getName());

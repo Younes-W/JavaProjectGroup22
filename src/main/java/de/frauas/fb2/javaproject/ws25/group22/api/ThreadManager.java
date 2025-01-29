@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 /**
  * Manages a list of drone fetching threads and prevents the starting of duplicate threads.
  *
- * @author Tobias Ilcken, Younes Wimmer, Parnia Esfahani
+ * @author Tobias Ilcken
  */
 public class ThreadManager {
     private static final Logger LOGGER = Logger.getLogger(ThreadManager.class.getName());

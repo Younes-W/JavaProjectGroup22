@@ -3,7 +3,7 @@ package de.frauas.fb2.javaproject.ws25.group22.errorhandling;
 /**
  * Exception thrown when a connection to the server fails.
  *
- * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
+ * @author Tobias Ilcken
  */
 public class ConnectionFailedException extends Exception {
 

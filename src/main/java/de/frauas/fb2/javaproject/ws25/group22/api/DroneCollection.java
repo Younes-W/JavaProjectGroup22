@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 /**
  * Manages a collection of available drones and drone types and initializes them.
  *
- * @author Tobias Ilcken, Younes Wimmer,Parnia Esfahani
+ * @author Tobias Ilcken, Younes Wimmer
  */
 public class DroneCollection {
     private static final Logger LOGGER = Logger.getLogger(DroneCollection.class.getName());

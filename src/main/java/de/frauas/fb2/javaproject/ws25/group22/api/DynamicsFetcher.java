@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  * A runnable that fetches all dynamics data for a specific drone in a continuous loop
  * until no new data is found or the thread is interrupted.
  *
- * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
+ * @author Younes Wimmer, Tobias Ilcken
  */
 public class DynamicsFetcher implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(DynamicsFetcher.class.getName());

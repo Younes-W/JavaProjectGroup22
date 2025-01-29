@@ -6,7 +6,7 @@ import java.time.OffsetDateTime;
  * Represents the dynamics of a drone at a specific point in time, including
  * positional information, alignment, speed, battery, and status information.
  *
- * @author Parnia Esfahani, Younes Wimmer, Tobias Ilcken, Parnia Esfahani
+ * @author Parnia Esfahani, Younes Wimmer, Tobias Ilcken
  */
 public class DroneDynamics {
     private final OffsetDateTime timestamp;
