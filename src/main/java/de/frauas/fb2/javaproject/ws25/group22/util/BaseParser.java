@@ -7,6 +7,8 @@ import org.json.JSONObject;
  * Abstract base class for parsing JSON objects into specific types.
  *
  * @param <T> the type of object to be returned by the parser.
+ *
+ * @author Younes Wimmer, Tobias Ilcker, Parnia Esfahani
  */
 public abstract class BaseParser<T> implements Parser<T> {
     /**
@@ -14,8 +16,8 @@ public abstract class BaseParser<T> implements Parser<T> {
      *
      * @param o the JSONObject to parse.
      * @return an instance of type T.
+     * @throws IllegalJSONFormatException if the JSON format is invalid.
      */
     @Override
     public abstract T parse(JSONObject o) throws IllegalJSONFormatException;
-
 }

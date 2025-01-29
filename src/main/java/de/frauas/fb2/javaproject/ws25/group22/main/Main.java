@@ -13,23 +13,34 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
- * Entry point for the Drone Application. Initializes the application
- * and transitions from the loading screen to the main UI.
+ * Entry point for the Drone Application.
+ * Initializes logging, sets up the primary stage, and transitions from the loading screen to the main UI.
+ *
+ * @author Maxim Wenkemann, Torben Fechner
  */
 public class Main extends Application {
     private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
+    /**
+     * The main method which launches the JavaFX application.
+     *
+     * @param args the command-line arguments.
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Starts the JavaFX application by initializing logging, setting up the primary stage,
+     * loading the loading screen, and preparing the main scene.
+     *
+     * @param primaryStage the primary stage for this application.
+     */
     @Override
     public void start(Stage primaryStage) {
         Logging.initialize("Logfile.log");
         try {
-            // Configure primary stage settings
             primaryStage.setTitle("Drone Application");
-            //Image icon = new Image("drone.png");
-            //primaryStage.getIcons().add(icon);
             primaryStage.setWidth(800);
             primaryStage.setHeight(600);
             primaryStage.setResizable(false);
@@ -52,10 +63,8 @@ public class Main extends Application {
             // Background thread to create the dashboard
             Thread initThread = new Thread(() -> {
                 try {
-                    // Create Dashboard in the background
                     Dashboard dashboard = new Dashboard();
 
-                    // After successful creation, update the UI on the JavaFX Application Thread
                     Platform.runLater(() -> {
                         mainController.setDashboard(dashboard);
                         mainController.loadDroneIds();
@@ -69,9 +78,8 @@ public class Main extends Application {
             });
             initThread.start();
 
-        }catch(IOException e){
-            LOGGER.severe("Error during GUI initialization " + e.getMessage());
+        } catch (IOException ioException) {
+            LOGGER.severe("Error during GUI initialization: " + ioException.getMessage());
         }
     }
 }
-

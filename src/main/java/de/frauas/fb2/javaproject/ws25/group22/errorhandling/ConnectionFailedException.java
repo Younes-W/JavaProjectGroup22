@@ -1,16 +1,23 @@
 package de.frauas.fb2.javaproject.ws25.group22.errorhandling;
 
 /**
- * A custom exception indicating a failure to connect to the server.
+ * Exception thrown when a connection to the server fails.
+ *
+ * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
  */
 public class ConnectionFailedException extends Exception {
-    /** Constructs a new ConnectionFailedException */
-    public ConnectionFailedException() {}
+
+    /**
+     * Constructs a new ConnectionFailedException with {@code null} as its detail message.
+     */
+    public ConnectionFailedException() {
+        super();
+    }
 
     /**
      * Constructs a new ConnectionFailedException with the specified detail message.
      *
-     * @param message the detail message.
+     * @param message the detail message explaining the reason for the exception.
      */
     public ConnectionFailedException(String message) {
         super(message);

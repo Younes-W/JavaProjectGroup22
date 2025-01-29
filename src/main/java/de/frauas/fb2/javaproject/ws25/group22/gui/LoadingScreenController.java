@@ -10,6 +10,8 @@ import javafx.util.Duration;
 /**
  * Controller for the loading screen, managing the progress bar animation
  * during application initialization.
+ *
+ * @author Maxim Wenkemann, Torben Fechner
  */
 public class LoadingScreenController {
     @FXML
@@ -17,6 +19,7 @@ public class LoadingScreenController {
 
     /**
      * Updates the progress bar with a specified progress value.
+     *
      * @param progress a value between 0 and 1 indicating the progress.
      */
     public void updateProgress(double progress) {

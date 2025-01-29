@@ -1,10 +1,11 @@
 package de.frauas.fb2.javaproject.ws25.group22.api;
 
+/**
+ * Represents a drone type, including specifications like manufacturer, weight, speed, battery capacity, etc.
+ *
+ * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
+ */
 public class DroneType {
-
-    /**
-     * Represents a dronetype, including specifications like manufacturer, weight, speed, battery capacity, etc.
-     */
 
     private int id;
     private String manufacturer;
@@ -39,42 +40,34 @@ public class DroneType {
         this.maxCarriage = maxCarriage;
     }
 
-    /** @return the unique identifier of this drone type */
     public int getId() {
         return id;
     }
 
-    /** @return the manufacturer of this drone type */
     public String getManufacturer() {
         return manufacturer;
     }
 
-    /** @return the type name of this drone type */
     public String getTypename() {
         return typename;
     }
 
-    /** @return the weight of this drone type */
     public int getWeight() {
         return weight;
     }
 
-    /** @return the maximum speed of this drone type */
     public int getMaxSpeed() {
         return maxSpeed;
     }
 
-    /** @return the battery capacity of this drone type */
     public int getBatteryCapacity() {
         return batteryCapacity;
     }
 
-    /** @return the control range of this drone type */
     public int getControlRange() {
         return controlRange;
     }
 
-    /** @return the maximum carriage capacity of this drone type */
     public int getMaxCarriage() {
         return maxCarriage;
     }

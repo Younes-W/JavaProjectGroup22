@@ -1,12 +1,23 @@
 package de.frauas.fb2.javaproject.ws25.group22.errorhandling;
 
 /**
- * A custom exception indicating a wrongly formatted JSON file has been received.
+ * Exception thrown when a JSON file has an illegal format.
+ *
+ * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
  */
-
 public class IllegalJSONFormatException extends Exception {
-    public IllegalJSONFormatException() {}
+    /**
+     * Constructs a new IllegalJSONFormatException with {@code null} as its detail message.
+     */
+    public IllegalJSONFormatException() {
+        super();
+    }
 
+    /**
+     * Constructs a new IllegalJSONFormatException with the specified detail message.
+     *
+     * @param message the detail message explaining the reason for the exception.
+     */
     public IllegalJSONFormatException(String message) {
         super(message);
     }

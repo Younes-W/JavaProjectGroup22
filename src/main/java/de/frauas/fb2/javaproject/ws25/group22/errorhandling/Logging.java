@@ -8,7 +8,8 @@ import java.util.logging.Logger;
 /**
  * Provides static utility methods for logging information, warnings, and errors.
  * Utilizes Java's built-in logging framework with a custom formatter.
- * @author Tobias Ilcken, Younes Wimmer
+ *
+ * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
  */
 public class Logging {
     private static final Logger LOGGER = Logger.getLogger(Logging.class.getName());
@@ -20,7 +21,7 @@ public class Logging {
      * @throws IllegalArgumentException if the log file name is null.
      */
     public static void initialize(String logFileName) {
-        if(logFileName == null){
+        if (logFileName == null) {
             throw new IllegalArgumentException("Log file name cannot be null");
         }
         try {
@@ -30,8 +31,8 @@ public class Logging {
             fileHandler.setLevel(Level.ALL);
             LOGGER.addHandler(fileHandler);
             LOGGER.info("Log file has been initialized");
-        } catch(IOException e) {
-            LOGGER.log(Level.SEVERE,"Error opening log file", e);
+        } catch (IOException ioException) {
+            LOGGER.log(Level.SEVERE, "Error opening log file", ioException);
         }
     }
 

@@ -8,7 +8,6 @@ import java.util.logging.Logger;
  * It can be used to get all relevant information for each drone, drone type and drone dynamic.
  * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
  */
-
 public class Dashboard {
     private static final Logger LOGGER = Logger.getLogger(Dashboard.class.getName());
     private DroneCollection droneCollection;
@@ -19,6 +18,7 @@ public class Dashboard {
 
     /**
      * Constructs a new Dashboard instance and initializes the DroneCollection as well as the thread manager.
+     *
      * @see ThreadManager
      * @see DroneCollection
      */
@@ -29,6 +29,7 @@ public class Dashboard {
 
     /**
      * Retrieves a map of all drones managed by the DroneCollection.
+     *
      * @return a map of all drones with drone ids as the keys.
      */
     public Map<Integer, Drone> getDrones() {
@@ -88,6 +89,7 @@ public class Dashboard {
      * @param selectedDrone the Drone to select or null to reset selection.
      */
     public void setSelectedDrone(Drone selectedDrone) {
+        dashboardRefresh();
         if (selectedDrone == null) {
             this.selectedDrone = null;
             return;
@@ -144,11 +146,8 @@ public class Dashboard {
         LOGGER.info("API Refresh in Dashboard ...");
     }
 
-    /**
-     * Refreshes the UI by resetting offsets and selections
-     * without reinitializing the DroneManager.
-     */
-    public void uiRefresh() {
+    //Resets the selected drone, dynamics and dynamics offset.
+    private void dashboardRefresh() {
         offset = 0;
         this.selectedDrone = null;
         this.selectedDynamics = null;

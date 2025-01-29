@@ -6,6 +6,8 @@ import org.json.JSONObject;
 
 /**
  * Parser for converting JSON objects into {@link DroneType} instances.
+ *
+ * @author Younes Wimmer, Tobias Ilcker, Parnia Esfahani
  */
 public class DroneTypeParser extends BaseParser<DroneType> {
     /**
@@ -13,10 +15,11 @@ public class DroneTypeParser extends BaseParser<DroneType> {
      *
      * @param o the JSONObject representing a drone type.
      * @return a new DroneType object.
+     * @throws IllegalJSONFormatException if the JSON format is invalid.
      */
     @Override
-    public DroneType parse (JSONObject o) throws IllegalJSONFormatException {
-        if(validate(o)){
+    public DroneType parse(JSONObject o) throws IllegalJSONFormatException {
+        if (validate(o)) {
             int id = o.getInt("id");
             String manufacturer = o.getString("manufacturer");
             String typename = o.getString("typename");
@@ -24,23 +27,25 @@ public class DroneTypeParser extends BaseParser<DroneType> {
             int maxSpeed = o.getInt("max_speed");
             int batteryCapacity = o.getInt("battery_capacity");
             int controlRange = o.getInt("control_range");
-            int maxCarriage = o.optInt("max_carriage",0);
+            int maxCarriage = o.optInt("max_carriage", 0);
 
             return new DroneType(id, manufacturer, typename, weight, maxSpeed,
                     batteryCapacity, controlRange, maxCarriage);
-        }else{
-            throw new IllegalJSONFormatException();
+        } else {
+            throw new IllegalJSONFormatException("Invalid JSON format for DroneType.");
         }
     }
+
     /**
-     * validates the drone type json object.
+     * Validates the drone type JSON object.
+     *
      * @param o the JSONObject of the drone type.
      * @return true if JSONObject is valid, false otherwise.
-     * */
+     */
     private boolean validate(JSONObject o) {
-        String[] attributes = {"id","manufacturer","typename","weight","max_speed","battery_capacity","control_range"};
-        for(String attribute : attributes){
-            if(!o.has(attribute)){
+        String[] attributes = {"id", "manufacturer", "typename", "weight", "max_speed", "battery_capacity", "control_range"};
+        for (String attribute : attributes) {
+            if (!o.has(attribute)) {
                 return false;
             }
         }

@@ -8,9 +8,9 @@ import java.util.List;
 /**
  * Represents a drone with attributes such as type, creation time, serial number, and associated dynamics data.
  * Provides utility methods to calculate distance traveled and average speed based on its dynamics.
+ *
  * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
  */
-
 public class Drone {
     private int id;
     private int droneTypeId;
@@ -40,47 +40,38 @@ public class Drone {
         this.carriageType = carriageType;
     }
 
-    /** @return the unique identifier of the drone */
     public int getId() {
         return id;
     }
 
-    /** @return the drone type identifier */
     public int getDroneTypeId() {
         return droneTypeId;
     }
 
-    /** @return the creation timestamp of the drone */
     public OffsetDateTime getCreated() {
         return created;
     }
 
-    /** @return the serial number of the drone */
     public String getSerialNumber() {
         return serialNumber;
     }
 
-    /** @return the weight of the carriage */
     public int getCarriageWeight() {
         return carriageWeight;
     }
 
-    /** @return the type of the carriage */
     public String getCarriageType() {
         return carriageType;
     }
 
-    /** @return the list of dynamics data associated with this drone */
     public List<DroneDynamics> getDroneDynamicsList() {
         return droneDynamicsList;
     }
 
-    /** @return true if dynamics data has been fetched, false otherwise */
-    public boolean getDynamicsFetched() {
+    public boolean isDynamicsFetched() {
         return dynamicsFetched;
     }
 
-    /** @return the number of dynamics available for this drone */
     public int getDynamicsCount() {
         return droneDynamicsList.size();
     }
@@ -97,6 +88,7 @@ public class Drone {
 
     /**
      * Sets the flag indicating whether the dynamics have been fetched.
+     *
      * @param dynamicsFetched true if dynamics data has been fetched, false otherwise.
      */
     public void setDynamicsFetched(boolean dynamicsFetched) {
@@ -116,11 +108,11 @@ public class Drone {
         }
         double sum = 0.0;
         for (int i = 1; i <= offset; i++) {
-            double lon1 = droneDynamicsList.get(i - 1).getLongitude();
-            double lat1 = droneDynamicsList.get(i - 1).getLatitude();
-            double lon2 = droneDynamicsList.get(i).getLongitude();
-            double lat2 = droneDynamicsList.get(i).getLatitude();
-            sum += haversine(lon1, lat1, lon2, lat2);
+            double longitude1 = droneDynamicsList.get(i - 1).getLongitude();
+            double latitude1 = droneDynamicsList.get(i - 1).getLatitude();
+            double longitude2 = droneDynamicsList.get(i).getLongitude();
+            double latitude2 = droneDynamicsList.get(i).getLatitude();
+            sum += haversine(longitude1, latitude1, longitude2, latitude2);
         }
         return sum;
     }
@@ -136,30 +128,21 @@ public class Drone {
         if (offset < 1 || offset >= getDynamicsCount()) {
             return 0.0;
         }
-        DroneDynamics first = droneDynamicsList.getFirst();
-        DroneDynamics nth   = droneDynamicsList.get(offset);
+        DroneDynamics firstDynamics = droneDynamicsList.get(0);
+        DroneDynamics nthDynamics = droneDynamicsList.get(offset);
 
-        long seconds = java.time.Duration.between(first.getTimestamp(), nth.getTimestamp()).getSeconds();
-        if (seconds == 0) {
+        long secondsElapsed = java.time.Duration.between(firstDynamics.getTimestamp(), nthDynamics.getTimestamp()).getSeconds();
+        if (secondsElapsed == 0) {
             return 0.0;
         }
-        double hours = seconds / 3600.0;
+        double hoursElapsed = secondsElapsed / 3600.0;
 
-        double distanceUpToN = calculateDistanceUpTo(offset);
-        return distanceUpToN / hours;
+        double distanceTraveled = calculateDistanceUpTo(offset);
+        return distanceTraveled / hoursElapsed;
     }
 
-    /**
-     * Computes the distance between two geographic coordinates using the Haversine formula.
-     *
-     * @param lon1 longitude of the first point
-     * @param lat1 latitude of the first point
-     * @param lon2 longitude of the second point
-     * @param lat2 latitude of the second point
-     * @return the distance in kilometers between the two points.
-     */
     private double haversine(double lon1, double lat1, double lon2, double lat2) {
-        final int R = 6371;
+        final int R = 6371; // Radius of the Earth in kilometers
         double phi1 = Math.toRadians(lat1);
         double phi2 = Math.toRadians(lat2);
         double deltaPhi = Math.toRadians(lat2 - lat1);

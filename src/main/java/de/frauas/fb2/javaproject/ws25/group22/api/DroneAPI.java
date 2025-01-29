@@ -12,13 +12,14 @@ import java.net.URI;
 /**
  * Provides methods to fetch JSON data from a given URL using HTTP GET requests.
  * Handles the connection.
- * @author Tobias Ilcken, Younes Wimmer, Parnia Esfahani
+ *
+ * @author Tobias Ilcken, Younes Wimmer,Parnia Esfahani
  */
-
 public class DroneAPI {
     private static final String TOKEN = "Token 140c969fed7748aafd5f1ac7dc1ed246aab72acd";
     private static final String USER_AGENT = "Group22";
     private final String url;
+
     /**
      * Constructs a DroneAPI instance with the specified URL.
      *
@@ -53,12 +54,6 @@ public class DroneAPI {
         return returnJson;
     }
 
-    /**
-     * Retrieves data from the HTTP connection.
-     *
-     * @param connection the HttpURLConnection to read data from.
-     * @return the response data as a String.
-     */
     private String fetchData(HttpURLConnection connection) throws Exception {
         int responseCode = connection.getResponseCode();
         if(responseCode != 200){
@@ -67,7 +62,7 @@ public class DroneAPI {
 
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String inputLine;
-        StringBuffer response = new StringBuffer();
+        StringBuilder response = new StringBuilder();
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
         }
@@ -75,23 +70,12 @@ public class DroneAPI {
         return response.toString();
     }
 
-    /**
-     * Sets necessary request properties for the HTTP connection including headers and request method.
-     *
-     * @param connection the HttpURLConnection to configure.
-     * @throws ProtocolException if setting the request method fails.
-     */
     private void setRequestProperties(HttpURLConnection connection) throws ProtocolException {
         connection.setRequestProperty("Authorization", TOKEN);
         connection.setRequestMethod("GET");
         connection.setRequestProperty("User-Agent", USER_AGENT);
     }
 
-    /**
-     * Validates a given JSONObject.
-     * @param o JSONObject to be validated
-     * @return true if JSON object is valid, false otherwise
-     */
     private boolean validateJSON(JSONObject o) {
         if(!o.has("count") || !o.has("results")){
             return false;

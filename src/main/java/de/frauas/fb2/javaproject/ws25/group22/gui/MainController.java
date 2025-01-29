@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 /**
  * Controller class for the main UI of the Drone Application.
  * Handles user interactions and updates UI components based on drone data.
+ *
+ * @author Maxim Wenkemann, Torben Fechner
  */
 public class MainController {
 
@@ -94,13 +96,8 @@ public class MainController {
         droneTypeIdListView.scrollTo(0);
     }
 
-    /**
-     * Handles selection of a drone from the list view and updates UI accordingly.
-     *
-     * @param droneId the selected drone's ID.
-     */
+    // Handles the selection of a drone and updates the UI accordingly
     private void onDroneSelected(Integer droneId) {
-        dashboard.uiRefresh();
         if (droneId != null && dashboard.getDrones().containsKey(droneId)) {
             Drone selectedDrone = dashboard.getDrone(droneId);
             if (selectedDrone != null) {
@@ -118,11 +115,7 @@ public class MainController {
         }
     }
 
-    /**
-     * Handles selection of a drone type from the list view and updates UI accordingly.
-     *
-     * @param droneTypeId the selected drone type's ID.
-     */
+    // Handles the selection of a drone type and updates the UI accordingly
     private void onDroneTypeSelected(Integer droneTypeId) {
         if (droneTypeId != null && dashboard.getDroneTypes().containsKey(droneTypeId)) {
             DroneType selectedDroneType = dashboard.getDroneTypes().get(droneTypeId);
@@ -142,17 +135,20 @@ public class MainController {
         LOGGER.info("Resetting Labels done");
     }
 
+    // Makes drone information labels visible and hides dynamics labels
     private void makeDroneLabelsVisible() {
         noDroneSelectedLabel.setVisible(false);
         droneInfoVBox.setVisible(true);
         droneDynamicsVBox.setVisible(false);
     }
 
+    // Makes drone type labels visible
     private void makeDroneTypeLabelsVisible() {
         noDroneTypeSelectedLabel.setVisible(false);
         droneTypesVBox.setVisible(true);
     }
 
+    // Makes drone dynamics labels visible and hides other labels
     private void makeDroneDynamicsLabelsVisible() {
         droneInfoVBox.setVisible(false);
         droneDynamicsVBox.setVisible(true);
@@ -160,6 +156,7 @@ public class MainController {
         droneTypesVBox.setVisible(false);
     }
 
+    // Sets the drone information labels based on the selected drone
     private void setDroneLabels(Drone selectedDrone) {
         DroneType type = dashboard.getDroneType(selectedDrone);
         droneTypeLabel.setText("Type: " + (type != null ? type.getTypename() : "Unknown"));
@@ -170,6 +167,7 @@ public class MainController {
         droneCarriageTypeLabel.setText("Carriage Type: " + selectedDrone.getCarriageType());
     }
 
+    // Sets the drone type labels based on the selected drone type
     private void setDroneTypeLabels(DroneType selectedDroneType) {
         droneTypeManufacturerLabel.setText("Manufacturer: " + selectedDroneType.getManufacturer());
         droneTypeTypenameLabel.setText("Typename: " + selectedDroneType.getTypename());
@@ -180,6 +178,7 @@ public class MainController {
         droneTypeMaximumCarriageLabel.setText("Maximum Carriage: " + selectedDroneType.getMaxCarriage());
     }
 
+    // Sets the drone dynamics labels based on the selected drone's dynamics
     private void setDroneDynamicsLabels(Drone selectedDrone) {
         int offset = dashboard.getOffset();
         if (offset >= selectedDrone.getDynamicsCount() || offset < 0) {
@@ -202,15 +201,13 @@ public class MainController {
         dynamicsSpeedOTLabel.setText("Speed Over Time: " +
                 String.format("%.2f", selectedDrone.calculateAverageSpeedUpTo(offset)) + " km/h");
         DroneType type = dashboard.getDroneType(selectedDrone);
-        double batteryPercent = firstDynamics.getBatteryPercentage(type);
+        double batteryPercent = firstDynamics.calculateBatteryPercentage(type);
         dynamicsBatteryPercentLabel.setText("Battery In Percent: " + String.format("%.2f", batteryPercent));
         dynamicsBatteryConsumptionLabel.setText("Battery Consumption In Percent: " +
-                String.format("%.2f", firstDynamics.getBatteryConsumptionInPercent(batteryPercent)));
+                String.format("%.2f", firstDynamics.calculateBatteryConsumptionPercentage(batteryPercent)));
     }
 
-    /**
-     * Handles click events on the drone type label to navigate to the corresponding drone type details.
-     */
+    // Handles click events on the drone type label to navigate to the corresponding drone type details
     private void onDroneTypeLabelClicked() {
         Integer selectedId = droneIdListView.getSelectionModel().getSelectedItem();
         if (selectedId == null) return;
@@ -224,9 +221,6 @@ public class MainController {
         droneTypeIdListView.scrollTo(droneTypeId);
     }
 
-    /**
-     * Action handler for the refresh button to update the dashboard and UI.
-     */
     @FXML
     private void refreshButton() {
         LOGGER.info("Refreshing.. ");
@@ -240,9 +234,6 @@ public class MainController {
         updateDroneDynamicsButtonStyle();
     }
 
-    /**
-     * Toggles between drone dynamics view and drone information view.
-     */
     @FXML
     private void setDroneDynamicsButton() {
         Integer currentSelection = droneIdListView.getSelectionModel().getSelectedItem();
@@ -268,9 +259,6 @@ public class MainController {
         }
     }
 
-    /**
-     * Updates the style of the drone dynamics button based on current view.
-     */
     @FXML
     private void updateDroneDynamicsButtonStyle() {
         droneDynamicsButton.getStyleClass().removeAll("button-dynamics-selected", "button-dynamics-unselected");
@@ -291,11 +279,7 @@ public class MainController {
     @FXML private void onPrevDynamicClicked50() { proceedNextDynamic(-50); }
     @FXML private void onPrevDynamicClicked500() { proceedNextDynamic(-500); }
 
-    /**
-     * Advances or goes back in dynamics data by a given number of steps.
-     *
-     * @param steps the number of dynamics steps to move.
-     */
+    // Advances or goes back in dynamics data by a given number of steps
     private void proceedNextDynamic(int steps) {
         Drone selectedDrone = dashboard.getSelectedDrone();
         if (selectedDrone == null) {
