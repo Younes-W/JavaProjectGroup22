@@ -35,31 +35,4 @@ public class Logging {
             LOGGER.log(Level.SEVERE, "Error opening log file", ioException);
         }
     }
-
-    /**
-     * Logs an informational message.
-     *
-     * @param message the message to log.
-     */
-    public static void info(String message) {
-        LOGGER.info(message);
-    }
-
-    /**
-     * Logs an error message.
-     *
-     * @param message the error message to log.
-     */
-    public static void error(String message) {
-        LOGGER.severe(message);
-    }
-
-    /**
-     * Logs a warning message.
-     *
-     * @param message the warning message to log.
-     */
-    public static void warning(String message) {
-        LOGGER.warning(message);
-    }
 }
