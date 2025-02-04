@@ -12,13 +12,13 @@ import java.util.List;
  * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
  */
 public class Drone {
-    private int id;
-    private int droneTypeId;
-    private OffsetDateTime created;
-    private String serialNumber;
-    private int carriageWeight;
-    private String carriageType;
-    private List<DroneDynamics> droneDynamicsList = Collections.synchronizedList(new ArrayList<>());
+    private final int id;
+    private final int droneTypeId;
+    private final OffsetDateTime created;
+    private final String serialNumber;
+    private final int carriageWeight;
+    private final String carriageType;
+    private final List<DroneDynamics> droneDynamicsList = Collections.synchronizedList(new ArrayList<>());
     private boolean dynamicsFetched = false;
 
     /**
@@ -128,7 +128,7 @@ public class Drone {
         if (offset < 1 || offset >= getDynamicsCount()) {
             return 0.0;
         }
-        DroneDynamics firstDynamics = droneDynamicsList.get(0);
+        DroneDynamics firstDynamics = droneDynamicsList.getFirst();
         DroneDynamics nthDynamics = droneDynamicsList.get(offset);
 
         long secondsElapsed = java.time.Duration.between(firstDynamics.getTimestamp(), nthDynamics.getTimestamp()).getSeconds();

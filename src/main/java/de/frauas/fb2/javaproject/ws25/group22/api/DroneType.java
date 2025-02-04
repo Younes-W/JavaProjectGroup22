@@ -6,15 +6,14 @@ package de.frauas.fb2.javaproject.ws25.group22.api;
  * @author Parnia Esfahani
  */
 public class DroneType {
-
-    private int id;
-    private String manufacturer;
-    private String typename;
-    private int weight;
-    private int maxSpeed;
-    private int batteryCapacity;
-    private int controlRange;
-    private int maxCarriage;
+    private final int id;
+    private final String manufacturer;
+    private final String typename;
+    private final int weight;
+    private final int maxSpeed;
+    private final int batteryCapacity;
+    private final int controlRange;
+    private final int maxCarriage;
 
     /**
      * Constructs a DroneType with the specified parameters.

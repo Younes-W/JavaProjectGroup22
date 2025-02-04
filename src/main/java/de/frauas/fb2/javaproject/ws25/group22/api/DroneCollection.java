@@ -19,8 +19,8 @@ import java.util.logging.Logger;
  */
 public class DroneCollection {
     private static final Logger LOGGER = Logger.getLogger(DroneCollection.class.getName());
-    private final HashMap<Integer, DroneType> droneTypes = new HashMap<>();
-    private final HashMap<Integer, Drone> drones = new HashMap<>();
+    private final Map<Integer, DroneType> droneTypes = new HashMap<>();
+    private final Map<Integer, Drone> drones = new HashMap<>();
 
     /**
      * Constructs a DroneCollection and initializes drones, drone types, and dynamics data.

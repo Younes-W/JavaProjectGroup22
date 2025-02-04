@@ -5,7 +5,6 @@ import de.frauas.fb2.javaproject.ws25.group22.errorhandling.IllegalJSONFormatExc
 import de.frauas.fb2.javaproject.ws25.group22.util.DroneDynamicsParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.logging.Logger;
 
 /**

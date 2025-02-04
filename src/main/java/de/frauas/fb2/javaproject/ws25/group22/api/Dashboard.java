@@ -11,10 +11,11 @@ import java.util.logging.Logger;
 public class Dashboard {
     private static final Logger LOGGER = Logger.getLogger(Dashboard.class.getName());
     private DroneCollection droneCollection;
+    private ThreadManager threadManager;
     private Drone selectedDrone = null;
     private DroneDynamics selectedDynamics = null;
     private int offset = 0;
-    private final ThreadManager threadManager;
+
 
     /**
      * Constructs a new Dashboard instance and initializes the DroneCollection as well as the thread manager.
@@ -140,6 +141,7 @@ public class Dashboard {
      */
     public void apiRefresh() {
         droneCollection = new DroneCollection();
+        threadManager = new ThreadManager();
         offset = 0;
         this.selectedDrone = null;
         this.selectedDynamics = null;

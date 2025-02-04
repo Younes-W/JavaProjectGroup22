@@ -14,11 +14,6 @@ public class ThreadManager {
     private final List<Thread> threads = new ArrayList<>();
 
     /**
-     * Constructs a ThreadManager.
-     */
-    public ThreadManager() {}
-
-    /**
      * Starts the fetching thread if the thread is not already running
      * and if the dynamics were not fetched before.
      * Updates the thread list beforehand.

@@ -36,12 +36,6 @@ public class DroneTypeParser extends BaseParser<DroneType> {
         }
     }
 
-    /**
-     * Validates the drone type JSON object.
-     *
-     * @param o the JSONObject of the drone type.
-     * @return true if JSONObject is valid, false otherwise.
-     */
     private boolean validate(JSONObject o) {
         String[] attributes = {"id", "manufacturer", "typename", "weight", "max_speed", "battery_capacity", "control_range"};
         for (String attribute : attributes) {
