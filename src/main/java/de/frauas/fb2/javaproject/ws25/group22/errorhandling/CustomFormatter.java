@@ -26,6 +26,10 @@ public class CustomFormatter extends Formatter {
         builder.append(" [");
         builder.append(logRecord.getLevel());
         builder.append("] ");
+        builder.append("[");
+        builder.append(logRecord.getSourceClassName());
+        builder.append("]");
+        builder.append("\n");
         builder.append(logRecord.getMessage());
         builder.append("\n");
         return builder.toString();

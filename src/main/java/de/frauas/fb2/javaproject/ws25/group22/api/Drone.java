@@ -108,10 +108,10 @@ public class Drone {
         }
         double sum = 0.0;
         for (int i = 0; i < offset; i++) {
-            double longitude1 = droneDynamicsList.get(i - 1).getLongitude();
-            double latitude1 = droneDynamicsList.get(i - 1).getLatitude();
-            double longitude2 = droneDynamicsList.get(i).getLongitude();
-            double latitude2 = droneDynamicsList.get(i).getLatitude();
+            double longitude1 = droneDynamicsList.get(i).getLongitude();
+            double latitude1 = droneDynamicsList.get(i).getLatitude();
+            double longitude2 = droneDynamicsList.get(i + 1).getLongitude();
+            double latitude2 = droneDynamicsList.get(i + 1).getLatitude();
             sum += haversine(longitude1, latitude1, longitude2, latitude2);
         }
         return sum;

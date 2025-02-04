@@ -6,16 +6,16 @@ import java.util.logging.Logger;
 /**
  * The Dashboard class is the intersection of the backend and the GUI.
  * It can be used to get all relevant information for each drone, drone type and drone dynamic.
+ *
  * @author Younes Wimmer, Tobias Ilcken, Parnia Esfahani
  */
 public class Dashboard {
-    private static final Logger LOGGER = Logger.getLogger(Dashboard.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private DroneCollection droneCollection;
     private ThreadManager threadManager;
     private Drone selectedDrone = null;
     private DroneDynamics selectedDynamics = null;
     private int offset = 0;
-
 
     /**
      * Constructs a new Dashboard instance and initializes the DroneCollection as well as the thread manager.
@@ -86,7 +86,26 @@ public class Dashboard {
     }
 
     /**
+     * Retrieves the current offset used for selecting dynamics.
+     *
+     * @return the current offset.
+     */
+    public int getOffset() {
+        return offset;
+    }
+
+    /**
+     * Retrieves the currently selected dynamics data.
+     *
+     * @return the currently selected DroneDynamics, or null if none selected.
+     */
+    public DroneDynamics getSelectedDynamics() {
+        return selectedDynamics;
+    }
+
+    /**
      * Sets the selected drone and starts fetching the dynamics.
+     *
      * @param selectedDrone the Drone to select or null to reset selection.
      */
     public void setSelectedDrone(Drone selectedDrone) {
@@ -118,34 +137,14 @@ public class Dashboard {
     }
 
     /**
-     * Retrieves the currently selected dynamics data.
-     *
-     * @return the currently selected DroneDynamics, or null if none selected.
-     */
-    public DroneDynamics getSelectedDynamics() {
-        return selectedDynamics;
-    }
-
-    /**
-     * Retrieves the current offset used for selecting dynamics.
-     *
-     * @return the current offset.
-     */
-    public int getOffset() {
-        return offset;
-    }
-
-    /**
      * Refreshes the API by reinitializing the DroneManager,
      * resetting offsets and selections.
      */
     public void apiRefresh() {
+        dashboardRefresh();
         droneCollection = new DroneCollection();
         threadManager = new ThreadManager();
-        offset = 0;
-        this.selectedDrone = null;
-        this.selectedDynamics = null;
-        LOGGER.info("API Refresh in Dashboard ...");
+        LOGGER.info("Refreshing API...");
     }
 
     //Resets the selected drone, dynamics and dynamics offset.

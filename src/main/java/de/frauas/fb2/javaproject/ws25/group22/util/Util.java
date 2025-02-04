@@ -3,7 +3,7 @@ package de.frauas.fb2.javaproject.ws25.group22.util;
 /**
  * Utility class containing helper methods.
  *
- * @author Tobias Ilcker
+ * @author Tobias Ilcken
  */
 public class Util {
     /**

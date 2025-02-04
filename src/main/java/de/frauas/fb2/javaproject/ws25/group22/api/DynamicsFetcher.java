@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * @author Younes Wimmer, Tobias Ilcken
  */
 public class DynamicsFetcher implements Runnable {
-    private static final Logger LOGGER = Logger.getLogger(DynamicsFetcher.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private final Drone drone;
     private final int dynamicsCount;
 
@@ -33,7 +33,7 @@ public class DynamicsFetcher implements Runnable {
      */
     @Override
     public void run() {
-        LOGGER.info("Fetching all dynamics for drone " + drone.getId() + "...");
+        LOGGER.info("Started fetching thread for drone " + drone.getId());
         String baseUrl = "http://dronesim.facets-labs.com/api/" + drone.getId() + "/dynamics/";
         int totalCount = fetchTotalDynamicsCount(baseUrl);
         String url = baseUrl + "?limit=" + totalCount + "&offset=" + dynamicsCount;

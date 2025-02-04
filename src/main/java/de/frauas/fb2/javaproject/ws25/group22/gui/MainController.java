@@ -59,7 +59,7 @@ public class MainController {
     @FXML private Label droneTypeControlRangeLabel;
     @FXML private Label droneTypeMaximumCarriageLabel;
     @FXML private VBox droneTypesVBox;
-    private static final Logger LOGGER = Logger.getLogger(MainController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private Dashboard dashboard;
 
     /**

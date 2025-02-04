@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @author Tobias Ilcken, Younes Wimmer
  */
 public class DroneCollection {
-    private static final Logger LOGGER = Logger.getLogger(DroneCollection.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private final Map<Integer, DroneType> droneTypes = new HashMap<>();
     private final Map<Integer, Drone> drones = new HashMap<>();
 

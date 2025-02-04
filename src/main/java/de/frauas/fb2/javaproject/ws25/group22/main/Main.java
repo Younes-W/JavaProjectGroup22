@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * @author Maxim Wenkemann, Torben Fechner
  */
 public class Main extends Application {
-    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     /**
      * The main method which launches the JavaFX application.
