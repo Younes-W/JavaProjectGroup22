@@ -107,7 +107,7 @@ public class Drone {
             offset = getDynamicsCount() - 1;
         }
         double sum = 0.0;
-        for (int i = 1; i <= offset; i++) {
+        for (int i = 0; i < offset; i++) {
             double longitude1 = droneDynamicsList.get(i - 1).getLongitude();
             double latitude1 = droneDynamicsList.get(i - 1).getLatitude();
             double longitude2 = droneDynamicsList.get(i).getLongitude();
