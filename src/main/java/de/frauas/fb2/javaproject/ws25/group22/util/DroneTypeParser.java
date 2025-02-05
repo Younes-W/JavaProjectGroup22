@@ -36,7 +36,8 @@ public class DroneTypeParser extends BaseParser<DroneType> {
         }
     }
 
-    private boolean validate(JSONObject o) {
+    @Override
+    protected boolean validate(JSONObject o) {
         String[] attributes = {"id", "manufacturer", "typename", "weight", "max_speed", "battery_capacity", "control_range"};
         for (String attribute : attributes) {
             if (!o.has(attribute)) {

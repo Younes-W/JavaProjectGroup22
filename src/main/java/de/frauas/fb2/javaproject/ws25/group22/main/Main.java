@@ -45,7 +45,6 @@ public class Main extends Application {
             primaryStage.setHeight(600);
             primaryStage.setResizable(false);
 
-            // Load the loading screen
             FXMLLoader loadingLoader = new FXMLLoader(getClass().getResource("/GUI/LoadingScreen.fxml"));
             Parent loadingRoot = loadingLoader.load();
             Scene loadingScreenScene = new Scene(loadingRoot);
@@ -53,14 +52,13 @@ public class Main extends Application {
             primaryStage.setScene(loadingScreenScene);
             primaryStage.show();
 
-            // Prepare the main scene
             FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("/GUI/Main.fxml"));
             Parent mainRoot = mainLoader.load();
             Scene mainScene = new Scene(mainRoot);
             mainScene.getStylesheets().add(getClass().getResource("/GUI/style.css").toExternalForm());
             MainController mainController = mainLoader.getController();
 
-            // Background thread to create the dashboard
+
             Thread initThread = new Thread(() -> {
                 try {
                     Dashboard dashboard = new Dashboard();

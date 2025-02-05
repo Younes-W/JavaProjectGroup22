@@ -13,7 +13,7 @@ import java.net.URI;
  * Provides methods to fetch JSON data from a given URL using HTTP GET requests.
  * Handles the connection.
  *
- * @author Tobias Ilcken, Younes Wimmer, Parnia Esfahani
+ * @author Tobias Ilcken, Younes Wimmer
  */
 public class DroneAPI {
     private static final String TOKEN = "Token 140c969fed7748aafd5f1ac7dc1ed246aab72acd";

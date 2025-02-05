@@ -142,7 +142,7 @@ public class Drone {
     }
 
     private double haversine(double lon1, double lat1, double lon2, double lat2) {
-        final int R = 6371; // Radius of the Earth in kilometers
+        final int R = 6371;
         double phi1 = Math.toRadians(lat1);
         double phi2 = Math.toRadians(lat2);
         double deltaPhi = Math.toRadians(lat2 - lat1);

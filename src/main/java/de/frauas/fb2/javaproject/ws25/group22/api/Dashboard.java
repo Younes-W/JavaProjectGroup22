@@ -147,7 +147,6 @@ public class Dashboard {
         LOGGER.info("Refreshing API...");
     }
 
-    //Resets the selected drone, dynamics and dynamics offset.
     private void dashboardRefresh() {
         offset = 0;
         this.selectedDrone = null;

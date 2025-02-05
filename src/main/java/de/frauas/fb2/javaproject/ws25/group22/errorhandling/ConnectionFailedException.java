@@ -6,7 +6,6 @@ package de.frauas.fb2.javaproject.ws25.group22.errorhandling;
  * @author Tobias Ilcken
  */
 public class ConnectionFailedException extends Exception {
-
     /**
      * Constructs a new ConnectionFailedException with {@code null} as its detail message.
      */

@@ -20,4 +20,6 @@ public abstract class BaseParser<T> implements Parser<T> {
      */
     @Override
     public abstract T parse(JSONObject o) throws IllegalJSONFormatException;
+
+    protected abstract boolean validate(JSONObject o);
 }

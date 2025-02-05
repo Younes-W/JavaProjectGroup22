@@ -37,13 +37,8 @@ public class DroneDynamicsParser extends BaseParser<DroneDynamics> {
         }
     }
 
-    /**
-     * Validates the Drone dynamics JSON object.
-     *
-     * @param o the JSONObject of the drone dynamics.
-     * @return true if JSONObject is valid, false otherwise.
-     */
-    private boolean validate(JSONObject o) {
+    @Override
+    protected boolean validate(JSONObject o) {
         String[] attributes = {"drone", "timestamp", "speed", "longitude", "latitude", "battery_status", "last_seen"};
         for (String attribute : attributes) {
             if (!o.has(attribute)) {
