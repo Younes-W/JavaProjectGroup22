@@ -7,7 +7,7 @@ import java.util.logging.LogRecord;
 /**
  * Custom log formatter to structure log messages with a specific timestamp and format.
  *
- * @author Tobias Ilcken
+ * @author Tobias Ilcken, Younes Wimmer
  */
 public class CustomFormatter extends Formatter {
     /**

@@ -1,3 +1,0 @@
-You can find the runnable JAR file in the following location within the project directory:
-
-out/artifacts/DroneProjectGroup22_jar/DroneProjectGroup22.jar
